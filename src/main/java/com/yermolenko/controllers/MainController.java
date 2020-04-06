@@ -1,20 +1,30 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.dao.impl.UserDAOImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yermolenko.model.SearchTourParams;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
 
-    @Autowired
-    private UserDAOImpl regularUserDAO;
+    @GetMapping("/allTours")
+    public String getAllTours(Model model) {
+        model.addAttribute("searchTourParams", new SearchTourParams());
+        return "allTours";
+    }
+
+    @PostMapping("/allTours")
+    public String getAllTours(@ModelAttribute SearchTourParams tourParams) {
+        System.out.println(tourParams.toString());
+        return "allTours";
+    }
 
     @GetMapping("/")
     public String view() {
-        regularUserDAO.getAllTours();
-        return "index";
+        return "welcome";
     }
 
 }

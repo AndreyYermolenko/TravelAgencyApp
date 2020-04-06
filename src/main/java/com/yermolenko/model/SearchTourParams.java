@@ -12,16 +12,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class TravelTour {
-    private int id;
+public class SearchTourParams {
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startTour;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate finishTour;
-    private double cost;
-    private int maxCount;
-    private int currentCount;
-    private String description;
-
+    private Double minCost;
+    private Double maxCost;
 }
