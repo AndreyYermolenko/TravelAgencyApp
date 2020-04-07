@@ -27,4 +27,16 @@ public class MainController {
         return "welcome";
     }
 
+
+
+//    @GetMapping("/test")
+//    public String test(Model model) {
+//        return "test";
+//    }
+//
+//    @PostMapping("/test")
+//    public String test(@ModelAttribute SearchTourParams tourParams) {
+//        return "test";
+//    }
+
 }
