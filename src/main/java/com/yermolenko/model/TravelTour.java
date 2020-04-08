@@ -16,10 +16,10 @@ public class TravelTour {
     private int id;
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startTour;
+    private LocalDate beginDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate finishTour;
-    private double cost;
+    private LocalDate endDate;
+    private float cost;
     private int maxCount;
     private int currentCount;
     private String description;

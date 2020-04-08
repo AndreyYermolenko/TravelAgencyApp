@@ -15,9 +15,9 @@ import java.time.LocalDate;
 public class SearchTourParams {
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate startTour;
+    private LocalDate beginDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate finishTour;
-    private Double minCost;
-    private Double maxCost;
+    private LocalDate endDate;
+    private Float minCost;
+    private Float maxCost;
 }

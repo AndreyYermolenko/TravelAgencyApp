@@ -8,10 +8,10 @@
           #destination {
               width: 300px;
           }
-          #startTour {
+          #beginDate {
               width: 150px;
           }
-          #finishTour {
+          #endDate {
               width: 150px;
           }
           #minCost {
@@ -24,16 +24,16 @@
 
       <script type="text/javascript">
           function saveData() {
-              let destination_value, startTour_value, finishTour_value, minCost_value, maxCost_value;
+              let destination_value, beginDate_value, endDate_value, minCost_value, maxCost_value;
               destination_value = document.getElementById("destination").value;
-              startTour_value = document.getElementById("startTour").value;
-              finishTour_value = document.getElementById("finishTour").value;
+              beginDate_value = document.getElementById("beginDate").value;
+              endDate_value = document.getElementById("endDate").value;
               minCost_value = document.getElementById("minCost").value;
               maxCost_value = document.getElementById("maxCost").value;
 
               sessionStorage.setItem("destination", destination_value);
-              sessionStorage.setItem("startTour", startTour_value);
-              sessionStorage.setItem("finishTour", finishTour_value);
+              sessionStorage.setItem("beginDate", beginDate_value);
+              sessionStorage.setItem("endDate", endDate_value);
               sessionStorage.setItem("minCost", minCost_value);
               sessionStorage.setItem("maxCost", maxCost_value);
           }
@@ -42,8 +42,8 @@
       <script type="text/javascript">
           function loadData() {
               document.getElementById("destination").value = sessionStorage.getItem("destination");
-              document.getElementById("startTour").value = sessionStorage.getItem("startTour");
-              document.getElementById("finishTour").value = sessionStorage.getItem("finishTour");
+              document.getElementById("beginDate").value = sessionStorage.getItem("beginDate");
+              document.getElementById("endDate").value = sessionStorage.getItem("endDate");
               document.getElementById("minCost").value = sessionStorage.getItem("minCost");
               document.getElementById("maxCost").value = sessionStorage.getItem("maxCost");
           }
@@ -55,14 +55,15 @@
     <form:form method="post" action="/allTours" modelAttribute="searchTourParams">
 
         <input name="destination" id="destination" type="text" placeholder="Название тура"/>
-        <input type="submit" value="Search" onclick="saveData()"/>
+        <input type="submit" value="Поиск" onclick="saveData()"/>
         <br/>
 
-        <button onclick="view()">Расширенный поиск</button>
-        <br/>
+<%--        <button onclick="showFields()">Расширенный поиск</button>--%>
+<%--        <br/>--%>
+<%--        <div id="fields"/>--%>
 
-        <input name="startTour" id="startTour" type="date" placeholder="Дата начала" />
-        <input name="finishTour" id="finishTour" type="date" placeholder="Дата окончания" />
+        <input name="beginDate" id="beginDate" type="date" placeholder="Дата начала" />
+        <input name="endDate" id="endDate" type="date" placeholder="Дата окончания" />
         <br/>
 
         <input name="minCost" id="minCost" type="number" placeholder="Минимальная цена" />
@@ -70,7 +71,7 @@
 
     </form:form>
 
-</body>
+    </body>
 </html>
 
 <%--    <p id="test"></p>--%>
@@ -89,3 +90,16 @@
 
 <%--      <form:label path="finishTour" >Finish tour</form:label>--%>
 <%--      <form:input path="finishTour" />--%>
+
+<%--      <script>--%>
+<%--          function showFields() {--%>
+
+<%--              let code = "<input name=\"startTour\" id=\"startTour\" type=\"date\" placeholder=\"Дата начала\" />\n" +--%>
+<%--                  "        <input name=\"finishTour\" id=\"finishTour\" type=\"date\" placeholder=\"Дата окончания\" />\n" +--%>
+<%--                  "        <br/>\n" +--%>
+<%--                  "\n" +--%>
+<%--                  "        <input name=\"minCost\" id=\"minCost\" type=\"number\" placeholder=\"Минимальная цена\" />\n" +--%>
+<%--                  "        <input name=\"maxCost\" id=\"maxCost\" type=\"number\" placeholder=\"Максимальная цена\" />"--%>
+<%--              document.getElementById("fields").innerHTML = code;--%>
+<%--          }--%>
+<%--      </script>--%>

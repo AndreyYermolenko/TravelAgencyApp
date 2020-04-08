@@ -35,7 +35,7 @@ public class ConnectionPool {
 //        Connection connection = null;
 //        try {
 //            context = new InitialContext();
-//            DataSource ds = (DataSource) context.lookup("jdbc/postgres");
+//            DataSource ds = (DataSource) context.lookup("jdbc/postgres"); //поменять jndi в datasource
 //            connection = ds.getConnection();
 //        } catch (NamingException | SQLException e) {
 //            e.printStackTrace();

@@ -1,14 +1,15 @@
 package com.yermolenko.dao;
 
+import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface UserDAO {
 
-    ArrayList<TravelTour> getAllTours();
+    List<TravelTour> getAllTours();
 
-    ArrayList<TravelTour> getSomeTours();
+    List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
 
     boolean buyTour(TravelTour travelTour);
 

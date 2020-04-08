@@ -2,14 +2,14 @@ package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.UserDAO;
+import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import org.springframework.stereotype.Component;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class UserDAOImpl implements UserDAO {
@@ -41,9 +41,61 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public ArrayList<TravelTour> getSomeTours() {
+    public List<TravelTour> getSomeTours(SearchTourParams searchTourParams) {
+        List<TravelTour> tours = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
 
-        return null;
+        String destination = searchTourParams.getDestination();
+        LocalDate beginDate = searchTourParams.getBeginDate();
+        LocalDate endDate = searchTourParams.getEndDate();
+        Float minCost = searchTourParams.getMinCost();
+        Float maxCost = searchTourParams.getMaxCost();
+
+        if (beginDate == null) {
+            beginDate = LocalDate.now();
+        }
+        if (endDate == null) {
+            endDate = LocalDate.now().plusYears(2);
+        }
+        if (minCost == null) {
+            minCost = 0.0f;
+        }
+        if (maxCost == null) {
+            maxCost = Float.MAX_VALUE;
+        }
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                    "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
+            ps.setString(1, destination);
+            ps.setDate(2, java.sql.Date.valueOf(beginDate));
+            ps.setDate(3, java.sql.Date.valueOf(endDate));
+            ps.setFloat(4, minCost);
+            ps.setFloat(5, maxCost);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                TravelTour tour = new TravelTour();
+
+                tour.setId(rs.getInt(1));
+                tour.setDestination(rs.getString(2));
+                tour.setBeginDate(rs.getDate(3).toLocalDate());
+                tour.setEndDate(rs.getDate(4).toLocalDate());
+                tour.setCost(rs.getFloat(5));
+                tour.setMaxCount(rs.getInt(6));
+                tour.setCurrentCount(rs.getInt(7));
+                tour.setDescription(rs.getString(8));
+
+                tours.add(tour);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tours;
     }
 
     @Override
