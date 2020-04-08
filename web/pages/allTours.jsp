@@ -6,19 +6,28 @@
 
       <style>
           #destination {
-              width: 300px;
+              width: 400px;
           }
           #beginDate {
-              width: 150px;
+              width: 200px;
           }
           #endDate {
-              width: 150px;
+              width: 200px;
           }
           #minCost {
-              width: 150px;
+              width: 200px;
           }
           #maxCost {
-              width: 150px;
+              width: 200px;
+          }
+
+          .scroll {
+              height: 400px; /* высота нашего блока */
+              width: 400px; /* ширина нашего блока */
+              background: #fff; /* цвет фона, белый */
+              border: 1px solid #C1C1C1; /* размер и цвет границы блока */
+              /*overflow-x: scroll; !* прокрутка по горизонтали *!*/
+              overflow-y: scroll; /* прокрутка по вертикали */
           }
       </style>
 
@@ -71,8 +80,14 @@
 
     </form:form>
 
+    <div class="scroll">
+        <jsp:include page="${includedPage}" />
+    </div>
+
     </body>
 </html>
+
+
 
 <%--    <p id="test"></p>--%>
 <%--  <script>--%>

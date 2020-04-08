@@ -3,12 +3,12 @@ package com.yermolenko.controllers;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.services.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -32,9 +32,22 @@ public class MainController {
                               Model model) {
         List<TravelTour> tours = service.getSomeTours(tourParams);
         model.addAttribute("tours", tours);
+        model.addAttribute("includedPage", "showAllToursForManager.jsp");
 
         System.out.println(tourParams.toString() + "\n" + tours.toString());
         return "allTours";
+    }
+
+    @GetMapping("/changeTour")
+    public String changeTour(@RequestParam String id) {
+        System.out.println("ID: " + id);
+        return "changeTour";
+    }
+
+    @GetMapping("/deleteTour")
+    public String deleteTour(@RequestParam String id) {
+        System.out.println("ID: " + id);
+        return "deleteTour";
     }
 
     @GetMapping("/")
@@ -44,14 +57,14 @@ public class MainController {
 
 
 
-//    @GetMapping("/test")
-//    public String test(Model model) {
-//        return "test";
+//    @GetMapping("/showAllTours")
+//    public String test1() {
+//        return "showAllTours";
 //    }
 //
-//    @PostMapping("/test")
-//    public String test(@ModelAttribute SearchTourParams tourParams) {
-//        return "test";
+//    @PostMapping("/showAllTours")
+//    public String test2() {
+//        return "showAllTours";
 //    }
 
 }

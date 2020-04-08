@@ -25,7 +25,7 @@ CREATE TABLE role_user
     UNIQUE (user_id, role_id)
 );
 
-CREATE TABLE travel_tours
+CREATE TABLE travel_tour
 (
     id SERIAL NOT NULL PRIMARY KEY,
     destination VARCHAR(50) NOT NULL,
@@ -57,9 +57,18 @@ INSERT INTO users VALUES (2, 'user@mail.com', 'root', 'Vasya', 'Pupkin', 1);
 INSERT INTO role_user VALUES (1, 1);
 INSERT INTO role_user VALUES (2, 2);
 
-INSERT INTO travel_tours VALUES (1, 'Egypt', TO_DATE('2020-08-15', 'YYYY-MM-DD'),
+INSERT INTO travel_tour (destination, begin_date, end_date, cost, max_count, current_count, description)
+VALUES ('Egypt', TO_DATE('2020-08-15', 'YYYY-MM-DD'),
                                 TO_DATE('2020-08-20', 'YYYY-MM-DD'),
                                 2000, 10, 0, 'Egypt tour'
                                 );
+INSERT INTO travel_tour (destination, begin_date, end_date, cost, max_count, current_count, description)
+VALUES ('Egypt', TO_DATE('2020-08-20', 'YYYY-MM-DD'),
+                                TO_DATE('2020-08-25', 'YYYY-MM-DD'),
+                                2100, 12, 0, 'Egypt tour'
+                               );
+
+DELETE FROM travel_tour WHERE id=1;
+
 
 COMMIT;

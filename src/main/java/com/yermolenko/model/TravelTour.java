@@ -15,9 +15,9 @@ import java.time.LocalDate;
 public class TravelTour {
     private int id;
     private String destination;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate beginDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate endDate;
     private float cost;
     private int maxCount;
