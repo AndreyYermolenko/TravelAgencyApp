@@ -21,50 +21,57 @@ public class MainController {
         this.service = service;
     }
 
-    @GetMapping("/allTours")
-    public String getAllTours(Model model) {
+    @GetMapping("/tours")
+    public String getTours(Model model) {
         model.addAttribute("searchTourParams", new SearchTourParams());
-        return "allTours";
+
+        return "tours";
     }
 
-    @PostMapping("/allTours")
-    public String getAllTours(@ModelAttribute SearchTourParams tourParams,
+    @PostMapping("/tours")
+    public String getTours(@ModelAttribute SearchTourParams tourParams,
                               Model model) {
-        List<TravelTour> tours = service.getSomeTours(tourParams);
+        List<TravelTour> tours = service.getTours(tourParams);
         model.addAttribute("tours", tours);
-        model.addAttribute("includedPage", "showAllToursForManager.jsp");
+        model.addAttribute("includedPage", "showToursForManager.jsp"); //showToursForUser.jsp
 
-        System.out.println(tourParams.toString() + "\n" + tours.toString());
-        return "allTours";
+        return "tours";
     }
 
-    @GetMapping("/changeTour")
-    public String changeTour(@RequestParam String id) {
-        System.out.println("ID: " + id);
-        return "changeTour";
+    @GetMapping("/updateTour")
+    public String updateTour(Model model,
+                             @RequestParam int id) {
+        TravelTour tour = service.getTour(id);
+        model.addAttribute("tourCurrent", tour);
+        model.addAttribute("tourUpdate", new TravelTour());
+
+        return "updateTour";
+    }
+
+    @PostMapping("/updateTour")
+    public String updateTour(@ModelAttribute TravelTour tourUpdate,
+                             @RequestParam int id) {
+        service.updateTour(id, tourUpdate);
+
+        return "redirect:tours";
     }
 
     @GetMapping("/deleteTour")
-    public String deleteTour(@RequestParam String id) {
+    public String deleteTour(@RequestParam int id) {
+        service.deleteTour(id);
+
+        return "redirect:tours";
+    }
+
+    @GetMapping("/reservationTour")
+    public String reservationTour(@RequestParam String id) {
         System.out.println("ID: " + id);
-        return "deleteTour";
+        return "reservationTour";
     }
 
     @GetMapping("/")
     public String view() {
         return "welcome";
     }
-
-
-
-//    @GetMapping("/showAllTours")
-//    public String test1() {
-//        return "showAllTours";
-//    }
-//
-//    @PostMapping("/showAllTours")
-//    public String test2() {
-//        return "showAllTours";
-//    }
 
 }

@@ -11,11 +11,13 @@ public interface UserDAO {
 
     List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
 
-    boolean buyTour(TravelTour travelTour);
+    TravelTour getTour(int id);
 
-    boolean updateTour(TravelTour travelTour);
+    boolean reservationTour(TravelTour travelTour);
 
-    boolean deleteTour(TravelTour travelTour);
+    void updateTour(int id, TravelTour travelTour);
+
+    void deleteTour(int id);
 
     boolean addTour(TravelTour travelTour);
 

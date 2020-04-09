@@ -18,7 +18,30 @@ public class ServiceImpl implements Service {
     }
 
     @Override
-    public List<TravelTour> getSomeTours(SearchTourParams searchTourParams) {
+    public List<TravelTour> getTours(SearchTourParams searchTourParams) {
+        if ("".equals(searchTourParams.getDestination())
+                && searchTourParams.getBeginDate() == null
+                && searchTourParams.getEndDate() == null
+                && searchTourParams.getMinCost() == null
+                && searchTourParams.getMaxCost() == null) {
+            return userDAO.getAllTours();
+        }
         return userDAO.getSomeTours(searchTourParams);
     }
+
+    @Override
+    public TravelTour getTour(int id) {
+        return userDAO.getTour(id);
+    }
+
+    @Override
+    public void updateTour(int id, TravelTour tour) {
+        userDAO.updateTour(id, tour);
+    }
+
+    @Override
+    public void deleteTour(int id) {
+        userDAO.deleteTour(id);
+    }
+
 }

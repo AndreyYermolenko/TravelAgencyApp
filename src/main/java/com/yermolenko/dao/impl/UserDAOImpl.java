@@ -21,7 +21,8 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public ArrayList<TravelTour> getAllTours() {
+    public List<TravelTour> getAllTours() {
+        List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -29,7 +30,9 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = statement.executeQuery("SELECT * FROM travel_tour");
 
             while(rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
+                TravelTour tour = new TravelTour();
+                tour = rsToTravelTour(tour, rs);
+                tours.add(tour);
             }
             connection.close();
 
@@ -37,7 +40,7 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
 
-        return null;
+        return tours;
     }
 
     @Override
@@ -64,29 +67,32 @@ public class UserDAOImpl implements UserDAO {
             maxCost = Float.MAX_VALUE;
         }
 
+
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM travel_tour " +
-                    "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
-            ps.setString(1, destination);
-            ps.setDate(2, java.sql.Date.valueOf(beginDate));
-            ps.setDate(3, java.sql.Date.valueOf(endDate));
-            ps.setFloat(4, minCost);
-            ps.setFloat(5, maxCost);
+            PreparedStatement ps;
+
+            if ("".equals(destination)) {
+                ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                        "WHERE begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
+                ps.setDate(1, java.sql.Date.valueOf(beginDate));
+                ps.setDate(2, java.sql.Date.valueOf(endDate));
+                ps.setFloat(3, minCost);
+                ps.setFloat(4, maxCost);
+            } else {
+                ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                        "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
+                ps.setString(1, destination);
+                ps.setDate(2, java.sql.Date.valueOf(beginDate));
+                ps.setDate(3, java.sql.Date.valueOf(endDate));
+                ps.setFloat(4, minCost);
+                ps.setFloat(5, maxCost);
+            }
 
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
                 TravelTour tour = new TravelTour();
-
-                tour.setId(rs.getInt(1));
-                tour.setDestination(rs.getString(2));
-                tour.setBeginDate(rs.getDate(3).toLocalDate());
-                tour.setEndDate(rs.getDate(4).toLocalDate());
-                tour.setCost(rs.getFloat(5));
-                tour.setMaxCount(rs.getInt(6));
-                tour.setCurrentCount(rs.getInt(7));
-                tour.setDescription(rs.getString(8));
-
+                tour = rsToTravelTour(tour, rs);
                 tours.add(tour);
             }
 
@@ -99,18 +105,93 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean buyTour(TravelTour travelTour) {
+    public TravelTour getTour(int id) {
+        Connection connection = connectionPool.getConnection();
+        TravelTour tour = new TravelTour();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                    "WHERE id = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            tour = rsToTravelTour(tour, rs);
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return tour;
+    }
+
+    private TravelTour rsToTravelTour(TravelTour tour, ResultSet rs) {
+        try {
+            tour.setId(rs.getInt(1));
+            tour.setDestination(rs.getString(2));
+            tour.setBeginDate(rs.getDate(3).toLocalDate());
+            tour.setEndDate(rs.getDate(4).toLocalDate());
+            tour.setCost(rs.getFloat(5));
+            tour.setMaxCount(rs.getInt(6));
+            tour.setCurrentCount(rs.getInt(7));
+            tour.setDescription(rs.getString(8));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return tour;
+    }
+
+    @Override
+    public boolean reservationTour(TravelTour travelTour) {
         return false;
     }
 
     @Override
-    public boolean updateTour(TravelTour travelTour) {
-        return false;
+    public void updateTour(int id, TravelTour travelTour) {
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE travel_tour SET " +
+                    "destination = ?, " +
+                    "begin_date = ?, " +
+                    "end_date = ?, " +
+                    "cost = ?, " +
+                    "max_count = ?, " +
+                    "description = ? " +
+                    "WHERE id = ?");
+            ps.setString(1, travelTour.getDestination());
+            ps.setDate(2, java.sql.Date.valueOf(travelTour.getBeginDate()));
+            ps.setDate(3, java.sql.Date.valueOf(travelTour.getEndDate()));
+            ps.setFloat(4, travelTour.getCost());
+            ps.setInt(5, travelTour.getMaxCount());
+            ps.setString(6, travelTour.getDescription());
+            ps.setInt(7, id);
+
+            ps.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
-    public boolean deleteTour(TravelTour travelTour) {
-        return false;
+    public void deleteTour(int id) {
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("DELETE FROM travel_tour " +
+                    "WHERE id = ?");
+            ps.setInt(1, id);
+
+            ps.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

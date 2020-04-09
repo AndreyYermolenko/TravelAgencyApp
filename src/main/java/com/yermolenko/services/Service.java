@@ -7,6 +7,12 @@ import java.util.List;
 
 public interface Service {
 
-    List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
+    List<TravelTour> getTours(SearchTourParams searchTourParams);
+
+    TravelTour getTour(int id);
+
+    void updateTour(int id, TravelTour tour);
+
+    void deleteTour(int id);
 
 }

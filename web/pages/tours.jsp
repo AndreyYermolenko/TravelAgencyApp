@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>Список туров</title>
 
       <style>
           #destination {
@@ -61,15 +61,11 @@
   </head>
   <body onload="loadData()">
 
-    <form:form method="post" action="/allTours" modelAttribute="searchTourParams">
+    <form:form method="post" action="/tours" modelAttribute="searchTourParams">
 
         <input name="destination" id="destination" type="text" placeholder="Название тура"/>
         <input type="submit" value="Поиск" onclick="saveData()"/>
         <br/>
-
-<%--        <button onclick="showFields()">Расширенный поиск</button>--%>
-<%--        <br/>--%>
-<%--        <div id="fields"/>--%>
 
         <input name="beginDate" id="beginDate" type="date" placeholder="Дата начала" />
         <input name="endDate" id="endDate" type="date" placeholder="Дата окончания" />

@@ -12,15 +12,27 @@ import java.sql.SQLException;
 
 @Component
 public class ConnectionPool {
-
-    public Connection getConnection(){
-        PoolProperties p = new PoolProperties();
+    private static DataSource ds;
+    private static PoolProperties p = new PoolProperties();
+    static {
         p.setUrl("jdbc:postgresql://localhost:5432/travel_agency");
         p.setDriverClassName("org.postgresql.Driver");
         p.setUsername("postgres");
         p.setPassword("root");
-        DataSource ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
+        ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
+    }
+    //WebLogic Datasource
+//    static {
+//        Context context;
+//        try {
+//            context = new InitialContext();
+//            ds = (DataSource) context.lookup("jdbc/postgres"); //поменять jndi в datasource
+//        } catch (NamingException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
+    public Connection getConnection(){
         Connection connection = null;
         try {
             connection = ds.getConnection();
@@ -30,16 +42,4 @@ public class ConnectionPool {
         return connection;
     }
 
-//    public Connection getConnection(){
-//        Context context;
-//        Connection connection = null;
-//        try {
-//            context = new InitialContext();
-//            DataSource ds = (DataSource) context.lookup("jdbc/postgres"); //поменять jndi в datasource
-//            connection = ds.getConnection();
-//        } catch (NamingException | SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return connection;
-//    }
 }

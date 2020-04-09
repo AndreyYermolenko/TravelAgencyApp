@@ -3,40 +3,47 @@
 <html>
 <head>
     <title>Title</title>
+
 </head>
 <body>
     <c:forEach var="tour" items="${tours}" >
         <table border="1" cellpadding="2" width="100%">
             <tr>
                 <th bgcolor="#dc143c">${tour.id}</th>
-                <th><a href="/changeTour?id=${tour.id}">Изменить тур</a></th>
-                <th><a href="/deleteTour?id=${tour.id}">Удалить тур</a></th>
+                <th>
+                    <a href="/updateTour?id=${tour.id}">Изменить тур</a>
+                    <br>
+                    <a onclick="return confirm('Подтвердите удаление тура')"
+                       href="/deleteTour?id=${tour.id}">Удалить тур</a>
+                </th>
             </tr>
             <tr>
                 <th>Название тура</th>
-                <th>Дата начала</th>
-                <th>Дата окончания</th>
+                <th>${tour.destination}</th>
             </tr>
             <tr>
-                <th>${tour.destination}</th>
+                <th>Дата начала</th>
                 <th>${tour.beginDate}</th>
+            </tr>
+            <tr>
+                <th>Дата окончания</th>
                 <th>${tour.endDate}</th>
             </tr>
             <tr>
-                <th>Количество</th>
-                <th>Максимально количество</th>
-                <th>Цена</th>
+                <th>Забронировано</th>
+                <th>${tour.currentCount}</th>
             </tr>
             <tr>
-                <th>${tour.currentCount}</th>
+                <th>Всего мест</th>
                 <th>${tour.maxCount}</th>
+            </tr>
+            <tr>
+                <th>Цена</th>
                 <th>${tour.cost}</th>
             </tr>
             <tr>
-                <th colspan="3">Описание</th>
-            </tr>
-            <tr>
-                <th colspan="3">${tour.description}</th>
+                <th>Описание</th>
+                <th>${tour.description}</th>
             </tr>
         </table>
         <br>
