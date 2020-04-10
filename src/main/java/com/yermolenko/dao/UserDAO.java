@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    List<TravelTour> getAllTours();
+    List<TravelTour> getAllTours(SearchTourParams searchTourParams);
 
     List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
 

@@ -31,6 +31,7 @@ public class MainController {
     @PostMapping("/tours")
     public String getTours(@ModelAttribute SearchTourParams tourParams,
                               Model model) {
+        System.out.println(tourParams.toString());
         List<TravelTour> tours = service.getTours(tourParams);
         model.addAttribute("tours", tours);
         model.addAttribute("includedPage", "showToursForManager.jsp"); //showToursForUser.jsp

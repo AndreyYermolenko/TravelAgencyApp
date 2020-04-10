@@ -20,4 +20,6 @@ public class SearchTourParams {
     private LocalDate endDate;
     private Float minCost;
     private Float maxCost;
+    private String sortedBy;
+    private Boolean desc = false;
 }

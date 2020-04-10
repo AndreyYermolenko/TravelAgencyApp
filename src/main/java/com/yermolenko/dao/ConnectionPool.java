@@ -13,6 +13,7 @@ import java.sql.SQLException;
 @Component
 public class ConnectionPool {
     private static DataSource ds;
+
     private static PoolProperties p = new PoolProperties();
     static {
         p.setUrl("jdbc:postgresql://localhost:5432/travel_agency");
@@ -21,6 +22,7 @@ public class ConnectionPool {
         p.setPassword("root");
         ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
     }
+
     //WebLogic Datasource
 //    static {
 //        Context context;

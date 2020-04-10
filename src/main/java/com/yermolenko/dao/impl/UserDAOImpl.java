@@ -21,13 +21,23 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<TravelTour> getAllTours() {
+    public List<TravelTour> getAllTours(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
         try {
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM travel_tour");
+            String desc = "";
+            String sortedBy = searchTourParams.getSortedBy();
+
+            if (searchTourParams.getDesc()) {
+                desc = "DESC";
+            }
+
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT * FROM travel_tour ORDER BY "
+                            + sortedBy + " "
+                            + desc + ";");
+            ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
                 TravelTour tour = new TravelTour();
@@ -67,20 +77,31 @@ public class UserDAOImpl implements UserDAO {
             maxCost = Float.MAX_VALUE;
         }
 
+        String desc = "";
+        String sortedBy = searchTourParams.getSortedBy();
+
+        if (searchTourParams.getDesc()) {
+            desc = "DESC";
+        }
+
 
         try {
             PreparedStatement ps;
 
             if ("".equals(destination)) {
                 ps = connection.prepareStatement("SELECT * FROM travel_tour " +
-                        "WHERE begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
+                        "WHERE begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
+                        "ORDER BY " + sortedBy + " " + desc + ";"
+                );
                 ps.setDate(1, java.sql.Date.valueOf(beginDate));
                 ps.setDate(2, java.sql.Date.valueOf(endDate));
                 ps.setFloat(3, minCost);
                 ps.setFloat(4, maxCost);
             } else {
                 ps = connection.prepareStatement("SELECT * FROM travel_tour " +
-                        "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?");
+                        "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
+                        "ORDER BY " + sortedBy + " " + desc + ";"
+                );
                 ps.setString(1, destination);
                 ps.setDate(2, java.sql.Date.valueOf(beginDate));
                 ps.setDate(3, java.sql.Date.valueOf(endDate));

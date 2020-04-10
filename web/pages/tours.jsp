@@ -19,6 +19,7 @@
               sessionStorage.setItem("endDate", endDate_value);
               sessionStorage.setItem("minCost", minCost_value);
               sessionStorage.setItem("maxCost", maxCost_value);
+
           }
       </script>
 
@@ -29,6 +30,7 @@
               document.getElementById("endDate").value = sessionStorage.getItem("endDate");
               document.getElementById("minCost").value = sessionStorage.getItem("minCost");
               document.getElementById("maxCost").value = sessionStorage.getItem("maxCost");
+
           }
       </script>
 
@@ -48,6 +50,16 @@
         <input name="minCost" id="minCost" type="number" placeholder="Минимальная цена" />
         <input name="maxCost" id="maxCost" type="number" placeholder="Максимальная цена" />
 
+        <br>
+        <select name="sortedBy" id="sortedBy">
+            <option disabled>Сортировка</option>
+            <option value="destination">Название</option>
+            <option value="begin_date">Дата</option>
+            <option value="cost">Цена</option>
+        </select>
+
+        <label><input type="checkbox" name="desc" id="desc">
+            <span>Обратная сортировка</span></label>
     </form:form>
 
     <jsp:include page="${includedPage}" />

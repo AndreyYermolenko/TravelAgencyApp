@@ -24,7 +24,7 @@ public class ServiceImpl implements Service {
                 && searchTourParams.getEndDate() == null
                 && searchTourParams.getMinCost() == null
                 && searchTourParams.getMaxCost() == null) {
-            return userDAO.getAllTours();
+            return userDAO.getAllTours(searchTourParams);
         }
         return userDAO.getSomeTours(searchTourParams);
     }
