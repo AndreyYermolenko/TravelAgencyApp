@@ -1,0 +1,15 @@
+#destination {
+    width: 400px;
+}
+#beginDate {
+    width: 200px;
+}
+#endDate {
+    width: 200px;
+}
+#minCost {
+    width: 200px;
+}
+#maxCost {
+    width: 200px;
+}

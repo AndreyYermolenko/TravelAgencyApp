@@ -195,7 +195,27 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean addTour(TravelTour travelTour) {
-        return false;
+    public void addTour(TravelTour travelTour) {
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT INTO travel_tour " +
+                        "(destination, begin_date, end_date, cost, max_count, current_count, description) " +
+                        "VALUES(?, ?, ?, ?, ?, 0, ?);"
+            );
+            ps.setString(1, travelTour.getDestination());
+            ps.setDate(2, java.sql.Date.valueOf(travelTour.getBeginDate()));
+            ps.setDate(3, java.sql.Date.valueOf(travelTour.getEndDate()));
+            ps.setFloat(4, travelTour.getCost());
+            ps.setInt(5, travelTour.getMaxCount());
+            ps.setString(6, travelTour.getDescription());
+
+            ps.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 }

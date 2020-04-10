@@ -3,37 +3,40 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="../css/scroll.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    <c:forEach var="tour" items="${tours}" >
-        <table border="1" cellpadding="2" width="100%">
-            <tr>
-                <th bgcolor="#dc143c">${tour.id}</th>
-                <th><a href="/reservationTour?id=${tour.id}">Забронировать тур</a></th>
-            </tr>
-            <tr>
-                <th>Название тура</th>
-                <th>${tour.destination}</th>
-            </tr>
-            <tr>
-                <th>Цена</th>
-                <th>${tour.cost}</th>
-            </tr>
-            <tr>
-                <th>Дата начала</th>
-                <th>${tour.beginDate}</th>
+    <div class="scroll">
+        <c:forEach var="tour" items="${tours}" >
+            <table border="1" cellpadding="2" width="100%">
+                <tr>
+                    <th bgcolor="#dc143c">${tour.id}</th>
+                    <th><a href="/reservationTour?id=${tour.id}">Забронировать тур</a></th>
+                </tr>
+                <tr>
+                    <th>Название тура</th>
+                    <th>${tour.destination}</th>
+                </tr>
+                <tr>
+                    <th>Цена</th>
+                    <th>${tour.cost}</th>
+                </tr>
+                <tr>
+                    <th>Дата начала</th>
+                    <th>${tour.beginDate}</th>
 
-            </tr>
-            <tr>
-                <th>Дата окончания</th>
-                <th>${tour.endDate}</th>
-            </tr>
-            <tr>
-                <th>Описание</th>
-                <th>${tour.description}</th>
-            </tr>
-        </table>
-        <br>
-    </c:forEach>
+                </tr>
+                <tr>
+                    <th>Дата окончания</th>
+                    <th>${tour.endDate}</th>
+                </tr>
+                <tr>
+                    <th>Описание</th>
+                    <th>${tour.description}</th>
+                </tr>
+            </table>
+            <br>
+        </c:forEach>
+    </div>
 </body>
 </html>

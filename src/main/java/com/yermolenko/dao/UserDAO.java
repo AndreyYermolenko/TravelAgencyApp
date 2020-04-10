@@ -19,6 +19,6 @@ public interface UserDAO {
 
     void deleteTour(int id);
 
-    boolean addTour(TravelTour travelTour);
+    void addTour(TravelTour travelTour);
 
 }

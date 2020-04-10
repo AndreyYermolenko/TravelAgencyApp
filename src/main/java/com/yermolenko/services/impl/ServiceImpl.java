@@ -44,4 +44,10 @@ public class ServiceImpl implements Service {
         userDAO.deleteTour(id);
     }
 
+    @Override
+    public void addTour(TravelTour tour) {
+        userDAO.addTour(tour);
+    }
+
+
 }

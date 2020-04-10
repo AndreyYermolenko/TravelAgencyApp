@@ -3,33 +3,7 @@
 <html>
   <head>
     <title>Список туров</title>
-
-      <style>
-          #destination {
-              width: 400px;
-          }
-          #beginDate {
-              width: 200px;
-          }
-          #endDate {
-              width: 200px;
-          }
-          #minCost {
-              width: 200px;
-          }
-          #maxCost {
-              width: 200px;
-          }
-
-          .scroll {
-              height: 400px; /* высота нашего блока */
-              width: 400px; /* ширина нашего блока */
-              background: #fff; /* цвет фона, белый */
-              border: 1px solid #C1C1C1; /* размер и цвет границы блока */
-              /*overflow-x: scroll; !* прокрутка по горизонтали *!*/
-              overflow-y: scroll; /* прокрутка по вертикали */
-          }
-      </style>
+      <link href="../css/tours.css" rel="stylesheet" type="text/css">
 
       <script type="text/javascript">
           function saveData() {
@@ -76,9 +50,7 @@
 
     </form:form>
 
-    <div class="scroll">
-        <jsp:include page="${includedPage}" />
-    </div>
+    <jsp:include page="${includedPage}" />
 
     </body>
 </html>

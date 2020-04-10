@@ -15,4 +15,6 @@ public interface Service {
 
     void deleteTour(int id);
 
+    void addTour(TravelTour tour);
+
 }

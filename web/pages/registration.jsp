@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: Andrey
-  Date: 06.04.2020
-  Time: 16:11
+  Date: 10.04.2020
+  Time: 9:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-    <a href="/allTours">All tours</a>
+    Регистрация
 </body>
 </html>

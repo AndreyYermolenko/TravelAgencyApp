@@ -63,15 +63,29 @@ public class MainController {
         return "redirect:tours";
     }
 
+    @GetMapping("/addTour")
+    public String addTour(Model model) {
+        model.addAttribute("newTour", new TravelTour());
+
+        return "addTour";
+    }
+
+    @PostMapping("/addTour")
+    public String addTour(@ModelAttribute TravelTour tour) {
+        service.addTour(tour);
+
+        return "redirect:tours";
+    }
+
     @GetMapping("/reservationTour")
-    public String reservationTour(@RequestParam String id) {
-        System.out.println("ID: " + id);
+    public String reservationTour() {
+
         return "reservationTour";
     }
 
     @GetMapping("/")
     public String view() {
-        return "welcome";
+        return "login";
     }
 
 }
