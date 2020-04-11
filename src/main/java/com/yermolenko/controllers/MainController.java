@@ -2,6 +2,7 @@ package com.yermolenko.controllers;
 
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 import com.yermolenko.services.Service;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -90,6 +91,21 @@ public class MainController {
     @GetMapping("/")
     public String view() {
         return "login";
+    }
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
+
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String registration(@ModelAttribute User user) {
+        System.out.println(user.toString());
+        service.registration(user);
+
+        return "redirect:/";
     }
 
 }

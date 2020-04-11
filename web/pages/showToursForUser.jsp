@@ -4,9 +4,7 @@
 <head>
     <title>Title</title>
 
-    <style>
-        <%@include file='/css/scroll.css' %>
-    </style>
+    <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
 </head>
 <body>
     <div class="scroll">

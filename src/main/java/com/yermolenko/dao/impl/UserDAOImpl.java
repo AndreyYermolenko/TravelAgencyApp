@@ -4,6 +4,7 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 import org.springframework.stereotype.Component;
 
 import java.sql.*;
@@ -233,6 +234,37 @@ public class UserDAOImpl implements UserDAO {
             ps.setString(6, travelTour.getDescription());
 
             ps.executeUpdate();
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void registration(User user) {
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps1 = connection.prepareStatement(
+                    "INSERT INTO users " +
+                            "(email, password, first_name, last_name, manager_id) " +
+                            "VALUES(?, ?, ?, ?, 1); "
+            );
+
+            ps1.setString(1, user.getEmail());
+            ps1.setString(2, user.getPassword());
+            ps1.setString(3, user.getFirstName());
+            ps1.setString(4, user.getLastName());
+
+            PreparedStatement ps2 = connection.prepareStatement(
+                    "INSERT INTO role_user VALUES ((SELECT id FROM users WHERE email = ?), 2)"
+            );
+
+            ps2.setString(1, user.getEmail());
+
+            ps1.executeUpdate();
+            ps2.executeUpdate();
 
             connection.close();
         } catch (SQLException ex) {

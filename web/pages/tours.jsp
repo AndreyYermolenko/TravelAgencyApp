@@ -1,12 +1,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
   <head>
     <title>Список туров</title>
-      <style>
-          <%@include file='/css/tours.css' %>
-      </style>
+      <link href="<c:url value="/resources/css/tours.css" />" rel="stylesheet">
 
       <script type="text/javascript">
           function saveData() {
@@ -54,7 +53,7 @@
         <input name="maxCost" id="maxCost" type="number" placeholder="Максимальная цена" />
 
         <br>
-        <select name="sortedBy" id="sortedBy">
+        <select name="sortedBy" id="sortedBy" >
             <option disabled>Сортировка</option>
             <option value="destination">Название</option>
             <option value="begin_date">Дата</option>

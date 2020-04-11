@@ -2,6 +2,7 @@ package com.yermolenko.dao;
 
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 
 import java.util.List;
 
@@ -20,5 +21,7 @@ public interface UserDAO {
     void deleteTour(int id);
 
     void addTour(TravelTour travelTour);
+
+    void registration(User user);
 
 }

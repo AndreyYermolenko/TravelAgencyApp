@@ -3,6 +3,7 @@ package com.yermolenko.services.impl;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 import com.yermolenko.services.Service;
 import org.springframework.stereotype.Component;
 
@@ -47,6 +48,11 @@ public class ServiceImpl implements Service {
     @Override
     public void addTour(TravelTour tour) {
         userDAO.addTour(tour);
+    }
+
+    @Override
+    public void registration(User user) {
+        userDAO.registration(user);
     }
 
 
