@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import javax.servlet.http.HttpSession;
 
 import java.util.List;
 
@@ -29,12 +30,14 @@ public class MainController {
     }
 
     @PostMapping("/tours")
-    public String getTours(@ModelAttribute SearchTourParams tourParams,
+    public String getTours(HttpSession session,
+                           @ModelAttribute SearchTourParams tourParams,
                               Model model) {
         System.out.println(tourParams.toString());
+
+        session.setAttribute("includedPage", "showToursForManager.jsp"); //showToursForUser.jsp
         List<TravelTour> tours = service.getTours(tourParams);
         model.addAttribute("tours", tours);
-        model.addAttribute("includedPage", "showToursForManager.jsp"); //showToursForUser.jsp
 
         return "tours";
     }
@@ -54,14 +57,14 @@ public class MainController {
                              @RequestParam int id) {
         service.updateTour(id, tourUpdate);
 
-        return "redirect:tours";
+        return "tours";
     }
 
     @GetMapping("/deleteTour")
     public String deleteTour(@RequestParam int id) {
         service.deleteTour(id);
 
-        return "redirect:tours";
+        return "tours";
     }
 
     @GetMapping("/addTour")
@@ -75,7 +78,7 @@ public class MainController {
     public String addTour(@ModelAttribute TravelTour tour) {
         service.addTour(tour);
 
-        return "redirect:tours";
+        return "tours";
     }
 
     @GetMapping("/reservationTour")

@@ -12,4 +12,5 @@
         <property name="prefix" value="/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
 </beans>

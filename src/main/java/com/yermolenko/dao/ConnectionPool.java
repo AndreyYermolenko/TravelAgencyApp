@@ -14,25 +14,26 @@ import java.sql.SQLException;
 public class ConnectionPool {
     private static DataSource ds;
 
-    private static PoolProperties p = new PoolProperties();
-    static {
-        p.setUrl("jdbc:postgresql://localhost:5432/travel_agency");
-        p.setDriverClassName("org.postgresql.Driver");
-        p.setUsername("postgres");
-        p.setPassword("root");
-        ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
-    }
+    //TomCat Datasource
+//    private static PoolProperties p = new PoolProperties();
+//    static {
+//        p.setUrl("jdbc:postgresql://localhost:5432/travel_agency");
+//        p.setDriverClassName("org.postgresql.Driver");
+//        p.setUsername("postgres");
+//        p.setPassword("root");
+//        ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
+//    }
 
     //WebLogic Datasource
-//    static {
-//        Context context;
-//        try {
-//            context = new InitialContext();
-//            ds = (DataSource) context.lookup("jdbc/postgres"); //поменять jndi в datasource
-//        } catch (NamingException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    static {
+        Context context;
+        try {
+            context = new InitialContext();
+            ds = (DataSource) context.lookup("jdbc/postgres"); //поменять jndi в datasource
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Connection getConnection(){
         Connection connection = null;

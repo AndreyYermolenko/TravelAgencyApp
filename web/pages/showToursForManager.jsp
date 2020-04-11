@@ -3,7 +3,10 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="../css/scroll.css" rel="stylesheet" type="text/css">
+
+    <style>
+        <%@include file='/css/scroll.css' %>
+    </style>
 </head>
 <body>
     <input type="button" class="button" value="Добавить тур" onclick="location.href='addTour'" />

@@ -1,9 +1,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <html>
   <head>
     <title>Список туров</title>
-      <link href="../css/tours.css" rel="stylesheet" type="text/css">
+      <style>
+          <%@include file='/css/tours.css' %>
+      </style>
 
       <script type="text/javascript">
           function saveData() {
@@ -62,39 +65,12 @@
             <span>Обратная сортировка</span></label>
     </form:form>
 
-    <jsp:include page="${includedPage}" />
+    <div>
+        <% String includedPage = (String) session.getAttribute("includedPage"); %>
+        <% if (includedPage != null && !includedPage.isEmpty()) { %>
+            <jsp:include page="<%= includedPage %>" />
+        <% } %>
+    </div>
 
     </body>
 </html>
-
-
-
-<%--    <p id="test"></p>--%>
-<%--  <script>--%>
-<%--      document.getElementById("test").innerHTML = sessionStorage.getItem("destination");--%>
-<%--  </script>--%>
-<%--        <script>--%>
-<%--            document.getElementById("test").innerHTML = document.getElementById("destination").value;--%>
-<%--        </script>--%>
-
-<%--      <form:label path="destination" >Destination</form:label>--%>
-<%--      <form:input path="destination" size="50"/>--%>
-
-<%--      <form:label path="startTour" >Start tour</form:label>--%>
-<%--      <form:input path="startTour" />--%>
-
-<%--      <form:label path="finishTour" >Finish tour</form:label>--%>
-<%--      <form:input path="finishTour" />--%>
-
-<%--      <script>--%>
-<%--          function showFields() {--%>
-
-<%--              let code = "<input name=\"startTour\" id=\"startTour\" type=\"date\" placeholder=\"Дата начала\" />\n" +--%>
-<%--                  "        <input name=\"finishTour\" id=\"finishTour\" type=\"date\" placeholder=\"Дата окончания\" />\n" +--%>
-<%--                  "        <br/>\n" +--%>
-<%--                  "\n" +--%>
-<%--                  "        <input name=\"minCost\" id=\"minCost\" type=\"number\" placeholder=\"Минимальная цена\" />\n" +--%>
-<%--                  "        <input name=\"maxCost\" id=\"maxCost\" type=\"number\" placeholder=\"Максимальная цена\" />"--%>
-<%--              document.getElementById("fields").innerHTML = code;--%>
-<%--          }--%>
-<%--      </script>--%>

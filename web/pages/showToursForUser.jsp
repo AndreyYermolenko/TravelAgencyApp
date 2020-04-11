@@ -3,7 +3,10 @@
 <html>
 <head>
     <title>Title</title>
-    <link href="../css/scroll.css" rel="stylesheet" type="text/css">
+
+    <style>
+        <%@include file='/css/scroll.css' %>
+    </style>
 </head>
 <body>
     <div class="scroll">
