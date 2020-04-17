@@ -40,7 +40,7 @@ public class AuthController {
         return "redirect:login";
     }
 
-    @RequestMapping("/login")
+    @RequestMapping(value = {"/login", "/"})
     public String view() {
         return "auth/sign_in";
     }

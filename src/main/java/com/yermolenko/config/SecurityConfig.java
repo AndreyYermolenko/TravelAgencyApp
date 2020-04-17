@@ -1,14 +1,13 @@
 package com.yermolenko.config;
 
-import org.springframework.context.annotation.Bean;
+import com.yermolenko.security.AuthProviderImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
@@ -16,24 +15,21 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // ensure the passwords are encoded properly
-        User.UserBuilder users = User.withDefaultPasswordEncoder();
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(users.username("oleh").password("user123").roles("USER").build());
-        manager.createUser(users.username("admin@mail.ru").password("1234").roles("ADMIN").build());
-        return manager;
-    }
+    @Autowired
+    private AuthProviderImpl authProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().
-                antMatchers("/login","/sign_up").anonymous()
-                .antMatchers("/tours").authenticated()
+        http.authorizeRequests()
+                .antMatchers("/login", "/", "/sign_up").anonymous()
                 .and().formLogin().loginPage("/login").loginProcessingUrl("/login/process").usernameParameter("email")
                 .successForwardUrl("/tours").failureForwardUrl("/login")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) {
+        auth.authenticationProvider(authProvider);
     }
 
 }

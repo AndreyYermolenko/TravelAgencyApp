@@ -15,7 +15,11 @@
     <br/>
 
     <input type="submit" value="Войти"/>
+    <br/>
 
 </form:form>
+
+    <a href="sign_up">Регистрация</a>
+
 </body>
 </html>

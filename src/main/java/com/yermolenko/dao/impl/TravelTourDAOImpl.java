@@ -4,10 +4,12 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
-import com.yermolenko.model.User;
 import org.springframework.stereotype.Component;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,12 +81,16 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         }
 
         String desc = "";
-        String sortedBy = searchTourParams.getSortedBy();
+        String sortedBy;
+        if (searchTourParams.getSortedBy() == null) {
+            sortedBy = "destination";
+        } else {
+            sortedBy = searchTourParams.getSortedBy();
+        }
 
         if (searchTourParams.getDesc()) {
             desc = "DESC";
         }
-
 
         try {
             PreparedStatement ps;
