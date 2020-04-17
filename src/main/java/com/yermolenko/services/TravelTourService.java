@@ -6,7 +6,7 @@ import com.yermolenko.model.User;
 
 import java.util.List;
 
-public interface Service {
+public interface TravelTourService {
 
     List<TravelTour> getTours(SearchTourParams searchTourParams);
 
@@ -17,7 +17,5 @@ public interface Service {
     void deleteTour(int id);
 
     void addTour(TravelTour tour);
-
-    void registration(User user);
 
 }

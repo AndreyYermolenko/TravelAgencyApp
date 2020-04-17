@@ -55,6 +55,7 @@ INSERT INTO users VALUES (1, 'admin@mail.com', 'root', 'Andrey', 'Yermolenko', N
 INSERT INTO users VALUES (2, 'user@mail.com', 'root', 'Vasya', 'Pupkin', 1);
 
 INSERT INTO role_user VALUES (1, 1);
+INSERT INTO role_user VALUES (1, 2);
 INSERT INTO role_user VALUES (2, 2);
 
 INSERT INTO travel_tour (destination, begin_date, end_date, cost, max_count, current_count, description)

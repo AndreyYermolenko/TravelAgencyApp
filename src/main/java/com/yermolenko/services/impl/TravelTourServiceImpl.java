@@ -1,21 +1,20 @@
 package com.yermolenko.services.impl;
 
-import com.yermolenko.dao.UserDAO;
+import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
-import com.yermolenko.model.User;
-import com.yermolenko.services.Service;
-import org.springframework.stereotype.Component;
+import com.yermolenko.services.TravelTourService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
-public class ServiceImpl implements Service {
+@Service
+public class TravelTourServiceImpl implements TravelTourService {
 
-    private final UserDAO userDAO;
+    private final TravelTourDAO travelTourDAO;
 
-    public ServiceImpl(UserDAO userDAO) {
-        this.userDAO = userDAO;
+    public TravelTourServiceImpl(TravelTourDAO travelTourDAO) {
+        this.travelTourDAO = travelTourDAO;
     }
 
     @Override
@@ -25,35 +24,29 @@ public class ServiceImpl implements Service {
                 && searchTourParams.getEndDate() == null
                 && searchTourParams.getMinCost() == null
                 && searchTourParams.getMaxCost() == null) {
-            return userDAO.getAllTours(searchTourParams);
+            return travelTourDAO.getAllTours(searchTourParams);
         }
-        return userDAO.getSomeTours(searchTourParams);
+        return travelTourDAO.getSomeTours(searchTourParams);
     }
 
     @Override
     public TravelTour getTour(int id) {
-        return userDAO.getTour(id);
+        return travelTourDAO.getTour(id);
     }
 
     @Override
     public void updateTour(int id, TravelTour tour) {
-        userDAO.updateTour(id, tour);
+        travelTourDAO.updateTour(id, tour);
     }
 
     @Override
     public void deleteTour(int id) {
-        userDAO.deleteTour(id);
+        travelTourDAO.deleteTour(id);
     }
 
     @Override
     public void addTour(TravelTour tour) {
-        userDAO.addTour(tour);
+        travelTourDAO.addTour(tour);
     }
-
-    @Override
-    public void registration(User user) {
-        userDAO.registration(user);
-    }
-
 
 }

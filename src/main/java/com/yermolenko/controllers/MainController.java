@@ -2,25 +2,24 @@ package com.yermolenko.controllers;
 
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
-import com.yermolenko.model.User;
-import com.yermolenko.services.Service;
+import com.yermolenko.services.TravelTourService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import javax.servlet.http.HttpSession;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
 public class MainController {
 
-    private final Service service;
+    private final TravelTourService travelTourService;
 
-    public MainController(Service service) {
-        this.service = service;
+    public MainController(TravelTourService travelTourService) {
+        this.travelTourService = travelTourService;
     }
 
     @GetMapping("/tours")
@@ -37,7 +36,7 @@ public class MainController {
         System.out.println(tourParams.toString());
 
         session.setAttribute("includedPage", "showToursForManager.jsp"); //showToursForUser.jsp
-        List<TravelTour> tours = service.getTours(tourParams);
+        List<TravelTour> tours = travelTourService.getTours(tourParams);
         model.addAttribute("tours", tours);
 
         return "tours";
@@ -46,7 +45,7 @@ public class MainController {
     @GetMapping("/updateTour")
     public String updateTour(Model model,
                              @RequestParam int id) {
-        TravelTour tour = service.getTour(id);
+        TravelTour tour = travelTourService.getTour(id);
         model.addAttribute("tourCurrent", tour);
         model.addAttribute("tourUpdate", new TravelTour());
 
@@ -56,14 +55,14 @@ public class MainController {
     @PostMapping("/updateTour")
     public String updateTour(@ModelAttribute TravelTour tourUpdate,
                              @RequestParam int id) {
-        service.updateTour(id, tourUpdate);
+        travelTourService.updateTour(id, tourUpdate);
 
         return "tours";
     }
 
     @GetMapping("/deleteTour")
     public String deleteTour(@RequestParam int id) {
-        service.deleteTour(id);
+        travelTourService.deleteTour(id);
 
         return "tours";
     }
@@ -77,7 +76,7 @@ public class MainController {
 
     @PostMapping("/addTour")
     public String addTour(@ModelAttribute TravelTour tour) {
-        service.addTour(tour);
+        travelTourService.addTour(tour);
 
         return "tours";
     }
@@ -86,26 +85,6 @@ public class MainController {
     public String reservationTour() {
 
         return "reservationTour";
-    }
-
-    @GetMapping("/")
-    public String view() {
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String registration(Model model) {
-        model.addAttribute("user", new User());
-
-        return "registration";
-    }
-
-    @PostMapping("/registration")
-    public String registration(@ModelAttribute User user) {
-        System.out.println(user.toString());
-        service.registration(user);
-
-        return "redirect:/";
     }
 
 }
