@@ -64,6 +64,8 @@
             <span>Обратная сортировка</span></label>
     </form:form>
 
+    <a href="/logout">Logout</a>
+
     <div>
         <% String includedPage = (String) session.getAttribute("includedPage"); %>
         <% if (includedPage != null && !includedPage.isEmpty()) { %>

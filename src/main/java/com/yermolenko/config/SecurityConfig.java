@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         User.UserBuilder users = User.withDefaultPasswordEncoder();
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(users.username("oleh").password("user123").roles("USER").build());
-        manager.createUser(users.username("admin").password("admin123").roles("ADMIN").build());
+        manager.createUser(users.username("admin@mail.ru").password("1234").roles("ADMIN").build());
         return manager;
     }
 
@@ -31,10 +31,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().
                 antMatchers("/login","/sign_up").anonymous()
                 .antMatchers("/tours").authenticated()
-                .and()
-                .formLogin()
-                .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                .and().formLogin().loginPage("/login").loginProcessingUrl("/login/process").usernameParameter("email")
+                .successForwardUrl("/tours").failureForwardUrl("/login")
+                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
+
 }
