@@ -22,7 +22,7 @@ public class UserValidator implements Validator {
     public void validate(Object o, Errors errors) {
         User user = (User) o;
         if (userDAO.findUserByEmail(user.getEmail()) != null) {
-            errors.rejectValue("email", "", "This email is already use");
+            errors.rejectValue("email", "", "This email is already use.");
         }
     }
 }

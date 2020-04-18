@@ -39,7 +39,9 @@
   </head>
   <body onload="loadData()">
 
-    <form:form method="post" action="/tours" modelAttribute="searchTourParams">
+  <a href="/logout">Logout</a>
+
+  <form:form method="post" action="/tours" modelAttribute="searchTourParams">
 
         <input name="destination" id="destination" type="text" placeholder="Название тура"/>
         <input type="submit" value="Поиск" onclick="saveData()"/>
@@ -63,8 +65,6 @@
         <label><input type="checkbox" name="desc" id="desc">
             <span>Обратная сортировка</span></label>
     </form:form>
-
-    <a href="/logout">Logout</a>
 
     <div>
         <% String includedPage = (String) session.getAttribute("includedPage"); %>
