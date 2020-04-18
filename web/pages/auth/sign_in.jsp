@@ -11,7 +11,7 @@
     <input name="email" id="email" type="text" placeholder="Email"/>
     <br/>
 
-    <input name="password" id="password" type="text" placeholder="Пароль" />
+    <input name="password" id="password" type="text" placeholder="Пароль" autocomplete="off" />
     <br/>
 
     <input type="submit" value="Войти"/>
