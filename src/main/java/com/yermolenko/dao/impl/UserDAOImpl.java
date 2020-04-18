@@ -56,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public User findUserByEmail(String email) {
         Connection connection = connectionPool.getConnection();
-        User user = new User();
+        User user = null;
 
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users " +
@@ -66,6 +66,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                user = new User();
 
                 user.setId(rs.getInt(1));
                 user.setEmail(rs.getString(2));

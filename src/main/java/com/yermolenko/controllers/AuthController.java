@@ -2,6 +2,7 @@ package com.yermolenko.controllers;
 
 import com.yermolenko.model.User;
 import com.yermolenko.services.UserService;
+import com.yermolenko.utils.UserValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +16,12 @@ import javax.validation.Valid;
 @Controller
 public class AuthController {
 
+    private final UserValidator userValidator;
+
     private final UserService userService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserValidator userValidator, UserService userService) {
+        this.userValidator = userValidator;
         this.userService = userService;
     }
 
@@ -30,6 +34,7 @@ public class AuthController {
 
     @PostMapping("/sign_up")
     public String registration(@ModelAttribute @Valid User user, BindingResult result) {
+        userValidator.validate(user, result);
         if (result.hasErrors()) {
             return "auth/sign_up";
         }

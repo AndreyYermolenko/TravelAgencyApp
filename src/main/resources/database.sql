@@ -51,25 +51,4 @@ CREATE TABLE tour_user
 INSERT INTO roles VALUES (1, 'manager');
 INSERT INTO roles VALUES (2, 'user');
 
-INSERT INTO users VALUES (1, 'admin@mail.com', 'root', 'Andrey', 'Yermolenko', NULL);
-INSERT INTO users VALUES (2, 'user@mail.com', 'root', 'Vasya', 'Pupkin', 1);
-
-INSERT INTO role_user VALUES (1, 1);
-INSERT INTO role_user VALUES (1, 2);
-INSERT INTO role_user VALUES (2, 2);
-
-INSERT INTO travel_tour (destination, begin_date, end_date, cost, max_count, current_count, description)
-VALUES ('Egypt', TO_DATE('2020-08-15', 'YYYY-MM-DD'),
-                                TO_DATE('2020-08-20', 'YYYY-MM-DD'),
-                                2000, 10, 0, 'Egypt tour'
-                                );
-INSERT INTO travel_tour (destination, begin_date, end_date, cost, max_count, current_count, description)
-VALUES ('Egypt', TO_DATE('2020-08-20', 'YYYY-MM-DD'),
-                                TO_DATE('2020-08-25', 'YYYY-MM-DD'),
-                                2100, 12, 0, 'Egypt tour'
-                               );
-
-DELETE FROM travel_tour WHERE id=1;
-
-
 COMMIT;
