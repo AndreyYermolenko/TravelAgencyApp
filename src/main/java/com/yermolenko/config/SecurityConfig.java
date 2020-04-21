@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/login", "/", "/sign_up").anonymous()
                 .and().formLogin().loginPage("/login").loginProcessingUrl("/login/process").usernameParameter("email")
-                .successForwardUrl("/tours").failureForwardUrl("/login")
+                .successForwardUrl("/tours/quickSearch").failureForwardUrl("/login")
                 .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
     }
 

@@ -8,10 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
@@ -26,35 +23,40 @@ public class MainController {
         this.travelTourService = travelTourService;
     }
 
-
-    @GetMapping("/tours")
+    @GetMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
     public String getTours(Model model) {
         model.addAttribute("searchTourParams", new SearchTourParams());
 
-        return "tours";
+        return "advancedSearchTours";
     }
 
-    @PostMapping("/tours")
+    @PostMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
     public String getTours(HttpSession session,
                            @ModelAttribute SearchTourParams tourParams,
                               Model model) {
         System.out.println(tourParams.toString());
 
-        session.setAttribute("includedPage", "showToursForUser.jsp");
+        session.setAttribute("includedPageResult", "showToursForUser.jsp");
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities();
         for(GrantedAuthority authority: authorities) {
             if ("manager".equals(authority.getAuthority())) {
-                session.setAttribute("includedPage", "showToursForManager.jsp");
+                session.setAttribute("includedPageResult", "showToursForManager.jsp");
             }
         }
 
         List<TravelTour> tours = travelTourService.getTours(tourParams);
         model.addAttribute("tours", tours);
 
-        return "tours";
+        return "advancedSearchTours";
+    }
+
+    @RequestMapping("/tours/quickSearch")
+    @PreAuthorize("hasAuthority('user')")
+    public String getToursQuick() {
+        return "quickSearchTours";
     }
 
     @GetMapping("/updateTour")
@@ -74,7 +76,7 @@ public class MainController {
                              @RequestParam int id) {
         travelTourService.updateTour(id, tourUpdate);
 
-        return "tours";
+        return "quickSearchTours";
     }
 
     @GetMapping("/deleteTour")
@@ -82,7 +84,7 @@ public class MainController {
     public String deleteTour(@RequestParam int id) {
         travelTourService.deleteTour(id);
 
-        return "tours";
+        return "quickSearchTours";
     }
 
     @GetMapping("/addTour")
@@ -98,7 +100,7 @@ public class MainController {
     public String addTour(@ModelAttribute TravelTour tour) {
         travelTourService.addTour(tour);
 
-        return "tours";
+        return "quickSearchTours";
     }
 
     @GetMapping("/reservationTour")
@@ -106,6 +108,11 @@ public class MainController {
     public String reservationTour() {
 
         return "reservationTour";
+    }
+
+    @RequestMapping("/login/process")
+    public String redirect() {
+        return "redirect:/tours/quickSearch";
     }
 
 }

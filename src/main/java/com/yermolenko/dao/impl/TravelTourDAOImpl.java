@@ -30,7 +30,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
         try {
             String desc = "";
-            String sortedBy = searchTourParams.getSortedBy();
+            String sortedBy;
+            if (searchTourParams.getSortedBy() == null) {
+                sortedBy = "destination";
+            } else {
+                sortedBy = searchTourParams.getSortedBy();
+            }
 
             if (searchTourParams.getDesc()) {
                 desc = "DESC";
