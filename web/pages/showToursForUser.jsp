@@ -5,6 +5,7 @@
     <title>Title</title>
 
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
+    <script type="text/javascript" src="<c:url value="/resources/script/reservationTour.js" />"></script>
 </head>
 <body>
     <div class="scroll">
@@ -12,7 +13,7 @@
             <table border="1" cellpadding="2" width="100%">
                 <tr>
                     <th bgcolor="#dc143c">${tour.id}</th>
-                    <th><a href="/reservationTour?id=${tour.id}">Забронировать тур</a></th>
+                    <th><button style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button></th>
                 </tr>
                 <tr>
                     <th>Название тура</th>

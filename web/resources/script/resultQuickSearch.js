@@ -6,7 +6,7 @@ function resultForUser(content) {
         text += '        <table border="1" cellpadding="2" width="100%">\n' +
             '                <tr>\n' +
             '                    <th bgcolor="#dc143c">' + content[i].id + '</th>\n' +
-            '                    <th><a href="/reservationTour?id=' + content[i].id + '">Забронировать тур</a></th>\n' +
+            '                    <th><a href="/reservationTour?id=' + content[i].id + '" onclick="return confirm(\'Подтвердите бронирование тура\')">Забронировать</a> </th>\n' +
             '                </tr>\n' +
             '                <tr>\n' +
             '                    <th>Название тура</th>\n' +
@@ -41,7 +41,7 @@ function resultForUser(content) {
 
 function resultForManager(content) {
     let text;
-    text = '    <input type="button" class="button" value="Добавить тур" onclick="location.href=\'addTour\'" />\n' +
+    text = '    <a href="/addTour">Добавить тур</a>\n' +
            '    <br>'
     text += '<div class="scroll">\n';
 

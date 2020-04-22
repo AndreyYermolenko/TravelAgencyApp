@@ -4,6 +4,7 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -159,6 +160,42 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tour;
     }
 
+    @Override
+    public boolean reservationTour(User user, TravelTour travelTour) {
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps1 = connection.prepareStatement(
+                    "SELECT count(*) FROM tour_user " +
+                            "WHERE user_id = ? AND tour_id = ?;"
+            );
+            ps1.setInt(1, user.getId());
+            ps1.setInt(2, travelTour.getId());
+            ResultSet rs1 = ps1.executeQuery();
+            rs1.next();
+            int countOfReservation = rs1.getInt(1);
+            if (countOfReservation != 0) {
+                return false;
+            }
+
+            PreparedStatement ps2 = connection.prepareStatement(
+                    "INSERT INTO tour_user " +
+                            "(user_id, tour_id) " +
+                            "VALUES(?, ?);"
+            );
+            ps2.setInt(1, user.getId());
+            ps2.setInt(2, travelTour.getId());
+
+            int countOfInsert = ps2.executeUpdate();
+            connection.close();
+
+            return countOfInsert != 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
     private TravelTour rsToTravelTour(TravelTour tour, ResultSet rs) {
         try {
             tour.setId(rs.getInt(1));
@@ -174,11 +211,6 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         }
 
         return tour;
-    }
-
-    @Override
-    public boolean reservationTour(TravelTour travelTour) {
-        return false;
     }
 
     @Override

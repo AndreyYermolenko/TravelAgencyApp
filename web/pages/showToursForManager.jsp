@@ -7,7 +7,7 @@
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
 </head>
 <body>
-    <input type="button" class="button" value="Добавить тур" onclick="location.href='addTour'" />
+    <a href="/addTour">Добавить тур</a>
     <br>
     <div class="scroll">
         <c:forEach var="tour" items="${tours}" >

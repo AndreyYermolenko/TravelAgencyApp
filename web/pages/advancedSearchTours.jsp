@@ -14,6 +14,7 @@
 
       <input name="destination" id="destination" type="text" placeholder="Название тура"/>
       <input type="submit" value="Поиск" onclick="saveData()"/>
+      <a href="/tours/quickSearch">Quick Search</a>
       <br/>
 
       <input name="beginDate" id="beginDate" type="date" placeholder="Дата начала" />
@@ -35,7 +36,6 @@
           <span>Обратная сортировка</span></label>
   </form:form>
 
-  <a href="/tours/quickSearch">Quick Search</a>
   <br/>
   <a href="/logout">Logout</a>
 

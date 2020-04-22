@@ -2,9 +2,11 @@ package com.yermolenko.controllers;
 
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
+import com.yermolenko.model.User;
 import com.yermolenko.services.TravelTourService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,13 +40,13 @@ public class MainController {
                               Model model) {
         System.out.println(tourParams.toString());
 
-        session.setAttribute("includedPageResult", "showToursForUser.jsp");
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities();
-        for(GrantedAuthority authority: authorities) {
-            if ("manager".equals(authority.getAuthority())) {
-                session.setAttribute("includedPageResult", "showToursForManager.jsp");
-            }
+
+        if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
+            session.setAttribute("includedPageResult", "showToursForManager.jsp");
+        } else {
+            session.setAttribute("includedPageResult", "showToursForUser.jsp");
         }
 
         List<TravelTour> tours = travelTourService.getTours(tourParams);
@@ -55,7 +57,15 @@ public class MainController {
 
     @RequestMapping("/tours/quickSearch")
     @PreAuthorize("hasAuthority('user')")
-    public String getToursQuick() {
+    public String getToursQuick(Model model) {
+        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
+                .getAuthorities();
+        if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
+            model.addAttribute("role", "manager");
+        } else {
+            model.addAttribute("role", "user");
+        }
+
         return "quickSearchTours";
     }
 
@@ -105,9 +115,12 @@ public class MainController {
 
     @GetMapping("/reservationTour")
     @PreAuthorize("hasAuthority('user')")
-    public String reservationTour() {
+    public String reservationTour(@RequestParam(name = "id") int idTour) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        TravelTour tour = travelTourService.getTour(idTour);
+        travelTourService.reservationTour(user, tour);
 
-        return "reservationTour";
+        return "redirect:/tours/quickSearch";
     }
 
     @RequestMapping("/login/process")

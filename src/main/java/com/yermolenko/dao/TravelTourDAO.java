@@ -14,7 +14,7 @@ public interface TravelTourDAO {
 
     TravelTour getTour(int id);
 
-    boolean reservationTour(TravelTour travelTour);
+    boolean reservationTour(User user, TravelTour travelTour);
 
     void updateTour(int id, TravelTour travelTour);
 

@@ -10,8 +10,11 @@ import org.springframework.validation.Validator;
 @Component
 public class UserValidator implements Validator {
 
-    @Autowired
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
+
+    public UserValidator(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

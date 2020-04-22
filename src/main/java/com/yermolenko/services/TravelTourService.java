@@ -18,4 +18,6 @@ public interface TravelTourService {
 
     void addTour(TravelTour tour);
 
+    boolean reservationTour(User user, TravelTour travelTour);
+
 }
