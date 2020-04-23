@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,12 +9,28 @@
     <script type="text/javascript" src="<c:url value="/resources/script/reservationTour.js" />"></script>
 </head>
 <body>
+<sec:authorize access="hasAuthority('manager')">
+</sec:authorize>
+    <sec:authorize access="hasAuthority('manager')">
+        <a href="/addTour">Добавить тур</a>
+        <br>
+    </sec:authorize>
     <div class="scroll">
         <c:forEach var="tour" items="${tours}" >
             <table border="1" cellpadding="2" width="100%">
                 <tr>
                     <th bgcolor="#dc143c">${tour.id}</th>
-                    <th><button style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button></th>
+                    <th>
+                        <sec:authorize access="!hasAuthority('manager')">
+                            <button id="linkReservation" style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button>
+                        </sec:authorize>
+                        <sec:authorize access="hasAuthority('manager')">
+                            <a href="/updateTour?id=${tour.id}">Изменить тур</a>
+                            <br>
+                            <a onclick="return confirm('Подтвердите удаление тура')"
+                               href="/deleteTour?id=${tour.id}">Удалить тур</a>
+                        </sec:authorize>
+                    </th>
                 </tr>
                 <tr>
                     <th>Название тура</th>

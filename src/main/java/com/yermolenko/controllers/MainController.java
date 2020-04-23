@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -35,19 +36,9 @@ public class MainController {
 
     @PostMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
-    public String getTours(HttpSession session,
-                           @ModelAttribute SearchTourParams tourParams,
+    public String getTours(@ModelAttribute SearchTourParams tourParams,
                               Model model) {
         System.out.println(tourParams.toString());
-
-        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities();
-
-        if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
-            session.setAttribute("includedPageResult", "showToursForManager.jsp");
-        } else {
-            session.setAttribute("includedPageResult", "showToursForUser.jsp");
-        }
 
         List<TravelTour> tours = travelTourService.getTours(tourParams);
         model.addAttribute("tours", tours);
@@ -121,6 +112,16 @@ public class MainController {
         travelTourService.reservationTour(user, tour);
 
         return "redirect:/tours/quickSearch";
+    }
+
+    @GetMapping("/tours/reserved")
+    @PreAuthorize("hasAuthority('user')")
+    public String getReservedTours(Model model) {
+        List<TravelTour> tours = new ArrayList<>();
+        tours.add(travelTourService.getTour(6));
+        model.addAttribute("tours", tours);
+
+        return "reservedTours";
     }
 
     @RequestMapping("/login/process")

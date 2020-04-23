@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
     <title>Список туров</title>
@@ -36,14 +36,15 @@
           <span>Обратная сортировка</span></label>
   </form:form>
 
+  <sec:authorize access="!hasAuthority('manager')">
+      <br/>
+      <a id="linkReserved" href="/tours/reserved">Список забронированных туров</a>
+  </sec:authorize>
   <br/>
   <a href="/logout">Logout</a>
 
   <div>
-        <% String includedPageResult = (String) session.getAttribute("includedPageResult"); %>
-        <% if (includedPageResult != null && !includedPageResult.isEmpty()) { %>
-            <jsp:include page="<%= includedPageResult %>" />
-        <% } %>
+      <jsp:include page="showTours.jsp" />
   </div>
 
 </body>
