@@ -32,7 +32,7 @@ public class TravelTourServiceImpl implements TravelTourService {
 
     @Override
     public TravelTour getTour(int id) {
-        return travelTourDAO.getTour(id);
+        return travelTourDAO.getTourById(id);
     }
 
     @Override
@@ -53,6 +53,16 @@ public class TravelTourServiceImpl implements TravelTourService {
     @Override
     public boolean reservationTour(User user, TravelTour travelTour) {
         return travelTourDAO.reservationTour(user, travelTour);
+    }
+
+    @Override
+    public List<TravelTour> getReservedTours(User user) {
+        return travelTourDAO.getReservedTours(user);
+    }
+
+    @Override
+    public List<User> getListOfReservedTourUsers(TravelTour tour) {
+        return travelTourDAO.getListOfReservedTourUsers(tour);
     }
 
 }

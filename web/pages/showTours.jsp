@@ -22,9 +22,11 @@
                     <th bgcolor="#dc143c">${tour.id}</th>
                     <th>
                         <sec:authorize access="!hasAuthority('manager')">
-                            <button id="linkReservation" style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button>
+                            <button name="reservationButton" style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button>
                         </sec:authorize>
                         <sec:authorize access="hasAuthority('manager')">
+                            <a href="/listOfReservedTourUsers?id=${tour.id}">Список туристов</a>
+                            <br>
                             <a href="/updateTour?id=${tour.id}">Изменить тур</a>
                             <br>
                             <a onclick="return confirm('Подтвердите удаление тура')"
@@ -49,6 +51,16 @@
                     <th>Дата окончания</th>
                     <th>${tour.endDate}</th>
                 </tr>
+                <sec:authorize access="hasAuthority('manager')">
+                    <tr>
+                        <th>Всего забронировано</th>
+                        <th>${tour.currentCount}</th>
+                    </tr>
+                    <tr>
+                        <th>Всего мест</th>
+                        <th>${tour.maxCount}</th>
+                    </tr>
+                </sec:authorize>
                 <tr>
                     <th>Описание</th>
                     <th>${tour.description}</th>

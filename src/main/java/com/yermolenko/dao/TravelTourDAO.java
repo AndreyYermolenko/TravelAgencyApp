@@ -12,14 +12,18 @@ public interface TravelTourDAO {
 
     List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
 
-    TravelTour getTour(int id);
+    TravelTour getTourById(int id);
 
     boolean reservationTour(User user, TravelTour travelTour);
+
+    List<TravelTour> getReservedTours(User user);
 
     void updateTour(int id, TravelTour travelTour);
 
     void deleteTour(int id);
 
     void addTour(TravelTour travelTour);
+
+    List<User> getListOfReservedTourUsers(TravelTour tour);
 
 }

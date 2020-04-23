@@ -20,4 +20,8 @@ public interface TravelTourService {
 
     boolean reservationTour(User user, TravelTour travelTour);
 
+    List<TravelTour> getReservedTours(User user);
+
+    List<User> getListOfReservedTourUsers(TravelTour tour);
+
 }

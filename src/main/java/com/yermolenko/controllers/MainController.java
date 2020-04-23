@@ -117,11 +117,25 @@ public class MainController {
     @GetMapping("/tours/reserved")
     @PreAuthorize("hasAuthority('user')")
     public String getReservedTours(Model model) {
-        List<TravelTour> tours = new ArrayList<>();
-        tours.add(travelTourService.getTour(6));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        List<TravelTour> tours = travelTourService.getReservedTours(user);
         model.addAttribute("tours", tours);
 
         return "reservedTours";
+    }
+
+    @GetMapping("/listOfReservedTourUsers")
+    @PreAuthorize("hasAuthority('manager')")
+    public String listOfReservedTourUsers(@RequestParam(name = "id") int tourId,
+                                          Model model) {
+        TravelTour tour = new TravelTour();
+        tour.setId(tourId);
+
+        List<User> users = travelTourService.getListOfReservedTourUsers(tour);
+        model.addAttribute("users", users);
+
+        return "listOfReservedTourUsers";
     }
 
     @RequestMapping("/login/process")

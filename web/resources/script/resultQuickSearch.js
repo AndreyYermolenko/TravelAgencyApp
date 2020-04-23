@@ -24,9 +24,9 @@ function resultForUser(content) {
             '                </tr>\n' +
             '                <tr>\n' +
             '                    <th>Дата окончания</th>\n' +
-            '                    <th>' + content[i].beginDate.year + '-'
-                                        + content[i].beginDate.monthValue + '-'
-                                        + content[i].beginDate.dayOfMonth + '</th>\n' +
+            '                    <th>' + content[i].endDate.year + '-'
+                                        + content[i].endDate.monthValue + '-'
+                                        + content[i].endDate.dayOfMonth + '</th>\n' +
             '                </tr>\n' +
             '                <tr>\n' +
             '                    <th>Описание</th>\n' +
@@ -50,6 +50,8 @@ function resultForManager(content) {
             '                <tr>\n' +
             '                    <th bgcolor="#dc143c">' + content[i].id + '</th>\n' +
             '                    <th>\n' +
+            '                        <a href="/listOfReservedTourUsers?id=' + content[i].id + '">Список туристов</a>\n' +
+            '                        <br>\n' +
             '                        <a href="/updateTour?id=' + content[i].id + '">Изменить тур</a>\n' +
             '                        <br>\n' +
             '                        <a onclick="return confirm(\'Подтвердите удаление тура\')"\n' +
@@ -72,10 +74,18 @@ function resultForManager(content) {
             '                </tr>\n' +
             '                <tr>\n' +
             '                    <th>Дата окончания</th>\n' +
-            '                    <th>' + content[i].beginDate.year + '-'
-                                        + content[i].beginDate.monthValue + '-'
-                                        + content[i].beginDate.dayOfMonth + '</th>\n' +
+            '                    <th>' + content[i].endDate.year + '-'
+                                        + content[i].endDate.monthValue + '-'
+                                        + content[i].endDate.dayOfMonth + '</th>\n' +
             '                </tr>\n' +
+            '                    <tr>\n' +
+            '                        <th>Всего забронировано</th>\n' +
+            '                        <th>' + content[i].currentCount + '</th>\n' +
+            '                    </tr>\n' +
+            '                    <tr>\n' +
+            '                        <th>Всего мест</th>\n' +
+            '                        <th>' + content[i].maxCount + '</th>\n' +
+            '                    </tr>' +
             '                <tr>\n' +
             '                    <th>Описание</th>\n' +
             '                    <th>' + content[i].description + '</th>\n' +

@@ -2,6 +2,7 @@ package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TravelTourDAO;
+import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
@@ -19,9 +20,11 @@ import java.util.List;
 public class TravelTourDAOImpl implements TravelTourDAO {
 
     private final ConnectionPool connectionPool;
+    private final UserDAO userDAO;
 
-    public TravelTourDAOImpl(ConnectionPool connectionPool) {
+    public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO) {
         this.connectionPool = connectionPool;
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -139,7 +142,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
     }
 
     @Override
-    public TravelTour getTour(int id) {
+    public TravelTour getTourById(int id) {
         Connection connection = connectionPool.getConnection();
         TravelTour tour = new TravelTour();
 
@@ -179,14 +182,35 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             }
 
             PreparedStatement ps2 = connection.prepareStatement(
+                    "SELECT current_count, max_count FROM travel_tour " +
+                            "WHERE id = ?;"
+            );
+            ps2.setInt(1, travelTour.getId());
+            ResultSet rs2 = ps2.executeQuery();
+            rs2.next();
+            int currentCountOfUsers = rs2.getInt(1);
+            int maxCountOfUsers = rs2.getInt(2);
+            if (currentCountOfUsers >= maxCountOfUsers) {
+                return false;
+            }
+
+            PreparedStatement ps3 = connection.prepareStatement(
+                    "UPDATE travel_tour SET current_count = ? " +
+                            "WHERE id = ?;"
+            );
+            ps3.setInt(1, ++currentCountOfUsers);
+            ps3.setInt(2, travelTour.getId());
+            ps3.executeUpdate();
+
+            PreparedStatement ps4 = connection.prepareStatement(
                     "INSERT INTO tour_user " +
                             "(user_id, tour_id) " +
                             "VALUES(?, ?);"
             );
-            ps2.setInt(1, user.getId());
-            ps2.setInt(2, travelTour.getId());
+            ps4.setInt(1, user.getId());
+            ps4.setInt(2, travelTour.getId());
 
-            int countOfInsert = ps2.executeUpdate();
+            int countOfInsert = ps4.executeUpdate();
             connection.close();
 
             return countOfInsert != 0;
@@ -194,6 +218,36 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<TravelTour> getReservedTours(User user) {
+        List<TravelTour> tours = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+
+        int userId = user.getId();
+
+        try {
+            PreparedStatement ps;
+
+            ps = connection.prepareStatement("SELECT * FROM tour_user " +
+                    "WHERE user_id = ?;"
+            );
+            ps.setInt(1, userId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int tourId = rs.getInt(2);
+                TravelTour tour = getTourById(tourId);
+                tours.add(tour);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tours;
     }
 
     private TravelTour rsToTravelTour(TravelTour tour, ResultSet rs) {
@@ -282,6 +336,36 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @Override
+    public List<User> getListOfReservedTourUsers(TravelTour tour) {
+        List<User> tours = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+
+        int tourId = tour.getId();
+
+        try {
+            PreparedStatement ps;
+
+            ps = connection.prepareStatement("SELECT * FROM tour_user " +
+                    "WHERE tour_id = ?;"
+            );
+            ps.setInt(1, tourId);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int userId = rs.getInt(1);
+                User user = userDAO.getUserById(userId);
+                tours.add(user);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tours;
     }
 
 }

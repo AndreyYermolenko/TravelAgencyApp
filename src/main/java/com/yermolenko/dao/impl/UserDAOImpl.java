@@ -67,14 +67,7 @@ public class UserDAOImpl implements UserDAO {
 
             while (rs.next()) {
                 user = new User();
-
-                user.setId(rs.getInt(1));
-                user.setEmail(rs.getString(2));
-                user.setPassword(rs.getString(3));
-                user.setFirstName(rs.getString(4));
-                user.setLastName(rs.getString(5));
-                user.setManagerId(rs.getInt(6));
-                user.setRoles(getAuthoritiesById(rs.getInt(1)));
+                rsToUser(user, rs);
             }
 
             connection.close();
@@ -82,6 +75,44 @@ public class UserDAOImpl implements UserDAO {
             e.printStackTrace();
         }
 
+        return user;
+    }
+
+    @Override
+    public User getUserById(int id) {
+        Connection connection = connectionPool.getConnection();
+        User user = new User();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users " +
+                    "WHERE id = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            rsToUser(user, rs);
+
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return user;
+    }
+
+    private User rsToUser(User user, ResultSet rs) {
+        try {
+            user.setId(rs.getInt(1));
+            user.setEmail(rs.getString(2));
+            user.setPassword(rs.getString(3));
+            user.setFirstName(rs.getString(4));
+            user.setLastName(rs.getString(5));
+            user.setManagerId(rs.getInt(6));
+            Set<Role> roleSet = getAuthoritiesById(user.getId());
+            user.setRoles(roleSet);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 

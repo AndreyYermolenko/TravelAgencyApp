@@ -4,7 +4,10 @@
     <title>Reserved Tours</title>
     <script>
         function hidden(){
-            document.getElementById("linkReservation").hidden = true;
+            let elements = document.getElementsByName("reservationButton");
+            for (let i in elements) {
+                elements[i].hidden = true;
+            }
         }
     </script>
 </head>
