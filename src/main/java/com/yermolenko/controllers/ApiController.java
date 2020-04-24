@@ -28,7 +28,7 @@ public class ApiController {
         this.travelTourService = travelTourService;
     }
 
-    @RequestMapping("/getToursQuick")
+    @RequestMapping("/api/getToursQuick")
     @PreAuthorize("hasAuthority('user')")
     public ResponseEntity<?> getToursQuick(@RequestParam(value = "") String destination) {
         SearchTourParams params = new SearchTourParams();
@@ -38,7 +38,7 @@ public class ApiController {
         return new ResponseEntity<>(tourList, HttpStatus.OK);
     }
 
-    @RequestMapping("/getCurrentUserRoles")
+    @RequestMapping("/api/getCurrentUserRoles")
     @PreAuthorize("hasAuthority('user')")
     public ResponseEntity<?> getCurrentUserRoles() {
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()

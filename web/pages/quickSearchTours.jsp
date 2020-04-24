@@ -6,32 +6,24 @@
 <head>
     <title>Список туров</title>
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
-    <script type="text/javascript" src="<c:url value="/resources/script/resultQuickSearch.js" />"></script>
     <script type="text/javascript" src="<c:url value="/resources/script/reservationTour.js" />"></script>
 
     <script>
         let request = new XMLHttpRequest();
 
-        function searchInfo(role) {
+        function searchInfo() {
             let name = document.destinationForm.destination.value;
-            let url = "/getToursQuick?destination=" + name;
-            let content;
+            let url = "/showTours?destination=" + name;
 
             try {
                 request.onreadystatechange = function () {
                     if (request.readyState === 4 && request.status === 200) {
-                        content = JSON.parse(request.responseText);
-                        if (role === 'manager') {
-                            document.getElementById("includePage").innerHTML = resultForManager(content)
-                        } else {
-                           document.getElementById("includePage").innerHTML = resultForUser(content);
-                        }
+                        document.getElementById("includePage").innerHTML = request.responseText;
                     }
                 };
 
                 request.open("GET", url);
                 request.send();
-
             } catch (e) {
                 alert("Unable connect to server");
             }
@@ -42,7 +34,7 @@
 
     <form name="destinationForm" action="/tours/quickSearch">
         <input name="destination" type= "text" placeholder="Название тура"
-               autocomplete="off" onkeyup="searchInfo('${role}')"/>
+               autocomplete="off" onkeyup="searchInfo()"/>
         <br/>
     </form>
 

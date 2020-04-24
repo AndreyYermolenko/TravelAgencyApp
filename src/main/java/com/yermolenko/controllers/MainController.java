@@ -4,6 +4,7 @@ import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import com.yermolenko.services.TravelTourService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,8 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -58,6 +57,18 @@ public class MainController {
         }
 
         return "quickSearchTours";
+    }
+
+    @GetMapping("/showTours")
+    @PreAuthorize("hasAuthority('user')")
+    public String showTours(@RequestParam(value = "") String destination,
+                            Model model) {
+        SearchTourParams params = new SearchTourParams();
+        params.setDestination(destination);
+        List<TravelTour> tours = travelTourService.getTours(params);
+        model.addAttribute("tours", tours);
+
+        return "showTours";
     }
 
     @GetMapping("/updateTour")
