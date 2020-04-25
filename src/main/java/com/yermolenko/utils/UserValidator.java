@@ -2,7 +2,6 @@ package com.yermolenko.utils;
 
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;

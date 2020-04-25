@@ -1,6 +1,5 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.model.Role;
 import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;

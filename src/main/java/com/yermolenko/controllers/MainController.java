@@ -4,7 +4,6 @@ import com.yermolenko.model.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import com.yermolenko.services.TravelTourService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -147,11 +146,6 @@ public class MainController {
         model.addAttribute("users", users);
 
         return "listOfReservedTourUsers";
-    }
-
-    @RequestMapping("/login/process")
-    public String redirect() {
-        return "redirect:/tours/quickSearch";
     }
 
 }

@@ -20,11 +20,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http
+            .authorizeRequests()
                 .antMatchers("/login", "/", "/sign_up").anonymous()
-                .and().formLogin().loginPage("/login").loginProcessingUrl("/login/process").usernameParameter("email")
-                .successForwardUrl("/tours/quickSearch").failureForwardUrl("/login")
-                .and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+                .and()
+            .formLogin()
+                .usernameParameter("email")
+                .defaultSuccessUrl("/tours/quickSearch")
+                .failureForwardUrl("/login")
+                .loginPage("/login")
+                .and()
+            .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"));
+        http.csrf().disable();
     }
 
     @Override

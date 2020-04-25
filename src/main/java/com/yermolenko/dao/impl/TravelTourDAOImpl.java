@@ -115,10 +115,10 @@ public class TravelTourDAOImpl implements TravelTourDAO {
                 ps.setFloat(4, maxCost);
             } else {
                 ps = connection.prepareStatement("SELECT * FROM travel_tour " +
-                        "WHERE destination = ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
+                        "WHERE destination LIKE ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
                         "ORDER BY " + sortedBy + " " + desc + ";"
                 );
-                ps.setString(1, destination);
+                ps.setString(1, destination + '%');
                 ps.setDate(2, java.sql.Date.valueOf(beginDate));
                 ps.setDate(3, java.sql.Date.valueOf(endDate));
                 ps.setFloat(4, minCost);

@@ -6,7 +6,7 @@
 </head>
 <body>
 
-<form:form method="post" action="/login/process">
+<form:form method="post" action="/login">
 
     <input name="email" id="email" type="text" placeholder="Email"/>
     <br/>
@@ -19,7 +19,7 @@
 
 </form:form>
 
-    <a href="sign_up">Регистрация</a>
+    <a href="/sign_up">Регистрация</a>
 
 </body>
 </html>

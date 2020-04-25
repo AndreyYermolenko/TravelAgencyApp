@@ -29,25 +29,25 @@ public class AuthController {
     public String registration(Model model) {
         model.addAttribute("user", new User());
 
-        return "auth/sign_up";
+        return "/auth/sign_up";
     }
 
     @PostMapping("/sign_up")
     public String registration(@ModelAttribute @Valid User user, BindingResult result) {
         userValidator.validate(user, result);
         if (result.hasErrors()) {
-            return "auth/sign_up";
+            return "/auth/sign_up";
         }
 
         System.out.println(user.toString());
         userService.registrationUser(user);
 
-        return "redirect:login";
+        return "redirect:/login";
     }
 
     @RequestMapping(value = {"/login", "/"})
     public String view() {
-        return "auth/sign_in";
+        return "/auth/sign_in";
     }
 
 }
