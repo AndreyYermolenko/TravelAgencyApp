@@ -1,9 +1,8 @@
-package com.yermolenko.security;
+package com.yermolenko.security.provider;
 
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.Role;
 import com.yermolenko.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

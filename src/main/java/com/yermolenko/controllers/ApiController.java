@@ -1,62 +1,60 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.model.SearchTourParams;
-import com.yermolenko.model.TravelTour;
-import com.yermolenko.model.User;
-import com.yermolenko.services.TravelTourService;
-import org.springframework.http.HttpStatus;
+import com.yermolenko.forms.LoginForm;
+import com.yermolenko.services.RestService;
+import com.yermolenko.transfer.TokenDto;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
 public class ApiController {
 
-    private final TravelTourService travelTourService;
+//    private final TravelTourService travelTourService;
 
-    public ApiController(TravelTourService travelTourService) {
-        this.travelTourService = travelTourService;
+    private final RestService restService;
+
+    public ApiController(RestService restService) {
+        this.restService = restService;
     }
 
-    @RequestMapping("/getToursQuick")
-    @PreAuthorize("hasAuthority('user')")
-    public ResponseEntity<?> getToursQuick(@RequestParam(value = "") String destination) {
-        SearchTourParams params = new SearchTourParams();
-        params.setDestination(destination);
-        List<TravelTour> tourList = travelTourService.getTours(params);
+//    public ApiController(TravelTourService travelTourService) {
+//        this.travelTourService = travelTourService;
+//    }
 
-        return new ResponseEntity<>(tourList, HttpStatus.OK);
-    }
+//    @RequestMapping("/getToursQuick")
+//    @PreAuthorize("hasAuthority('user')")
+//    public ResponseEntity<?> getToursQuick(@RequestParam(value = "") String destination) {
+//        SearchTourParams params = new SearchTourParams();
+//        params.setDestination(destination);
+//        List<TravelTour> tourList = travelTourService.getTours(params);
+//
+//        return new ResponseEntity<>(tourList, HttpStatus.OK);
+//    }
+//
+//    @RequestMapping("/getCurrentUserRoles")
+//    @PreAuthorize("hasAuthority('user')")
+//    public ResponseEntity<?> getCurrentUserRoles() {
+//        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
+//                .getAuthorities();
+//        List<String> list = new ArrayList<>();
+//        for (GrantedAuthority role: authorities) {
+//            list.add(role.getAuthority());
+//        }
+//        return new ResponseEntity<>(list, HttpStatus.OK);
+//    }
+//
+//    @GetMapping("/reservationTour")
+//    @PreAuthorize("hasAuthority('user')")
+//    public ResponseEntity<?> reservationTour(@RequestParam(name = "id") int idTour) {
+//        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        TravelTour tour = travelTourService.getTour(idTour);
+//        boolean result = travelTourService.reservationTour(user, tour);
+//
+//        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+//    }
 
-    @RequestMapping("/getCurrentUserRoles")
-    @PreAuthorize("hasAuthority('user')")
-    public ResponseEntity<?> getCurrentUserRoles() {
-        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities();
-        List<String> list = new ArrayList<>();
-        for (GrantedAuthority role: authorities) {
-            list.add(role.getAuthority());
-        }
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
-
-    @GetMapping("/reservationTour")
-    @PreAuthorize("hasAuthority('user')")
-    public ResponseEntity<?> reservationTour(@RequestParam(name = "id") int idTour) {
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        TravelTour tour = travelTourService.getTour(idTour);
-        boolean result = travelTourService.reservationTour(user, tour);
-
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+    @PostMapping("/api/sign_in")
+    public ResponseEntity<TokenDto> login(@RequestBody LoginForm loginForm) {
+        return ResponseEntity.ok(restService.login(loginForm));
     }
 }

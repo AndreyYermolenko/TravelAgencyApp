@@ -1,4 +1,4 @@
-package com.yermolenko.config;
+package com.yermolenko.security.config;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;

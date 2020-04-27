@@ -51,4 +51,14 @@ CREATE TABLE tour_user
 INSERT INTO roles VALUES (1, 'manager');
 INSERT INTO roles VALUES (2, 'user');
 
+CREATE TABLE tokens
+(
+    id SERIAL PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
+
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE (token)
+);
+
 COMMIT;

@@ -1,5 +1,7 @@
 package com.yermolenko.config;
 
+import com.yermolenko.security.config.MvcSecurityConfig;
+import com.yermolenko.security.config.RestSecurityConfig;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -9,7 +11,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[] {
-                SecurityConfig.class
+                MvcSecurityConfig.class,
+                RestSecurityConfig.class
         };
     }
 

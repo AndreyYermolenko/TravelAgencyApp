@@ -1,8 +1,9 @@
-package com.yermolenko.config;
+package com.yermolenko.security.config;
 
-import com.yermolenko.security.AuthProviderImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.yermolenko.security.provider.AuthProviderImpl;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,11 +14,12 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 @ComponentScan("com.yermolenko")
 @EnableGlobalMethodSecurity(prePostEnabled=true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Order(4)
+public class MvcSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthProviderImpl authProvider;
 
-    public SecurityConfig(AuthProviderImpl authProvider) {
+    public MvcSecurityConfig(@Qualifier("authProviderImpl") AuthProviderImpl authProvider) {
         this.authProvider = authProvider;
     }
 
