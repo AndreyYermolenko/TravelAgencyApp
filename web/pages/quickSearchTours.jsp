@@ -6,7 +6,6 @@
 <head>
     <title>Список туров</title>
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
-    <script type="text/javascript" src="<c:url value="/resources/script/reservationTour.js" />"></script>
 
     <script>
         let request = new XMLHttpRequest();

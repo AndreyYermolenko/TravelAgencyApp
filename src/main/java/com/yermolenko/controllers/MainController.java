@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
 
@@ -116,12 +117,13 @@ public class MainController {
 
     @GetMapping("/reservationTour")
     @PreAuthorize("hasAuthority('user')")
-    public String reservationTour(@RequestParam(name = "id") int idTour) {
+    public String reservationTour(HttpSession session,
+                                  @RequestParam(name = "id") int idTour) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         TravelTour tour = travelTourService.getTour(idTour);
-        travelTourService.reservationTour(user, tour);
-
-        return "redirect:/tours/quickSearch";
+        boolean result = travelTourService.reservationTour(user, tour);
+        session.setAttribute("isSuccess", result);
+        return "/reservationTour";
     }
 
     @GetMapping("/tours/reserved")

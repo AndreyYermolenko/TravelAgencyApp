@@ -9,16 +9,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class ApiController {
 
     private final TravelTourService travelTourService;
@@ -27,7 +28,7 @@ public class ApiController {
         this.travelTourService = travelTourService;
     }
 
-    @RequestMapping("/api/getToursQuick")
+    @RequestMapping("/getToursQuick")
     @PreAuthorize("hasAuthority('user')")
     public ResponseEntity<?> getToursQuick(@RequestParam(value = "") String destination) {
         SearchTourParams params = new SearchTourParams();
@@ -37,7 +38,7 @@ public class ApiController {
         return new ResponseEntity<>(tourList, HttpStatus.OK);
     }
 
-    @RequestMapping("/api/getCurrentUserRoles")
+    @RequestMapping("/getCurrentUserRoles")
     @PreAuthorize("hasAuthority('user')")
     public ResponseEntity<?> getCurrentUserRoles() {
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
@@ -49,7 +50,7 @@ public class ApiController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @GetMapping("/api/reservationTour")
+    @GetMapping("/reservationTour")
     @PreAuthorize("hasAuthority('user')")
     public ResponseEntity<?> reservationTour(@RequestParam(name = "id") int idTour) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

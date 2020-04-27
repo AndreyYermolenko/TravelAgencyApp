@@ -6,7 +6,6 @@
     <title>Title</title>
 
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
-    <script type="text/javascript" src="<c:url value="/resources/script/reservationTour.js" />"></script>
 </head>
 <body>
 <sec:authorize access="hasAuthority('manager')">
@@ -22,7 +21,8 @@
                     <th bgcolor="#dc143c">${tour.id}</th>
                     <th>
                         <sec:authorize access="!hasAuthority('manager')">
-                            <button name="reservationButton" style="width:110px; height:20px;" onclick="reservation(${tour.id})" >Забронировать</button>
+                            <a name="reservationButton" onclick="return confirm('Подтвердите бронирование тура')"
+                               href="/reservationTour?id=${tour.id}">Забронировать</a>
                         </sec:authorize>
                         <sec:authorize access="hasAuthority('manager')">
                             <a href="/listOfReservedTourUsers?id=${tour.id}">Список туристов</a>

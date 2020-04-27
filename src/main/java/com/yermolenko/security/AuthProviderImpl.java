@@ -20,8 +20,11 @@ import java.util.Set;
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
 
-    @Autowired
-    private UserDAO userRepository;
+    private final UserDAO userRepository;
+
+    public AuthProviderImpl(UserDAO userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
