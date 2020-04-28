@@ -17,15 +17,12 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
     private final TokenDAO tokenDAO;
 
-    private final UserDAO userDAO;
-
     private final UserDetailsService userDetailsService;
 
 
 
-    public TokenAuthenticationProvider(TokenDAO tokenDAO, UserDAO userDAO, UserDetailsService userDetailsService) {
+    public TokenAuthenticationProvider(TokenDAO tokenDAO, UserDetailsService userDetailsService) {
         this.tokenDAO = tokenDAO;
-        this.userDAO = userDAO;
         this.userDetailsService = userDetailsService;
     }
 

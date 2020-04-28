@@ -1,26 +1,21 @@
-package com.yermolenko.model;
+package com.yermolenko.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class TravelTour {
+@Builder
+public class TravelTourDtoForUser {
     private int id;
     private String destination;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate beginDate;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Float cost;
-    private Integer maxCount;
-    private Integer currentCount;
     private String description;
 }
