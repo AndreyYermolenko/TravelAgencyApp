@@ -30,12 +30,12 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .addFilterBefore(tokenAuthFilter, BasicAuthenticationFilter.class)
-                .antMatcher("/api")
+                .antMatcher("/api/**")
                 .authenticationProvider(authenticationProvider)
                 .authorizeRequests()
-//                .antMatchers("/users/**").hasAuthority("USER")
-//                .antMatchers("/sign_up").permitAll()
-                .antMatchers("/sign_in").permitAll();
+                .antMatchers("/api/tours").hasAuthority("user")
+                .antMatchers("/api/sign_up").permitAll()
+                .antMatchers("/api/login").permitAll();
         http.csrf().disable();
     }
 }

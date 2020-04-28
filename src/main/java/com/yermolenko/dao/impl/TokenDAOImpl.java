@@ -30,7 +30,7 @@ public class TokenDAOImpl implements TokenDAO {
 
         try {
             PreparedStatement ps = connection.prepareStatement("SELECT * FROM tokens " +
-                    "WHERE value = ?");
+                    "WHERE token = ?");
             ps.setString(1, value);
 
             ResultSet rs = ps.executeQuery();

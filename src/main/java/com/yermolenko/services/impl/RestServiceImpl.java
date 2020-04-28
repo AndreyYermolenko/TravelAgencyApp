@@ -7,11 +7,11 @@ import com.yermolenko.forms.UserForm;
 import com.yermolenko.model.Token;
 import com.yermolenko.model.User;
 import com.yermolenko.services.RestService;
-import com.yermolenko.transfer.TokenDto;
+import com.yermolenko.dto.TokenDto;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.stereotype.Service;
 
-import static com.yermolenko.transfer.TokenDto.from;
+import static com.yermolenko.dto.TokenDto.from;
 
 @Service
 public class RestServiceImpl implements RestService {

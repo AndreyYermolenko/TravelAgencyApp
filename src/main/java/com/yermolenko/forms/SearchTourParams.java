@@ -1,5 +1,7 @@
-package com.yermolenko.model;
+package com.yermolenko.forms;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yermolenko.utils.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,9 @@ import java.time.LocalDate;
 public class SearchTourParams {
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate beginDate;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Float minCost;

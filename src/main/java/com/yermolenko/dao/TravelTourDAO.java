@@ -1,6 +1,6 @@
 package com.yermolenko.dao;
 
-import com.yermolenko.model.SearchTourParams;
+import com.yermolenko.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 

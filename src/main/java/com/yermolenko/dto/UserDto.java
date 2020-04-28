@@ -1,4 +1,4 @@
-package com.yermolenko.transfer;
+package com.yermolenko.dto;
 
 import com.yermolenko.model.User;
 import lombok.AllArgsConstructor;

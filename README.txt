@@ -27,10 +27,47 @@ User может:
 +Ajax;
 +JSP;
 +Таблицы в БД приведены к 3 нормальной форме;
-
 +В файле testdata.sql находятся тестовые данные для заполнения БД;
-
 +3 уровня валидации данных при регистрации нового пользователя:
 	*на стороне клиента (с помощью JS);
 	*на стороне сервера (защита от вмешательства в исходный код страницы);
 	*обращение в БД для проверки уникальности введенного email;
+	
+
+	
+Работа с API:
+	Добавить header - Content-Type:application/json
+1. Авторизация (получение токена).
+	В RequestBody добавить данные о пользователе, например:
+{      
+	"email": "user@mail.com",      
+	"password": "root" 
+}
+Отправить POST запрос на http://localhost:7001/api/login
+
+2. Регистрация пользователя.
+	В RequestBody добавить данные о новом пользователе, например:
+{
+	"email": "user@mail.com",
+	"password": "root",
+	"firstName": "Andrey",
+	"lastName": "Yermolenko"
+}
+Отправить POST запрос на http://localhost:7001/api/sign_up
+
+3. Получить все туристические туры, которые удовлетворяют параметрам поиска.
+	В RequestBody добавить данные о туре, например:
+{
+    "destination": "Egypt",
+    "beginDate": "2020-03-30",
+    "endDate": "",
+    "minCost": "",
+    "maxCost": "",
+    "sortedBy": "",
+    "desc": "false"
+}
+	Добавить в RequestParameters:
+		token = ${tokenValue}
+Отправить POST запрос на http://localhost:7001/api/tours
+
+4.

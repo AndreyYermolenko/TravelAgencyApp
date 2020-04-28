@@ -3,7 +3,7 @@ package com.yermolenko.dao.impl;
 import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.dao.UserDAO;
-import com.yermolenko.model.SearchTourParams;
+import com.yermolenko.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import org.springframework.stereotype.Component;
