@@ -1,6 +1,11 @@
-package com.yermolenko.model;
+package com.yermolenko.forms;
 
-import lombok.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.yermolenko.utils.LocalDateDeserializer;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -9,16 +14,15 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@Builder
-public class TravelTour {
-    private int id;
+public class TravelTourForm {
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate beginDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
     private Float cost;
     private Integer maxCount;
-    private Integer currentCount;
     private String description;
 }

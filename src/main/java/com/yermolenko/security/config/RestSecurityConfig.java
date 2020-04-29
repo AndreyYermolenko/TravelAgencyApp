@@ -36,7 +36,12 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/sign_up").permitAll()
                 .antMatchers("/api/login").permitAll()
                 .antMatchers("/api/tours").hasAuthority("user")
-                .antMatchers("/api/reservationTour").hasAuthority("user");
+                .antMatchers("/api/reservationTour").hasAuthority("user")
+                .antMatchers("/api/reservedTours").hasAuthority("user")
+                .antMatchers("/api/updateTour").hasAuthority("manager")
+                .antMatchers("/api/addTour").hasAuthority("manager")
+                .antMatchers("/api/deleteTour").hasAuthority("manager")
+                .antMatchers("/api/listOfReservedTourUsers").hasAuthority("manager");
         http.csrf().disable();
     }
 }

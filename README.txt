@@ -57,7 +57,7 @@ User может:
 
 3. Получить все туристические туры, которые удовлетворяют параметрам поиска.
 	В зависимости от роли пользователя данные о турах будут отличаться (менеджеру доступно больше данных).
-	В RequestBody добавить данные о туре, например:
+	В RequestBody добавить данные о туре. Каких-то параметров может не быть в запросе, например:
 {
     "destination": "Egypt",
     "beginDate": "2020-03-30",
@@ -71,4 +71,57 @@ User может:
 		token = ${tokenValue}
 Отправить POST запрос на http://localhost:7001/api/tours
 
-4.
+4. Забронировать тур (для обычного пользователя).
+	Отправить GET запрос на http://localhost:7001/api/reservationTour
+	Добавить в RequestParameters токен пользователя и ID тура:
+		token = ${tokenValue}
+		id=${idValue}
+
+5. Обновить тур (для менеджера).
+	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
+	Например:
+{
+    "destination": "Turkey",
+	"beginDate": "2020-08-15",
+    "endDate": "2020-08-20",
+    "cost": "2000",
+    "maxCount": "12",
+    "description": "Turkey tour (update)"
+}
+	Добавить в RequestParameters токен менеджера и ID тура:
+		token = ${tokenValue}
+		id=${idValue}
+Отправить POST запрос на http://localhost:7001/api/updateTour
+
+6. Удалить тур (для менеджера).
+	Отправить GET запрос на http://localhost:7001/api/deleteTour
+	Добавить в RequestParameters токен менеджера и ID тура:
+		token = ${tokenValue}
+		id=${idValue}
+		
+7. Добавить тур (для менеджера).	
+	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
+	Например:
+{
+    "destination": "Turkey",
+	"beginDate": "2020-08-15",
+    "endDate": "2020-08-20",
+    "cost": "2000",
+    "maxCount": "12",
+    "description": "Turkey tour"
+}
+	Добавить в RequestParameters токен менеджера:
+		token = ${tokenValue}
+Отправить POST запрос на http://localhost:7001/api/addTour
+
+8.Получение зарезервированных туров для текущего пользователя (для пользователя).
+	Отправить GET запрос на http://localhost:7001/api/reservedTours
+	Добавить в RequestParameters токен пользоватя:
+		token = ${tokenValue}
+		
+9.Получение списка пользователей для тура (для менеджера).
+	Отправить GET запрос на http://localhost:7001/api/listOfReservedTourUsers
+	Добавить в RequestParameters токен менеджера и ID тура:
+		token = ${tokenValue}
+		id=${idValue}
+		

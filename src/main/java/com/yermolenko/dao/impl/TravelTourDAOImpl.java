@@ -301,11 +301,16 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         Connection connection = connectionPool.getConnection();
 
         try {
-            PreparedStatement ps = connection.prepareStatement("DELETE FROM travel_tour " +
-                    "WHERE id = ?");
-            ps.setInt(1, id);
+            PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tour_user " +
+                    "WHERE tour_id = ?");
+            ps1.setInt(1, id);
 
-            ps.executeUpdate();
+            PreparedStatement ps2 = connection.prepareStatement("DELETE FROM travel_tour " +
+                    "WHERE id = ?");
+            ps2.setInt(1, id);
+
+            ps1.executeUpdate();
+            ps2.executeUpdate();
 
             connection.close();
         } catch (SQLException ex) {

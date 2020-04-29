@@ -1,6 +1,7 @@
 package com.yermolenko.utils;
 
 import com.yermolenko.dto.TravelTourDtoForUser;
+import com.yermolenko.forms.TravelTourForm;
 import com.yermolenko.forms.UserForm;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
@@ -37,6 +38,17 @@ public class Converters {
                 .endDate(tour.getEndDate())
                 .cost(tour.getCost())
                 .description(tour.getDescription())
+                .build();
+    }
+
+    public static TravelTour from(TravelTourForm tourForm) {
+        return TravelTour.builder()
+                .destination(tourForm.getDestination())
+                .beginDate(tourForm.getBeginDate())
+                .endDate(tourForm.getEndDate())
+                .cost(tourForm.getCost())
+                .maxCount(tourForm.getMaxCount())
+                .description(tourForm.getDescription())
                 .build();
     }
 
