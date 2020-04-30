@@ -4,7 +4,7 @@ import com.yermolenko.model.User;
 
 public interface UserService {
 
-    void registrationUser(User user);
+    boolean registrationUser(User user);
 
     User findUserByEmail(String email);
 

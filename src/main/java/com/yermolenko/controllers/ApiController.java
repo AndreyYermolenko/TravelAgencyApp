@@ -46,8 +46,12 @@ public class ApiController {
     @PostMapping("/api/sign_up")
     public ResponseEntity<Object> addUser(@RequestBody UserForm userForm) {
         User user = from(userForm);
-        userService.registrationUser(user);
-        return ResponseEntity.ok().build();
+        boolean result = userService.registrationUser(user);
+
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/api/tours")
@@ -74,29 +78,41 @@ public class ApiController {
         TravelTour tour = travelTourService.getTour(id);
         boolean result = travelTourService.reservationTour(user, tour);
 
-        return ResponseEntity.ok(result);
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/api/updateTour")
     public ResponseEntity<?> updateTour(@RequestBody TravelTourForm tourUpdate,
                              @RequestParam int id) {
-        travelTourService.updateTour(id, from(tourUpdate));
+        boolean result = travelTourService.updateTour(id, from(tourUpdate));
 
-        return ResponseEntity.ok().build();
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @GetMapping("/api/deleteTour")
     public ResponseEntity<?> deleteTour(@RequestParam int id) {
-        travelTourService.deleteTour(id);
+        boolean result = travelTourService.deleteTour(id);
 
-        return ResponseEntity.ok().build();
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping("/api/addTour")
     public ResponseEntity<?> addTour(@RequestBody TravelTourForm tourAdd) {
-        travelTourService.addTour(from(tourAdd));
+        boolean result = travelTourService.addTour(from(tourAdd));
 
-        return ResponseEntity.ok().build();
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 

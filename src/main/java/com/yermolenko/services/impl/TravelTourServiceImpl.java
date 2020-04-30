@@ -36,18 +36,18 @@ public class TravelTourServiceImpl implements TravelTourService {
     }
 
     @Override
-    public void updateTour(int id, TravelTour tour) {
-        travelTourDAO.updateTour(id, tour);
+    public boolean updateTour(int id, TravelTour tour) {
+        return travelTourDAO.updateTour(id, tour);
     }
 
     @Override
-    public void deleteTour(int id) {
-        travelTourDAO.deleteTour(id);
+    public boolean deleteTour(int id) {
+        return travelTourDAO.deleteTour(id);
     }
 
     @Override
-    public void addTour(TravelTour tour) {
-        travelTourDAO.addTour(tour);
+    public boolean addTour(TravelTour tour) {
+        return travelTourDAO.addTour(tour);
     }
 
     @Override

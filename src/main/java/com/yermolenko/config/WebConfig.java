@@ -28,7 +28,6 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(final ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**")
                 .addResourceLocations("/resources/");
-//                .setCachePeriod(31556926); //ОСТОРОЖНО: могут кешироваться результаты JS функций;
     }
 
 }

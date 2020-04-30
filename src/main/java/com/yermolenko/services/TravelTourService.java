@@ -12,11 +12,11 @@ public interface TravelTourService {
 
     TravelTour getTour(int id);
 
-    void updateTour(int id, TravelTour tour);
+    boolean updateTour(int id, TravelTour tour);
 
-    void deleteTour(int id);
+    boolean deleteTour(int id);
 
-    void addTour(TravelTour tour);
+    boolean addTour(TravelTour tour);
 
     boolean reservationTour(User user, TravelTour travelTour);
 

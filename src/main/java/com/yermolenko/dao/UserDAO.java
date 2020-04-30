@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserDAO {
 
-    void registrationUser(User user);
+    boolean registrationUser(User user);
 
     User findUserByEmail(String email);
 

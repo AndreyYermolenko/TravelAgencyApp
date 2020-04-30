@@ -1,7 +1,9 @@
 package com.yermolenko.dao;
 
+import com.yermolenko.exceptions.ConnectionToDatabaseException;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpServerErrorException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -56,9 +58,11 @@ public class ConnectionPool {
     public Connection getConnection(){
         Connection connection = null;
         try {
+            if (ds == null) {
+                throw new ConnectionToDatabaseException();
+            }
             connection = ds.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return connection;
     }

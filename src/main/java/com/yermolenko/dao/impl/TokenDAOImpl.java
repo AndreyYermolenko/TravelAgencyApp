@@ -50,7 +50,7 @@ public class TokenDAOImpl implements TokenDAO {
     }
 
     @Override
-    public void saveToken(Token token) {
+    public boolean saveToken(Token token) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -63,11 +63,14 @@ public class TokenDAOImpl implements TokenDAO {
             ps1.setString(1, token.getValue());
             ps1.setInt(2, token.getUser().getId());
 
-            ps1.executeUpdate();
+            int countOfInsert = ps1.executeUpdate();
 
             connection.close();
+
+            return countOfInsert != 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 }

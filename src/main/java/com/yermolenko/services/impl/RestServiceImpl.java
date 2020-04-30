@@ -26,7 +26,7 @@ public class RestServiceImpl implements RestService {
     }
 
     @Override
-    public void signUp(UserForm userForm) {
+    public boolean signUp(UserForm userForm) {
         String password = userForm.getPassword();
 
 
@@ -37,7 +37,7 @@ public class RestServiceImpl implements RestService {
                 .email(userForm.getEmail())
                 .build();
 
-        userDAO.registrationUser(user);
+        return userDAO.registrationUser(user);
     }
 
     @Override

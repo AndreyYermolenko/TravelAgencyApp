@@ -268,7 +268,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
     }
 
     @Override
-    public void updateTour(int id, TravelTour travelTour) {
+    public boolean updateTour(int id, TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -288,16 +288,19 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setString(6, travelTour.getDescription());
             ps.setInt(7, id);
 
-            ps.executeUpdate();
+            int countOfUpdate = ps.executeUpdate();
 
             connection.close();
+
+            return countOfUpdate != 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     @Override
-    public void deleteTour(int id) {
+    public boolean deleteTour(int id) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -309,17 +312,20 @@ public class TravelTourDAOImpl implements TravelTourDAO {
                     "WHERE id = ?");
             ps2.setInt(1, id);
 
-            ps1.executeUpdate();
-            ps2.executeUpdate();
+            int countOfDelete1 =  ps1.executeUpdate();
+            int countOfDelete2 = ps2.executeUpdate();
 
             connection.close();
+
+            return (countOfDelete1 != 0 && countOfDelete2 != 0);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     @Override
-    public void addTour(TravelTour travelTour) {
+    public boolean addTour(TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -335,12 +341,15 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setInt(5, travelTour.getMaxCount());
             ps.setString(6, travelTour.getDescription());
 
-            ps.executeUpdate();
+            int countOfInsert = ps.executeUpdate();
 
             connection.close();
+
+            return countOfInsert != 0;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     @Override

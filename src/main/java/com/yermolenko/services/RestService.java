@@ -6,7 +6,7 @@ import com.yermolenko.dto.TokenDto;
 
 public interface RestService {
 
-    void signUp(UserForm userForm);
+    boolean signUp(UserForm userForm);
 
     TokenDto login(LoginForm loginForm);
 }

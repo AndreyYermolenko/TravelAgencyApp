@@ -23,7 +23,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void registrationUser(User user) {
+    public boolean registrationUser(User user) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -44,13 +44,16 @@ public class UserDAOImpl implements UserDAO {
 
             ps2.setString(1, user.getEmail());
 
-            ps1.executeUpdate();
-            ps2.executeUpdate();
+            int countOfInsert1 = ps1.executeUpdate();
+            int countOfInsert2 = ps2.executeUpdate();
 
             connection.close();
+
+            return (countOfInsert1 != 0 && countOfInsert2 != 0);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+        return false;
     }
 
     @Override

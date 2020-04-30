@@ -6,6 +6,6 @@ public interface TokenDAO {
 
     Token findOneByValue(String value);
 
-    void saveToken(Token token);
+    boolean saveToken(Token token);
 
 }
