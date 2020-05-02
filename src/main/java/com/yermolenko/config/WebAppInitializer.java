@@ -3,8 +3,6 @@ package com.yermolenko.config;
 import com.yermolenko.security.config.MvcSecurityConfig;
 import com.yermolenko.security.config.RestSecurityConfig;
 import org.springframework.core.annotation.Order;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 @Order(1)

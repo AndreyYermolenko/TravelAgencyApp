@@ -1,0 +1,181 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.0" author="andrey.yermolenko">
+        <createTable tableName="role_user">
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="role_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.1" author="andrey.yermolenko">
+        <createTable tableName="roles">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="role" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.2" author="andrey.yermolenko">
+        <createTable tableName="tokens">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="token" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.3" author="andrey.yermolenko">
+        <createTable tableName="tour_user">
+            <column name="user_id" type="INT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="tour_id" type="INT">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.4" author="andrey.yermolenko">
+        <createTable tableName="travel_tour">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="destination" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="begin_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="end_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="cost" type="FLOAT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="max_count" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="current_count" type="INT">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="VARCHAR">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.5" author="andrey.yermolenko">
+        <createTable tableName="users">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="email" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="manager_id" type="INT">
+            </column>
+
+        </createTable>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="andrey.yermolenko">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="role_user"
+                                 constraintName="fk_role_user_users_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.7" author="andrey.yermolenko">
+        <addForeignKeyConstraint baseColumnNames="role_id"
+                                 baseTableName="role_user"
+                                 constraintName="fk_role_user_roles_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="roles"/>
+    </changeSet>
+
+    <changeSet id="1.0.8" author="andrey.yermolenko">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="tour_user"
+                                 constraintName="fk_tour_user_users_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.9" author="andrey.yermolenko">
+        <addForeignKeyConstraint baseColumnNames="tour_id"
+                                 baseTableName="tour_user"
+                                 constraintName="fk_tour_user_travel_tour"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="travel_tour"/>
+    </changeSet>
+
+    <changeSet id="1.0.10" author="andrey.yermolenko">
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="tokens"
+                                 constraintName="fk_tokens_users_id"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedColumnNames="id"
+                                 referencedTableName="users"/>
+    </changeSet>
+
+    <changeSet id="1.0.11" author="andrey.yermolenko">
+        <insert tableName="roles">
+            <column name="role" value="manager"/>
+        </insert>
+
+        <insert tableName="roles">
+            <column name="role" value="user"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

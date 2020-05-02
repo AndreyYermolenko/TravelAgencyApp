@@ -1,6 +1,7 @@
 package com.yermolenko.dao;
 
 import com.yermolenko.exceptions.ConnectionToDatabaseException;
+import lombok.extern.log4j.Log4j;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpServerErrorException;
@@ -15,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+@Log4j
 @Component
 public class ConnectionPool {
 
@@ -29,20 +31,9 @@ public class ConnectionPool {
             properties.load(in);
             datasource = properties.getProperty("datasource.name");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Getting datasource problem", e);
         }
     }
-
-
-//    TomCat Datasource
-//    private static PoolProperties p = new PoolProperties();
-//    {
-//        p.setUrl("jdbc:postgresql://localhost:5432/travel_agency");
-//        p.setDriverClassName("org.postgresql.Driver");
-//        p.setUsername("postgres");
-//        p.setPassword("root");
-//        ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
-//    }
 
     //WebLogic Datasource
     {
@@ -51,7 +42,7 @@ public class ConnectionPool {
             context = new InitialContext();
             ds = (DataSource) context.lookup(datasource);
         } catch (NamingException e) {
-            e.printStackTrace();
+            log.error("Getting datasource name problem", e);
         }
     }
 
@@ -63,6 +54,7 @@ public class ConnectionPool {
             }
             connection = ds.getConnection();
         } catch (SQLException e) {
+            log.error("Getting connection problem", e);
         }
         return connection;
     }

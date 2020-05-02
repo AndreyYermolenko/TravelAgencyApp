@@ -4,6 +4,7 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.Role;
 import com.yermolenko.model.User;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -13,6 +14,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+@Log4j
 @Component
 public class UserDAOImpl implements UserDAO {
 
@@ -51,7 +53,7 @@ public class UserDAOImpl implements UserDAO {
 
             return (countOfInsert1 != 0 && countOfInsert2 != 0);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Registration user problem", ex);
         }
         return false;
     }
@@ -75,7 +77,7 @@ public class UserDAOImpl implements UserDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Finding user by email problem", e);
         }
 
         return user;
@@ -97,7 +99,7 @@ public class UserDAOImpl implements UserDAO {
 
             connection.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Getting user by id problem", ex);
         }
 
         return user;
@@ -114,7 +116,7 @@ public class UserDAOImpl implements UserDAO {
             Set<Role> roleSet = getAuthoritiesById(user.getId());
             user.setRoles(roleSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Parsing result set problem", e);
         }
         return user;
     }
@@ -136,7 +138,7 @@ public class UserDAOImpl implements UserDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting authorities by id problem", e);
         }
 
         return authorities;
@@ -158,7 +160,7 @@ public class UserDAOImpl implements UserDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting role by id problem", e);
         }
         return role;
     }

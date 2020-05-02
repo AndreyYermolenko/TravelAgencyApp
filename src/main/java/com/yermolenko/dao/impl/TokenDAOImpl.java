@@ -4,6 +4,7 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TokenDAO;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.Token;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@Log4j
 @Component
 public class TokenDAOImpl implements TokenDAO {
 
@@ -43,7 +45,7 @@ public class TokenDAOImpl implements TokenDAO {
 
             connection.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Finding token problem", ex);
         }
 
         return token;
@@ -69,7 +71,7 @@ public class TokenDAOImpl implements TokenDAO {
 
             return countOfInsert != 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Saving token problem", ex);
         }
         return false;
     }

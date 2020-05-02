@@ -6,6 +6,7 @@ import com.yermolenko.dao.UserDAO;
 import com.yermolenko.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j
 @Component
 public class TravelTourDAOImpl implements TravelTourDAO {
 
@@ -59,7 +61,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             connection.close();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting all the tours problem", e);
         }
 
         return tours;
@@ -135,7 +137,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting some tours problem", e);
         }
 
         return tours;
@@ -157,7 +159,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             connection.close();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Getting tour by id problem", ex);
         }
 
         return tour;
@@ -215,7 +217,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             return countOfInsert != 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Reservation tour problem", ex);
             return false;
         }
     }
@@ -245,7 +247,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting reserved tours problem", e);
         }
         return tours;
     }
@@ -261,7 +263,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setCurrentCount(rs.getInt(7));
             tour.setDescription(rs.getString(8));
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Parsing result set problem", e);
         }
 
         return tour;
@@ -294,7 +296,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             return countOfUpdate != 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Updating tour problem", ex);
         }
         return false;
     }
@@ -319,7 +321,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             return (countOfDelete1 != 0 && countOfDelete2 != 0);
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Deleting tour problem", ex);
         }
         return false;
     }
@@ -347,7 +349,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             return countOfInsert != 0;
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error("Adding tour problem", ex);
         }
         return false;
     }
@@ -377,7 +379,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             connection.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Getting list of reserved tours problem", e);
         }
         return tours;
     }
