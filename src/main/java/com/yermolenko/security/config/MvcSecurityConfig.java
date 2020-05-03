@@ -52,7 +52,7 @@ public class MvcSecurityConfig extends WebSecurityConfigurerAdapter {
             .formLogin()
                 .usernameParameter("email")
                 .defaultSuccessUrl("/tours/quickSearch")
-                .failureForwardUrl("/login")
+                .failureForwardUrl("/login?error=true")
                 .loginPage("/login")
                 .and()
             .logout()

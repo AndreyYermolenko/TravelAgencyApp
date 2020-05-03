@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -13,6 +14,10 @@
 
     <input name="password" id="password" type="text" placeholder="Пароль" autocomplete="off" />
     <br/>
+
+    <c:if test = "${error}">
+        <p style="color: #cd0a0a">Invalid Email or Password<p>
+    </c:if>
 
     <input type="submit" value="Войти"/>
     <br/>

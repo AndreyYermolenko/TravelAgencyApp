@@ -3,13 +3,11 @@ package com.yermolenko.controllers;
 import com.yermolenko.model.User;
 import com.yermolenko.services.UserService;
 import com.yermolenko.utils.UserValidator;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -75,7 +73,11 @@ public class AuthController {
      * @return String
      */
     @RequestMapping(value = {"/login", "/"})
-    public String login() {
+    public String login(@RequestParam(name = "error", required = false) Boolean error,
+                        Model model) {
+        if (Boolean.TRUE.equals(error)) {
+            model.addAttribute("error", true);
+        }
         return "/auth/sign_in";
     }
 
