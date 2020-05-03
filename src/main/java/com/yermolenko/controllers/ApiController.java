@@ -87,7 +87,6 @@ public class ApiController {
      */
     @PostMapping("/api/tours")
     public ResponseEntity<?> getTours(@RequestBody SearchTourParams tourParams) {
-        System.out.println(tourParams.toString());
         List<TravelTour> tours = travelTourService.getTours(tourParams);
 
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()

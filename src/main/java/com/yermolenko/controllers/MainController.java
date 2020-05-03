@@ -61,8 +61,6 @@ public class MainController {
     @PreAuthorize("hasAuthority('user')")
     public String getTours(@ModelAttribute SearchTourParams tourParams,
                               Model model) {
-        System.out.println(tourParams.toString());
-
         List<TravelTour> tours = travelTourService.getTours(tourParams);
         model.addAttribute("tours", tours);
 

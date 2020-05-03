@@ -1,9 +1,7 @@
 package com.yermolenko.security.provider;
 
 import com.yermolenko.dao.TokenDAO;
-import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.Token;
-import com.yermolenko.model.User;
 import com.yermolenko.security.token.TokenAuthentication;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;

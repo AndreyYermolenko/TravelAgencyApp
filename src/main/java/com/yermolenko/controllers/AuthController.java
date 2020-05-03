@@ -3,7 +3,6 @@ package com.yermolenko.controllers;
 import com.yermolenko.model.User;
 import com.yermolenko.services.UserService;
 import com.yermolenko.utils.UserValidator;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -62,7 +61,6 @@ public class AuthController {
             return "/auth/sign_up";
         }
 
-        System.out.println(user.toString());
         userService.registrationUser(user);
 
         return "redirect:/login";

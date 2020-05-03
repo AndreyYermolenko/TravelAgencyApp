@@ -46,11 +46,11 @@
     <changeSet id="1.0.3" author="andrey.yermolenko">
         <createTable tableName="tour_user">
             <column name="user_id" type="INT">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false"/>
             </column>
 
             <column name="tour_id" type="INT">
-                <constraints nullable="false" unique="true"/>
+                <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>

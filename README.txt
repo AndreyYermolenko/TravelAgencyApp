@@ -64,12 +64,17 @@ User может:
 {
     "destination": "Egypt",
     "beginDate": "2020-03-30",
-    "endDate": "",
-    "minCost": "",
-    "maxCost": "",
-    "sortedBy": "",
+    "endDate": "2020-09-30",
+    "minCost": "900",
+    "maxCost": "2500",
+    "sortedBy": "cost",
     "desc": "false"
 }
+	ИЛИ
+{
+    "destination": "Egypt"
+}
+
 	Добавить в RequestParameters:
 		token = ${tokenValue}
 Отправить POST запрос на http://localhost:7001/api/tours
@@ -79,8 +84,13 @@ User может:
 	Добавить в RequestParameters токен пользователя и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
+		
+5.Получение зарезервированных туров для текущего пользователя (для пользователя).
+	Отправить GET запрос на http://localhost:7001/api/reservedTours
+	Добавить в RequestParameters токен пользоватя:
+		token = ${tokenValue}		
 
-5. Обновить тур (для менеджера).
+6. Обновить тур (для менеджера).
 	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
 	Например:
 {
@@ -96,13 +106,13 @@ User может:
 		id=${idValue}
 Отправить POST запрос на http://localhost:7001/api/updateTour
 
-6. Удалить тур (для менеджера).
+7. Удалить тур (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/deleteTour
 	Добавить в RequestParameters токен менеджера и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
 		
-7. Добавить тур (для менеджера).	
+8. Добавить тур (для менеджера).	
 	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
 	Например:
 {
@@ -116,11 +126,6 @@ User может:
 	Добавить в RequestParameters токен менеджера:
 		token = ${tokenValue}
 Отправить POST запрос на http://localhost:7001/api/addTour
-
-8.Получение зарезервированных туров для текущего пользователя (для пользователя).
-	Отправить GET запрос на http://localhost:7001/api/reservedTours
-	Добавить в RequestParameters токен пользоватя:
-		token = ${tokenValue}
 		
 9.Получение списка пользователей для тура (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/listOfReservedTourUsers
