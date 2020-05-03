@@ -2,6 +2,7 @@ package com.yermolenko.security.config;
 
 import com.yermolenko.security.filters.TokenAuthFilter;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -9,6 +10,8 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
@@ -61,5 +64,10 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/deleteTour").hasAuthority("manager")
                 .antMatchers("/api/listOfReservedTourUsers").hasAuthority("manager");
         http.csrf().disable();
+    }
+
+    @Bean
+    public PasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

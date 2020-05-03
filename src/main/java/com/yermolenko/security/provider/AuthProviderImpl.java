@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -27,13 +28,18 @@ public class AuthProviderImpl implements AuthenticationProvider {
 
     private final UserDAO userRepository;
 
+    private final PasswordEncoder bCryptPasswordEncoder;
+
+
     /**
      * Constructor AuthProviderImpl creates a new AuthProviderImpl instance.
      *
      * @param userRepository of type UserDAO
+     * @param bCryptPasswordEncoder
      */
-    public AuthProviderImpl(UserDAO userRepository) {
+    public AuthProviderImpl(UserDAO userRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /**
@@ -51,7 +57,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
             throw new UsernameNotFoundException("User not found");
         }
         String password = authentication.getCredentials().toString();
-        if (!password.equals(user.getPassword())) {
+        if (!bCryptPasswordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
 

@@ -3,6 +3,7 @@ package com.yermolenko.services.impl;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.User;
 import com.yermolenko.services.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,13 +17,17 @@ public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
 
+    private final PasswordEncoder bCryptPasswordEncoder;
+
+
     /**
      * Constructor UserServiceImpl creates a new UserServiceImpl instance.
      *
      * @param userDAO of type UserDAO
      */
-    public UserServiceImpl(UserDAO userDAO) {
+    public UserServiceImpl(UserDAO userDAO, PasswordEncoder bCryptPasswordEncoder) {
         this.userDAO = userDAO;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /**
@@ -33,6 +38,8 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public boolean registrationUser(User user) {
+        String hashPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(hashPassword);
         return userDAO.registrationUser(user);
     }
 
@@ -46,5 +53,4 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmail(String email) {
         return userDAO.findUserByEmail(email);
     }
-
 }

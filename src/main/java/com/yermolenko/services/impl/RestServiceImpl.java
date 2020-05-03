@@ -9,6 +9,7 @@ import com.yermolenko.model.User;
 import com.yermolenko.services.RestService;
 import com.yermolenko.dto.TokenDto;
 import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static com.yermolenko.dto.TokenDto.from;
@@ -26,15 +27,18 @@ public class RestServiceImpl implements RestService {
 
     private final TokenDAO tokenDAO;
 
+    private final PasswordEncoder bCryptPasswordEncoder;
+
     /**
      * Constructor RestServiceImpl creates a new RestServiceImpl instance.
-     *
-     * @param userDAO of type UserDAO
+     *  @param userDAO of type UserDAO
      * @param tokenDAO of type TokenDAO
+     * @param bCryptPasswordEncoder
      */
-    public RestServiceImpl(UserDAO userDAO, TokenDAO tokenDAO) {
+    public RestServiceImpl(UserDAO userDAO, TokenDAO tokenDAO, PasswordEncoder bCryptPasswordEncoder) {
         this.userDAO = userDAO;
         this.tokenDAO = tokenDAO;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     /**
@@ -45,13 +49,12 @@ public class RestServiceImpl implements RestService {
      */
     @Override
     public boolean signUp(UserForm userForm) {
-        String password = userForm.getPassword();
-
+        String hashPassword = bCryptPasswordEncoder.encode(userForm.getPassword());
 
         User user = User.builder()
                 .firstName(userForm.getFirstName())
                 .lastName(userForm.getLastName())
-                .password(password)
+                .password(hashPassword)
                 .email(userForm.getEmail())
                 .build();
 
@@ -69,7 +72,7 @@ public class RestServiceImpl implements RestService {
         User userCandidate = userDAO.findUserByEmail(loginForm.getEmail());
 
         if (userCandidate != null) {
-            if (userCandidate.getPassword().equals(loginForm.getPassword())) {
+            if (bCryptPasswordEncoder.matches(loginForm.getPassword(), userCandidate.getPassword())) {
                 Token token = Token.builder()
                         .user(userCandidate)
                         .value(RandomStringUtils.random(10, true, true))
