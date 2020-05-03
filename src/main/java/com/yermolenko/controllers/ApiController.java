@@ -23,6 +23,12 @@ import java.util.List;
 
 import static com.yermolenko.utils.Converters.from;
 
+/**
+ * Class ApiController contains api controllers.
+ *
+ * @author Andrey
+ * Created on 02.05.2020
+ */
 @RestController
 public class ApiController {
 
@@ -32,17 +38,36 @@ public class ApiController {
 
     private final UserService userService;
 
+    /**
+     * Constructor ApiController creates a new ApiController instance.
+     *
+     * @param travelTourService of type TravelTourService
+     * @param restService of type RestService
+     * @param userService of type UserService
+     */
     public ApiController(TravelTourService travelTourService, RestService restService, UserService userService) {
         this.travelTourService = travelTourService;
         this.restService = restService;
         this.userService = userService;
     }
 
+    /**
+     * Controller login forms a request for api to receive a token.
+     *
+     * @param loginForm of type LoginForm
+     * @return ResponseEntity<TokenDto>
+     */
     @PostMapping("/api/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginForm loginForm) {
         return ResponseEntity.ok(restService.login(loginForm));
     }
 
+    /**
+     * Controller addUser is responsible for adding a new user.
+     *
+     * @param userForm of type UserForm
+     * @return ResponseEntity<Object>
+     */
     @PostMapping("/api/sign_up")
     public ResponseEntity<Object> addUser(@RequestBody UserForm userForm) {
         User user = from(userForm);
@@ -54,6 +79,12 @@ public class ApiController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Controller getTours is responsible for getting travel tours.
+     *
+     * @param tourParams of type SearchTourParams
+     * @return ResponseEntity<?>
+     */
     @PostMapping("/api/tours")
     public ResponseEntity<?> getTours(@RequestBody SearchTourParams tourParams) {
         System.out.println(tourParams.toString());
@@ -70,6 +101,12 @@ public class ApiController {
         }
     }
 
+    /**
+     * Controller reservationTour is responsible for reservation tour for user.
+     *
+     * @param id of type int
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/api/reservationTour")
     public ResponseEntity<?> reservationTour(@RequestParam int id) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -84,6 +121,13 @@ public class ApiController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Controller updateTour is responsible for updating tour for manager.
+     *
+     * @param tourUpdate of type TravelTourForm
+     * @param id of type int
+     * @return ResponseEntity<?>
+     */
     @PostMapping("/api/updateTour")
     public ResponseEntity<?> updateTour(@RequestBody TravelTourForm tourUpdate,
                              @RequestParam int id) {
@@ -95,6 +139,12 @@ public class ApiController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Controller deleteTour is responsible for deleting tour for manager.
+     *
+     * @param id of type int
+     * @return ResponseEntity<?>
+     */
     @GetMapping("/api/deleteTour")
     public ResponseEntity<?> deleteTour(@RequestParam int id) {
         boolean result = travelTourService.deleteTour(id);
@@ -105,6 +155,12 @@ public class ApiController {
         return ResponseEntity.badRequest().build();
     }
 
+    /**
+     * Controller addTour is responsible for adding a new tour.
+     *
+     * @param tourAdd of type TravelTourForm
+     * @return ResponseEntity<?>
+     */
     @PostMapping("/api/addTour")
     public ResponseEntity<?> addTour(@RequestBody TravelTourForm tourAdd) {
         boolean result = travelTourService.addTour(from(tourAdd));
@@ -116,6 +172,13 @@ public class ApiController {
     }
 
 
+    /**
+     * Controller getReservedTours returns the reservedTours of this ApiController object.
+     *
+     *
+     *
+     * @return the reservedTours (type ResponseEntity<List<TravelTour>>) of this ApiController object.
+     */
     @GetMapping("/api/reservedTours")
     public ResponseEntity<List<TravelTour>> getReservedTours() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
@@ -127,6 +190,12 @@ public class ApiController {
         return ResponseEntity.ok(tours);
     }
 
+    /**
+     * Controller listOfReservedTourUsers is responsible for returns list of reserved tour users for manager.
+     *
+     * @param id of type int
+     * @return ResponseEntity<List < User>>
+     */
     @GetMapping("/api/listOfReservedTourUsers")
     public ResponseEntity<List<User>> listOfReservedTourUsers(@RequestParam int id) {
         TravelTour tour = new TravelTour();

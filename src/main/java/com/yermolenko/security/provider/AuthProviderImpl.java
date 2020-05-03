@@ -16,15 +16,33 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * AuthProvider.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
 
     private final UserDAO userRepository;
 
+    /**
+     * Constructor AuthProviderImpl creates a new AuthProviderImpl instance.
+     *
+     * @param userRepository of type UserDAO
+     */
     public AuthProviderImpl(UserDAO userRepository) {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Method authenticate.
+     *
+     * @param authentication of type Authentication
+     * @return Authentication
+     * @throws AuthenticationException when
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String email = authentication.getName();
@@ -45,6 +63,12 @@ public class AuthProviderImpl implements AuthenticationProvider {
         return new UsernamePasswordAuthenticationToken(user, null, authorities);
     }
 
+    /**
+     * Method supports.
+     *
+     * @param aClass of type Class<?>
+     * @return boolean
+     */
     @Override
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);

@@ -2,12 +2,12 @@ package com.yermolenko.forms;
 
 import lombok.Data;
 
+
 /**
- * 18.04.2018
- * UserForm
+ * Class UserForm is a form for data transfer.
  *
- * @author Sidikov Marsel (First Software Engineering Platform)
- * @version v1.0
+ * @author Andrey
+ * Created on 03.05.2020
  */
 @Data
 public class UserForm {

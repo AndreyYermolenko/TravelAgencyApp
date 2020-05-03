@@ -14,16 +14,33 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class UserDAOImpl is designed to receive and modify user data.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Log4j
 @Component
 public class UserDAOImpl implements UserDAO {
 
     private final ConnectionPool connectionPool;
 
+    /**
+     * Constructor UserDAOImpl creates a new UserDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
     public UserDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Method registrationUser add user data to database.
+     *
+     * @param user of type User
+     * @return boolean
+     */
     @Override
     public boolean registrationUser(User user) {
         Connection connection = connectionPool.getConnection();
@@ -58,6 +75,12 @@ public class UserDAOImpl implements UserDAO {
         return false;
     }
 
+    /**
+     * Method findUserByEmail finds user by email from database.
+     *
+     * @param email of type String
+     * @return User
+     */
     @Override
     public User findUserByEmail(String email) {
         Connection connection = connectionPool.getConnection();
@@ -83,6 +106,12 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    /**
+     * Method getUserById gets user by id from database.
+     *
+     * @param id of type int
+     * @return User
+     */
     @Override
     public User getUserById(int id) {
         Connection connection = connectionPool.getConnection();

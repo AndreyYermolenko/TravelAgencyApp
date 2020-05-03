@@ -2,9 +2,7 @@ package com.yermolenko.dao;
 
 import com.yermolenko.exceptions.ConnectionToDatabaseException;
 import lombok.extern.log4j.Log4j;
-import org.apache.tomcat.jdbc.pool.PoolProperties;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpServerErrorException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -16,6 +14,12 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * Class ConnectionPool contains connection pool.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Log4j
 @Component
 public class ConnectionPool {
@@ -35,7 +39,6 @@ public class ConnectionPool {
         }
     }
 
-    //WebLogic Datasource
     {
         Context context;
         try {
@@ -46,6 +49,13 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Method getConnection returns the connection of this ConnectionPool object.
+     *
+     *
+     *
+     * @return the connection (type Connection) of this ConnectionPool object.
+     */
     public Connection getConnection(){
         Connection connection = null;
         try {

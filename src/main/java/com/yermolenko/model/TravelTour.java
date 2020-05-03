@@ -5,6 +5,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
+/**
+ * Class TravelTour  is a model.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

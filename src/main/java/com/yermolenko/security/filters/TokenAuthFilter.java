@@ -9,19 +9,33 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * 25.04.2018
  * TokenAuthFilter
  *
- * @author Sidikov Marsel (First Software Engineering Platform)
- * @version v1.0
+ * @author Andrey
+ * Created on 03.05.2020
  */
 @Component
 public class TokenAuthFilter implements Filter {
+    /**
+     * Method init.
+     *
+     * @param filterConfig of type FilterConfig
+     * @throws ServletException when
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    /**
+     * Method doFilter.
+     *
+     * @param servletRequest of type ServletRequest
+     * @param servletResponse of type ServletResponse
+     * @param filterChain of type FilterChain
+     * @throws IOException when
+     * @throws ServletException when
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
@@ -37,6 +51,9 @@ public class TokenAuthFilter implements Filter {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
+    /**
+     * Method destroy.
+     */
     @Override
     public void destroy() {
 

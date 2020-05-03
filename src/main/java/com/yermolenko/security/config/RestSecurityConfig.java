@@ -11,6 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+/**
+ * Class RestSecurityConfig  is custom config for rest security.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @ComponentScan("com.yermolenko")
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -21,11 +27,23 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final TokenAuthFilter tokenAuthFilter;
 
+    /**
+     * Constructor RestSecurityConfig creates a new RestSecurityConfig instance.
+     *
+     * @param authenticationProvider of type AuthenticationProvider
+     * @param tokenAuthFilter of type TokenAuthFilter
+     */
     public RestSecurityConfig(@Qualifier("tokenAuthenticationProvider") AuthenticationProvider authenticationProvider, TokenAuthFilter tokenAuthFilter) {
         this.authenticationProvider = authenticationProvider;
         this.tokenAuthFilter = tokenAuthFilter;
     }
 
+    /**
+     * Configure.
+     *
+     * @param http of type HttpSecurity
+     * @throws Exception when
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http

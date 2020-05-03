@@ -12,6 +12,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+/**
+ * TokenAuthenticationProvider.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Component
 public class TokenAuthenticationProvider implements AuthenticationProvider {
 
@@ -21,11 +27,24 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
 
 
 
+    /**
+     * Constructor TokenAuthenticationProvider creates a new TokenAuthenticationProvider instance.
+     *
+     * @param tokenDAO of type TokenDAO
+     * @param userDetailsService of type UserDetailsService
+     */
     public TokenAuthenticationProvider(TokenDAO tokenDAO, UserDetailsService userDetailsService) {
         this.tokenDAO = tokenDAO;
         this.userDetailsService = userDetailsService;
     }
 
+    /**
+     * Method authenticate.
+     *
+     * @param authentication of type Authentication
+     * @return Authentication
+     * @throws AuthenticationException when
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         TokenAuthentication tokenAuthentication = (TokenAuthentication)authentication;
@@ -40,6 +59,12 @@ public class TokenAuthenticationProvider implements AuthenticationProvider {
         } else throw new IllegalArgumentException("Bad token");
     }
 
+    /**
+     * Method supports.
+     *
+     * @param authentication of type Class<?>
+     * @return boolean
+     */
     @Override
     public boolean supports(Class<?> authentication) {
         return TokenAuthentication.class.equals(authentication);

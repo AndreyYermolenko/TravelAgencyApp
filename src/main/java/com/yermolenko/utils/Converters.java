@@ -12,11 +12,23 @@ import lombok.Data;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Class Converters.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Data
 @AllArgsConstructor
 @Builder
 public class Converters {
 
+    /**
+     * Method from converts UserForm to User.
+     *
+     * @param userForm of type UserForm
+     * @return User
+     */
     public static User from(UserForm userForm) {
         return User.builder()
                 .email(userForm.getEmail())
@@ -26,10 +38,22 @@ public class Converters {
                 .build();
     }
 
+    /**
+     * Method from converts List<TravelTour> to List<TravelTourDtoForUser>.
+     *
+     * @param tours of type List<TravelTour>
+     * @return List<TravelTourDtoForUser>
+     */
     public static List<TravelTourDtoForUser> from(List<TravelTour> tours) {
         return tours.stream().map(Converters::from).collect(Collectors.toList());
     }
 
+    /**
+     * Method from converts TravelTour to TravelTourDtoForUser.
+     *
+     * @param tour of type TravelTour
+     * @return TravelTourDtoForUser
+     */
     private static TravelTourDtoForUser from(TravelTour tour) {
         return TravelTourDtoForUser.builder()
                 .id(tour.getId())
@@ -41,6 +65,12 @@ public class Converters {
                 .build();
     }
 
+    /**
+     * Method from converts TravelTourForm to TravelTour.
+     *
+     * @param tourForm of type TravelTourForm
+     * @return TravelTour
+     */
     public static TravelTour from(TravelTourForm tourForm) {
         return TravelTour.builder()
                 .destination(tourForm.getDestination())

@@ -17,6 +17,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class TravelTourDAOImpl is designed to receive and modify travel tour data.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Log4j
 @Component
 public class TravelTourDAOImpl implements TravelTourDAO {
@@ -24,11 +30,23 @@ public class TravelTourDAOImpl implements TravelTourDAO {
     private final ConnectionPool connectionPool;
     private final UserDAO userDAO;
 
+    /**
+     * Constructor TravelTourDAOImpl creates a new TravelTourDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     * @param userDAO of type UserDAO
+     */
     public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO) {
         this.connectionPool = connectionPool;
         this.userDAO = userDAO;
     }
 
+    /**
+     * Method getAllTours gets the all tours data from database.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     @Override
     public List<TravelTour> getAllTours(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
@@ -67,6 +85,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method getSomeTours gets some tours data from database.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     @Override
     public List<TravelTour> getSomeTours(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
@@ -143,6 +167,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method getTourById gets tour data by id from database.
+     *
+     * @param id of type int
+     * @return TravelTour
+     */
     @Override
     public TravelTour getTourById(int id) {
         Connection connection = connectionPool.getConnection();
@@ -165,6 +195,13 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tour;
     }
 
+    /**
+     * Method reservationTour adds tour reservation data to the database.
+     *
+     * @param user of type User
+     * @param travelTour of type TravelTour
+     * @return boolean
+     */
     @Override
     public boolean reservationTour(User user, TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
@@ -222,6 +259,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         }
     }
 
+    /**
+     * Method getReservedTours gets reserved tours data from database.
+     *
+     * @param user of type User
+     * @return List<TravelTour>
+     */
     @Override
     public List<TravelTour> getReservedTours(User user) {
         List<TravelTour> tours = new ArrayList<>();
@@ -269,6 +312,13 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tour;
     }
 
+    /**
+     * Method updateTour updates tour data to the database.
+     *
+     * @param id of type int
+     * @param travelTour of type TravelTour
+     * @return boolean
+     */
     @Override
     public boolean updateTour(int id, TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
@@ -301,6 +351,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return false;
     }
 
+    /**
+     * Method deleteTour deletes tour data from the database.
+     *
+     * @param id of type int
+     * @return boolean
+     */
     @Override
     public boolean deleteTour(int id) {
         Connection connection = connectionPool.getConnection();
@@ -326,6 +382,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return false;
     }
 
+    /**
+     * Method addTour adds tour data to the database.
+     *
+     * @param travelTour of type TravelTour
+     * @return boolean
+     */
     @Override
     public boolean addTour(TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
@@ -354,6 +416,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return false;
     }
 
+    /**
+     * Method getListOfReservedTourUsers gets list of reserved tour users data from database.
+     *
+     * @param tour of type TravelTour
+     * @return List<User>
+     */
     @Override
     public List<User> getListOfReservedTourUsers(TravelTour tour) {
         List<User> tours = new ArrayList<>();

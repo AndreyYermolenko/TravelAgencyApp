@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
 
+/**
+ * Class AuthController contains authentication controllers.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Controller
 public class AuthController {
 
@@ -20,11 +26,23 @@ public class AuthController {
 
     private final UserService userService;
 
+    /**
+     * Constructor AuthController creates a new AuthController instance.
+     *
+     * @param userValidator of type UserValidator
+     * @param userService of type UserService
+     */
     public AuthController(UserValidator userValidator, UserService userService) {
         this.userValidator = userValidator;
         this.userService = userService;
     }
 
+    /**
+     * Controller registration is responsible for registration users.
+     *
+     * @param model of type Model
+     * @return String
+     */
     @GetMapping("/sign_up")
     public String registration(Model model) {
         model.addAttribute("user", new User());
@@ -32,6 +50,13 @@ public class AuthController {
         return "/auth/sign_up";
     }
 
+    /**
+     * Controller registration is responsible for registration users.
+     *
+     * @param user of type User
+     * @param result of type BindingResult
+     * @return String
+     */
     @PostMapping("/sign_up")
     public String registration(@ModelAttribute @Valid User user, BindingResult result) {
         userValidator.validate(user, result);
@@ -45,8 +70,12 @@ public class AuthController {
         return "redirect:/login";
     }
 
+    /**
+     * Controller login is responsible for sign in.
+     * @return String
+     */
     @RequestMapping(value = {"/login", "/"})
-    public String view() {
+    public String login() {
         return "/auth/sign_in";
     }
 

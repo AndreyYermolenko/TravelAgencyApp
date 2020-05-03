@@ -7,6 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+/**
+ * Class TravelTourDtoForUser is a simple travel tour dto for user class.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

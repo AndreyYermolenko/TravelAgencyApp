@@ -7,6 +7,12 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
+/**
+ * Class User  is a model.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

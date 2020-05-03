@@ -13,6 +13,12 @@ import org.springframework.stereotype.Service;
 
 import static com.yermolenko.dto.TokenDto.from;
 
+/**
+ * Class RestServiceImpl.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Service
 public class RestServiceImpl implements RestService {
 
@@ -20,11 +26,23 @@ public class RestServiceImpl implements RestService {
 
     private final TokenDAO tokenDAO;
 
+    /**
+     * Constructor RestServiceImpl creates a new RestServiceImpl instance.
+     *
+     * @param userDAO of type UserDAO
+     * @param tokenDAO of type TokenDAO
+     */
     public RestServiceImpl(UserDAO userDAO, TokenDAO tokenDAO) {
         this.userDAO = userDAO;
         this.tokenDAO = tokenDAO;
     }
 
+    /**
+     * Method signUp.
+     *
+     * @param userForm of type UserForm
+     * @return boolean
+     */
     @Override
     public boolean signUp(UserForm userForm) {
         String password = userForm.getPassword();
@@ -40,6 +58,12 @@ public class RestServiceImpl implements RestService {
         return userDAO.registrationUser(user);
     }
 
+    /**
+     * Method login.
+     *
+     * @param loginForm of type LoginForm
+     * @return TokenDto
+     */
     @Override
     public TokenDto login(LoginForm loginForm) {
         User userCandidate = userDAO.findUserByEmail(loginForm.getEmail());

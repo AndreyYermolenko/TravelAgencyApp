@@ -11,6 +11,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+/**
+ * Class MvcSecurityConfig is custom config for mvc security.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @EnableWebSecurity
 @ComponentScan("com.yermolenko")
 @EnableGlobalMethodSecurity(prePostEnabled=true)
@@ -19,10 +25,21 @@ public class MvcSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthProviderImpl authProvider;
 
+    /**
+     * Constructor MvcSecurityConfig creates a new MvcSecurityConfig instance.
+     *
+     * @param authProvider of type AuthProviderImpl
+     */
     public MvcSecurityConfig(@Qualifier("authProviderImpl") AuthProviderImpl authProvider) {
         this.authProvider = authProvider;
     }
 
+    /**
+     * Configure.
+     *
+     * @param http of type HttpSecurity
+     * @throws Exception when
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -40,6 +57,11 @@ public class MvcSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
+    /**
+     * Configure.
+     *
+     * @param auth of type AuthenticationManagerBuilder
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(authProvider);

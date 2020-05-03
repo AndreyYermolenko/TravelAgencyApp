@@ -12,6 +12,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Class TokenDAOImpl is designed to receive and save token data.
+ *
+ * @author Andrey
+ * Created on 03.05.2020
+ */
 @Log4j
 @Component
 public class TokenDAOImpl implements TokenDAO {
@@ -20,11 +26,23 @@ public class TokenDAOImpl implements TokenDAO {
 
     private final UserDAO userDAO;
 
+    /**
+     * Constructor TokenDAOImpl creates a new TokenDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     * @param userDAO of type UserDAO
+     */
     public TokenDAOImpl(ConnectionPool connectionPool, UserDAO userDAO) {
         this.connectionPool = connectionPool;
         this.userDAO = userDAO;
     }
 
+    /**
+     * Method findOneByValue gets from the database token data.
+     *
+     * @param value of type String
+     * @return Token
+     */
     @Override
     public Token findOneByValue(String value) {
         Connection connection = connectionPool.getConnection();
@@ -51,6 +69,12 @@ public class TokenDAOImpl implements TokenDAO {
         return token;
     }
 
+    /**
+     * Method saveToken saves to the database token data.
+     *
+     * @param token of type Token
+     * @return boolean
+     */
     @Override
     public boolean saveToken(Token token) {
         Connection connection = connectionPool.getConnection();
