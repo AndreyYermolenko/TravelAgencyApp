@@ -62,6 +62,14 @@
                     </tr>
                 </sec:authorize>
                 <tr>
+                    <th>Перевозчик</th>
+                    <th>${tour.traverCarrier.destination}</th>
+                </tr>
+                <tr>
+                    <th>Курорт</th>
+                    <th>${tour.resort.destination}</th>
+                </tr>
+                <tr>
                     <th>Описание</th>
                     <th>${tour.description}</th>
                 </tr>

@@ -48,14 +48,18 @@ public class UserDAOImpl implements UserDAO {
         try {
             PreparedStatement ps1 = connection.prepareStatement(
                     "INSERT INTO users " +
-                            "(email, password, first_name, last_name, manager_id) " +
-                            "VALUES(?, ?, ?, ?, 1); "
+                            "(email, password, first_name, last_name, manager_id, agency_branch_id) " +
+                            "VALUES(?, ?, ?, ?, ?, ?); "
             );
+
+            User manager = getManagerByBranchId(user.getAgencyBranchId());
 
             ps1.setString(1, user.getEmail());
             ps1.setString(2, user.getPassword());
             ps1.setString(3, user.getFirstName());
             ps1.setString(4, user.getLastName());
+            ps1.setInt(5, manager.getId());
+            ps1.setInt(6, user.getAgencyBranchId());
 
             PreparedStatement ps2 = connection.prepareStatement(
                     "INSERT INTO role_user VALUES ((SELECT id FROM users WHERE email = ?), 2)"
@@ -132,6 +136,33 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return user;
+    }
+
+    @Override
+    public User getManagerByBranchId(int id) {
+        Connection connection = connectionPool.getConnection();
+        Role managerRole = new Role(1, "manager");
+
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users " +
+                    "WHERE agency_branch_id = ?");
+            ps.setInt(1, id);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                User user = new User();
+                rsToUser(user, rs);
+                if (user.getRoles().contains(managerRole)) {
+                    connection.close();
+                    return user;
+                }
+            }
+
+            connection.close();
+        } catch (SQLException ex) {
+            log.error("Getting manager by agency branch id problem", ex);
+        }
+        return null;
     }
 
     private User rsToUser(User user, ResultSet rs) {

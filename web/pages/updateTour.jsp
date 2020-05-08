@@ -23,6 +23,38 @@
         <input name="maxCount" id="maxCount" type="number" value="${tourCurrent.maxCount}" placeholder="Макс. кол-во туристов" />
         <br/>
 
+        <div>
+            <select name="traverCarrierId" id="traverCarrierId" >
+                <option disabled>Транспортный перевозчик</option>
+                <c:forEach var="carrier" items="${travelCarriers}" >
+                    <c:choose>
+                        <c:when test = "${carrier.id  == tourCurrent.traverCarrier.id}">
+                            <option selected value="${carrier.id}">${carrier.destination}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${carrier.id}">${carrier.destination}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </select>
+        </div>
+
+        <div>
+            <select name="resortId" id="resortId" >
+                <option disabled>Отделение агенства</option>
+                <c:forEach var="resort" items="${resorts}" >
+                    <c:choose>
+                        <c:when test = "${resort.id  == tourCurrent.resort.id}">
+                            <option selected value="${resort.id}">${resort.destination}</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="${resort.id}">${resort.destination}</option>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+            </select>
+        </div>
+
         <input name="description" id="description" type="text" value="${tourCurrent.description}" placeholder="Описание тура"/>
         <br/>
 
@@ -32,5 +64,3 @@
 
 </body>
 </html>
-
-

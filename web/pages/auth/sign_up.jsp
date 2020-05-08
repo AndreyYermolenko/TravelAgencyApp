@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -62,6 +63,14 @@
             <text id="lastNameMessage"></text>
         </div>
 
+        <div>
+            <select name="agencyBranchId" id="agencyBranchId" >
+                <option disabled>Отделение агенства</option>
+                <c:forEach var="branch" items="${branches}" >
+                    <option value="${branch.id}">${branch.destination}</option>
+                </c:forEach>
+            </select>
+        </div>
         <input type="submit" value="Регистрация"/>
 
     </form:form>

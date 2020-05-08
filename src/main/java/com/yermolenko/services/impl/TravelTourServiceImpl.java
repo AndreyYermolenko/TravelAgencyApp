@@ -36,15 +36,27 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getTours(SearchTourParams searchTourParams) {
+    public List<TravelTour> getToursForManager(SearchTourParams searchTourParams) {
         if ("".equals(searchTourParams.getDestination())
                 && searchTourParams.getBeginDate() == null
                 && searchTourParams.getEndDate() == null
                 && searchTourParams.getMinCost() == null
                 && searchTourParams.getMaxCost() == null) {
-            return travelTourDAO.getAllTours(searchTourParams);
+            return travelTourDAO.getAllToursForManager(searchTourParams);
         }
-        return travelTourDAO.getSomeTours(searchTourParams);
+        return travelTourDAO.getSomeToursForManager(searchTourParams);
+    }
+
+    @Override
+    public List<TravelTour> getToursForUser(SearchTourParams searchTourParams) {
+        if ("".equals(searchTourParams.getDestination())
+                && searchTourParams.getBeginDate() == null
+                && searchTourParams.getEndDate() == null
+                && searchTourParams.getMinCost() == null
+                && searchTourParams.getMaxCost() == null) {
+            return travelTourDAO.getAllToursForUser(searchTourParams);
+        }
+        return travelTourDAO.getSomeToursForUser(searchTourParams);
     }
 
     /**

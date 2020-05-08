@@ -7,12 +7,9 @@ import com.yermolenko.forms.UserForm;
 import com.yermolenko.model.Token;
 import com.yermolenko.model.User;
 import com.yermolenko.services.RestService;
-import com.yermolenko.dto.TokenDto;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import static com.yermolenko.dto.TokenDto.from;
 
 /**
  * Class RestServiceImpl.
@@ -65,10 +62,10 @@ public class RestServiceImpl implements RestService {
      * Method login.
      *
      * @param loginForm of type LoginForm
-     * @return TokenDto
+     * @return Token
      */
     @Override
-    public TokenDto login(LoginForm loginForm) {
+    public Token login(LoginForm loginForm) {
         User userCandidate = userDAO.findUserByEmail(loginForm.getEmail());
 
         if (userCandidate != null) {
@@ -79,7 +76,7 @@ public class RestServiceImpl implements RestService {
                         .build();
 
                 tokenDAO.saveToken(token);
-                return from(token);
+                return token;
             }
         }
 

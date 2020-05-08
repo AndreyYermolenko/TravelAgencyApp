@@ -1,6 +1,7 @@
 package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
+import com.yermolenko.dao.TravelAgencyDAO;
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.forms.SearchTourParams;
@@ -29,16 +30,18 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
     private final ConnectionPool connectionPool;
     private final UserDAO userDAO;
+    private final TravelAgencyDAO travelAgencyDAO;
 
     /**
      * Constructor TravelTourDAOImpl creates a new TravelTourDAOImpl instance.
-     *
-     * @param connectionPool of type ConnectionPool
+     *  @param connectionPool of type ConnectionPool
      * @param userDAO of type UserDAO
+     * @param travelAgencyDAO
      */
-    public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO) {
+    public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO, TravelAgencyDAO travelAgencyDAO) {
         this.connectionPool = connectionPool;
         this.userDAO = userDAO;
+        this.travelAgencyDAO = travelAgencyDAO;
     }
 
     /**
@@ -48,7 +51,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getAllTours(SearchTourParams searchTourParams) {
+    public List<TravelTour> getAllToursForManager(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -73,7 +76,45 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             while(rs.next()) {
                 TravelTour tour = new TravelTour();
-                tour = rsToTravelTour(tour, rs);
+                tour = mapperTravelTourForManager(tour, rs);
+                tours.add(tour);
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            log.error("Getting all the tours problem", e);
+        }
+
+        return tours;
+    }
+
+    @Override
+    public List<TravelTour> getAllToursForUser(SearchTourParams searchTourParams) {
+        List<TravelTour> tours = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            String desc = "";
+            String sortedBy;
+            if (searchTourParams.getSortedBy() == null) {
+                sortedBy = "destination";
+            } else {
+                sortedBy = searchTourParams.getSortedBy();
+            }
+
+            if (searchTourParams.getDesc()) {
+                desc = "DESC";
+            }
+
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT * FROM travel_tour ORDER BY "
+                            + sortedBy + " "
+                            + desc + ";");
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                TravelTour tour = new TravelTour();
+                tour = mapperTravelTourForUser(tour, rs);
                 tours.add(tour);
             }
             connection.close();
@@ -92,7 +133,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getSomeTours(SearchTourParams searchTourParams) {
+    public List<TravelTour> getSomeToursForManager(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -155,7 +196,83 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             while (rs.next()) {
                 TravelTour tour = new TravelTour();
-                tour = rsToTravelTour(tour, rs);
+                tour = mapperTravelTourForManager(tour, rs);
+                tours.add(tour);
+            }
+
+            connection.close();
+        } catch (SQLException e) {
+            log.error("Getting some tours problem", e);
+        }
+
+        return tours;
+    }
+
+    @Override
+    public List<TravelTour> getSomeToursForUser(SearchTourParams searchTourParams) {
+        List<TravelTour> tours = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+
+        String destination = searchTourParams.getDestination();
+        LocalDate beginDate = searchTourParams.getBeginDate();
+        LocalDate endDate = searchTourParams.getEndDate();
+        Float minCost = searchTourParams.getMinCost();
+        Float maxCost = searchTourParams.getMaxCost();
+
+        if (beginDate == null) {
+            beginDate = LocalDate.now();
+        }
+        if (endDate == null) {
+            endDate = LocalDate.now().plusYears(2);
+        }
+        if (minCost == null) {
+            minCost = 0.0f;
+        }
+        if (maxCost == null) {
+            maxCost = Float.MAX_VALUE;
+        }
+
+        String desc = "";
+        String sortedBy;
+        if (searchTourParams.getSortedBy() == null || "".equals(searchTourParams.getSortedBy())) {
+            sortedBy = "destination";
+        } else {
+            sortedBy = searchTourParams.getSortedBy();
+        }
+
+        if (searchTourParams.getDesc()) {
+            desc = "DESC";
+        }
+
+        try {
+            PreparedStatement ps;
+
+            if ("".equals(destination)) {
+                ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                        "WHERE begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
+                        "ORDER BY " + sortedBy + " " + desc + ";"
+                );
+                ps.setDate(1, java.sql.Date.valueOf(beginDate));
+                ps.setDate(2, java.sql.Date.valueOf(endDate));
+                ps.setFloat(3, minCost);
+                ps.setFloat(4, maxCost);
+            } else {
+                ps = connection.prepareStatement("SELECT * FROM travel_tour " +
+                        "WHERE destination LIKE ? AND begin_date >= ? AND end_date <= ? AND cost BETWEEN ? AND ?" +
+                        "ORDER BY " + sortedBy + " " + desc + ";"
+                );
+                ps.setString(1, destination + '%');
+                ps.setDate(2, java.sql.Date.valueOf(beginDate));
+                ps.setDate(3, java.sql.Date.valueOf(endDate));
+                ps.setFloat(4, minCost);
+                ps.setFloat(5, maxCost);
+            }
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                TravelTour tour = new TravelTour();
+                tour = mapperTravelTourForUser(tour, rs);
                 tours.add(tour);
             }
 
@@ -185,7 +302,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             ResultSet rs = ps.executeQuery();
             rs.next();
-            tour = rsToTravelTour(tour, rs);
+            tour = mapperTravelTourForManager(tour, rs);
 
             connection.close();
         } catch (SQLException ex) {
@@ -295,7 +412,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
-    private TravelTour rsToTravelTour(TravelTour tour, ResultSet rs) {
+    private TravelTour mapperTravelTourForManager(TravelTour tour, ResultSet rs) {
         try {
             tour.setId(rs.getInt(1));
             tour.setDestination(rs.getString(2));
@@ -305,6 +422,25 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setMaxCount(rs.getInt(6));
             tour.setCurrentCount(rs.getInt(7));
             tour.setDescription(rs.getString(8));
+            tour.setTraverCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
+        } catch (SQLException e) {
+            log.error("Parsing result set problem", e);
+        }
+
+        return tour;
+    }
+
+    private TravelTour mapperTravelTourForUser(TravelTour tour, ResultSet rs) {
+        try {
+            tour.setId(rs.getInt(1));
+            tour.setDestination(rs.getString(2));
+            tour.setBeginDate(rs.getDate(3).toLocalDate());
+            tour.setEndDate(rs.getDate(4).toLocalDate());
+            tour.setCost(rs.getFloat(5));
+            tour.setDescription(rs.getString(8));
+            tour.setTraverCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);
         }
@@ -330,7 +466,9 @@ public class TravelTourDAOImpl implements TravelTourDAO {
                     "end_date = ?, " +
                     "cost = ?, " +
                     "max_count = ?, " +
-                    "description = ? " +
+                    "description = ?, " +
+                    "travel_carrier_id = ?," +
+                    "resort_id = ?" +
                     "WHERE id = ?");
             ps.setString(1, travelTour.getDestination());
             ps.setDate(2, java.sql.Date.valueOf(travelTour.getBeginDate()));
@@ -338,7 +476,9 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setFloat(4, travelTour.getCost());
             ps.setInt(5, travelTour.getMaxCount());
             ps.setString(6, travelTour.getDescription());
-            ps.setInt(7, id);
+            ps.setInt(7, travelTour.getTraverCarrierId());
+            ps.setInt(8, travelTour.getResortId());
+            ps.setInt(9, id);
 
             int countOfUpdate = ps.executeUpdate();
 
@@ -395,8 +535,8 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         try {
             PreparedStatement ps = connection.prepareStatement(
                     "INSERT INTO travel_tour " +
-                        "(destination, begin_date, end_date, cost, max_count, current_count, description) " +
-                        "VALUES(?, ?, ?, ?, ?, 0, ?);"
+                        "(destination, begin_date, end_date, cost, max_count, current_count, description, travel_carrier_id, resort_id) " +
+                        "VALUES(?, ?, ?, ?, ?, 0, ?, ?, ?);"
             );
             ps.setString(1, travelTour.getDestination());
             ps.setDate(2, java.sql.Date.valueOf(travelTour.getBeginDate()));
@@ -404,6 +544,8 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setFloat(4, travelTour.getCost());
             ps.setInt(5, travelTour.getMaxCount());
             ps.setString(6, travelTour.getDescription());
+            ps.setInt(7, travelTour.getTraverCarrierId());
+            ps.setInt(8, travelTour.getResortId());
 
             int countOfInsert = ps.executeUpdate();
 

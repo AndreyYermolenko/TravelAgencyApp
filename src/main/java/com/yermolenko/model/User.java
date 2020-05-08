@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.Set;
 
 /**
- * Class User  is a model.
+ * Class User is a model.
  *
  * @author Andrey
  * Created on 03.05.2020
@@ -37,5 +37,7 @@ public class User {
     private int managerId;
 
     private Set<Role> roles;
+
+    private int agencyBranchId;
 
 }

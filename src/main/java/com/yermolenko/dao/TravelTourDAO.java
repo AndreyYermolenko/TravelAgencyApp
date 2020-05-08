@@ -20,7 +20,9 @@ public interface TravelTourDAO {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getAllTours(SearchTourParams searchTourParams);
+    List<TravelTour> getAllToursForManager(SearchTourParams searchTourParams);
+
+    List<TravelTour> getAllToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getSomeTours gets some tours data from database.
@@ -28,7 +30,9 @@ public interface TravelTourDAO {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getSomeTours(SearchTourParams searchTourParams);
+    List<TravelTour> getSomeToursForManager(SearchTourParams searchTourParams);
+
+    List<TravelTour> getSomeToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getTourById gets tour data by id from database.

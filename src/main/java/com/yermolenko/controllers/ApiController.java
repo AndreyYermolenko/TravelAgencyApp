@@ -1,7 +1,5 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.dto.TokenDto;
-import com.yermolenko.dto.TravelTourDtoForUser;
 import com.yermolenko.forms.LoginForm;
 import com.yermolenko.forms.SearchTourParams;
 import com.yermolenko.forms.TravelTourForm;
@@ -58,8 +56,8 @@ public class ApiController {
      * @return ResponseEntity<TokenDto>
      */
     @PostMapping("/api/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginForm loginForm) {
-        return ResponseEntity.ok(restService.login(loginForm));
+    public ResponseEntity<String> login(@RequestBody LoginForm loginForm) {
+        return ResponseEntity.ok(restService.login(loginForm).getValue());
     }
 
     /**
@@ -87,16 +85,14 @@ public class ApiController {
      */
     @PostMapping("/api/tours")
     public ResponseEntity<?> getTours(@RequestBody SearchTourParams tourParams) {
-        List<TravelTour> tours = travelTourService.getTours(tourParams);
 
         Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
                 .getAuthorities();
 
         if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
-            return ResponseEntity.ok(tours);
+            return ResponseEntity.ok(travelTourService.getToursForManager(tourParams));
         } else {
-            List<TravelTourDtoForUser> tourDtoList = from(tours);
-            return ResponseEntity.ok(tourDtoList);
+            return ResponseEntity.ok(travelTourService.getToursForUser(tourParams));
         }
     }
 

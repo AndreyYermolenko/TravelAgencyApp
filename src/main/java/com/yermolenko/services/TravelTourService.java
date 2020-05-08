@@ -20,7 +20,9 @@ public interface TravelTourService {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getTours(SearchTourParams searchTourParams);
+    List<TravelTour> getToursForManager(SearchTourParams searchTourParams);
+
+    List<TravelTour> getToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getTour.

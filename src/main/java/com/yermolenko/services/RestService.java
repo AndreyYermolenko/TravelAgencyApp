@@ -2,7 +2,7 @@ package com.yermolenko.services;
 
 import com.yermolenko.forms.LoginForm;
 import com.yermolenko.forms.UserForm;
-import com.yermolenko.dto.TokenDto;
+import com.yermolenko.model.Token;
 
 /**
  * Interface RestService.
@@ -26,5 +26,5 @@ public interface RestService {
      * @param loginForm of type LoginForm
      * @return TokenDto
      */
-    TokenDto login(LoginForm loginForm);
+    Token login(LoginForm loginForm);
 }

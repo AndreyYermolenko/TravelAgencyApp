@@ -1,6 +1,7 @@
 package com.yermolenko.controllers;
 
 import com.yermolenko.model.User;
+import com.yermolenko.services.TravelAgencyService;
 import com.yermolenko.services.UserService;
 import com.yermolenko.utils.UserValidator;
 import org.springframework.stereotype.Controller;
@@ -23,15 +24,18 @@ public class AuthController {
 
     private final UserService userService;
 
+    private final TravelAgencyService travelAgencyService;
+
     /**
      * Constructor AuthController creates a new AuthController instance.
-     *
      * @param userValidator of type UserValidator
      * @param userService of type UserService
+     * @param travelAgencyService
      */
-    public AuthController(UserValidator userValidator, UserService userService) {
+    public AuthController(UserValidator userValidator, UserService userService, TravelAgencyService travelAgencyService) {
         this.userValidator = userValidator;
         this.userService = userService;
+        this.travelAgencyService = travelAgencyService;
     }
 
     /**
@@ -43,6 +47,7 @@ public class AuthController {
     @GetMapping("/sign_up")
     public String registration(Model model) {
         model.addAttribute("user", new User());
+        model.addAttribute("branches", travelAgencyService.getAgencyBranches());
 
         return "/auth/sign_up";
     }

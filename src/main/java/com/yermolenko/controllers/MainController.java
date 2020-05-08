@@ -3,17 +3,15 @@ package com.yermolenko.controllers;
 import com.yermolenko.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
+import com.yermolenko.services.TravelAgencyService;
 import com.yermolenko.services.TravelTourService;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -27,13 +25,17 @@ public class MainController {
 
     private final TravelTourService travelTourService;
 
+    private final TravelAgencyService travelAgencyService;
+
     /**
      * Constructor MainController creates a new MainController instance.
      *
      * @param travelTourService of type TravelTourService
+     * @param travelAgencyService
      */
-    public MainController(TravelTourService travelTourService) {
+    public MainController(TravelTourService travelTourService, TravelAgencyService travelAgencyService) {
         this.travelTourService = travelTourService;
+        this.travelAgencyService = travelAgencyService;
     }
 
     /**
@@ -61,7 +63,7 @@ public class MainController {
     @PreAuthorize("hasAuthority('user')")
     public String getTours(@ModelAttribute SearchTourParams tourParams,
                               Model model) {
-        List<TravelTour> tours = travelTourService.getTours(tourParams);
+        List<TravelTour> tours = travelTourService.getToursForManager(tourParams);
         model.addAttribute("tours", tours);
 
         return "advancedSearchTours";
@@ -70,20 +72,11 @@ public class MainController {
     /**
      * Controller getToursQuick is responsible for quick search tours.
      *
-     * @param model of type Model
      * @return String
      */
     @RequestMapping("/tours/quickSearch")
     @PreAuthorize("hasAuthority('user')")
-    public String getToursQuick(Model model) {
-        Collection<? extends GrantedAuthority> authorities = SecurityContextHolder.getContext().getAuthentication()
-                .getAuthorities();
-        if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
-            model.addAttribute("role", "manager");
-        } else {
-            model.addAttribute("role", "user");
-        }
-
+    public String getToursQuick() {
         return "quickSearchTours";
     }
 
@@ -100,7 +93,7 @@ public class MainController {
                             Model model) {
         SearchTourParams params = new SearchTourParams();
         params.setDestination(destination);
-        List<TravelTour> tours = travelTourService.getTours(params);
+        List<TravelTour> tours = travelTourService.getToursForManager(params);
         model.addAttribute("tours", tours);
 
         return "showTours";
@@ -120,6 +113,8 @@ public class MainController {
         TravelTour tour = travelTourService.getTour(id);
         model.addAttribute("tourCurrent", tour);
         model.addAttribute("tourUpdate", new TravelTour());
+        model.addAttribute("resorts", travelAgencyService.getResorts());
+        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
 
         return "updateTour";
     }
@@ -164,6 +159,8 @@ public class MainController {
     @PreAuthorize("hasAuthority('manager')")
     public String addTour(Model model) {
         model.addAttribute("newTour", new TravelTour());
+        model.addAttribute("resorts", travelAgencyService.getResorts());
+        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
 
         return "addTour";
     }
@@ -197,6 +194,7 @@ public class MainController {
         TravelTour tour = travelTourService.getTour(idTour);
         boolean result = travelTourService.reservationTour(user, tour);
         session.setAttribute("isSuccess", result);
+
         return "/reservationTour";
     }
 

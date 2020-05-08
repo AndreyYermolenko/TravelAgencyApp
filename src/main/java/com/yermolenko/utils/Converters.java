@@ -1,6 +1,5 @@
 package com.yermolenko.utils;
 
-import com.yermolenko.dto.TravelTourDtoForUser;
 import com.yermolenko.forms.TravelTourForm;
 import com.yermolenko.forms.UserForm;
 import com.yermolenko.model.TravelTour;
@@ -38,32 +37,32 @@ public class Converters {
                 .build();
     }
 
-    /**
-     * Method from converts List<TravelTour> to List<TravelTourDtoForUser>.
-     *
-     * @param tours of type List<TravelTour>
-     * @return List<TravelTourDtoForUser>
-     */
-    public static List<TravelTourDtoForUser> from(List<TravelTour> tours) {
-        return tours.stream().map(Converters::from).collect(Collectors.toList());
-    }
-
-    /**
-     * Method from converts TravelTour to TravelTourDtoForUser.
-     *
-     * @param tour of type TravelTour
-     * @return TravelTourDtoForUser
-     */
-    private static TravelTourDtoForUser from(TravelTour tour) {
-        return TravelTourDtoForUser.builder()
-                .id(tour.getId())
-                .destination(tour.getDestination())
-                .beginDate(tour.getBeginDate())
-                .endDate(tour.getEndDate())
-                .cost(tour.getCost())
-                .description(tour.getDescription())
-                .build();
-    }
+//    /**
+//     * Method from converts List<TravelTour> to List<TravelTourDtoForUser>.
+//     *
+//     * @param tours of type List<TravelTour>
+//     * @return List<TravelTourDtoForUser>
+//     */
+//    public static List<TravelTourDtoForUser> from(List<TravelTour> tours) {
+//        return tours.stream().map(Converters::from).collect(Collectors.toList());
+//    }
+//
+//    /**
+//     * Method from converts TravelTour to TravelTourDtoForUser.
+//     *
+//     * @param tour of type TravelTour
+//     * @return TravelTourDtoForUser
+//     */
+//    private static TravelTourDtoForUser from(TravelTour tour) {
+//        return TravelTourDtoForUser.builder()
+//                .id(tour.getId())
+//                .destination(tour.getDestination())
+//                .beginDate(tour.getBeginDate())
+//                .endDate(tour.getEndDate())
+//                .cost(tour.getCost())
+//                .description(tour.getDescription())
+//                .build();
+//    }
 
     /**
      * Method from converts TravelTourForm to TravelTour.

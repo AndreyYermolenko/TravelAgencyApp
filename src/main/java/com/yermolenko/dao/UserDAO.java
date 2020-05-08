@@ -34,4 +34,6 @@ public interface UserDAO {
      */
     User getUserById(int id);
 
+    User getManagerByBranchId(int id);
+
 }

@@ -1,3 +1,35 @@
+CREATE TABLE agency_branch
+(
+    id SERIAL NOT NULL PRIMARY KEY,
+    destination VARCHAR(50) NOT NULL,
+    address VARCHAR(100) NOT NULL
+);
+
+INSERT INTO agency_branch (destination, address) VALUES ('Sumy branch', '2, Rymskogo-Korsakova st., 40007 Sumy, Ukraine');
+INSERT INTO agency_branch (destination, address) VALUES ('Kiev branch', '15, Khreschatyk st., 01044 Kiev, Ukraine');
+INSERT INTO agency_branch (destination, address) VALUES ('Kharkov branch', '17, Gogol st., 61057 Kharkov, Ukraine');
+
+CREATE TABLE travel_carrier
+(
+    id SERIAL NOT NULL PRIMARY KEY,
+    destination VARCHAR(50) NOT NULL
+);
+
+INSERT INTO travel_carrier (destination) VALUES ('ТК "В последний путь"');
+INSERT INTO travel_carrier (destination) VALUES ('ОАО "Перевозка дров"');
+
+CREATE TABLE resort
+(
+    id SERIAL NOT NULL PRIMARY KEY,
+    destination VARCHAR(50) NOT NULL,
+    country VARCHAR(50) NOT NULL,
+    description VARCHAR
+);
+
+INSERT INTO resort (destination, country, description) VALUES ('Turkish resort', 'Turkey', 'Take a rest for the last time!');
+INSERT INTO resort (destination, country, description) VALUES ('German resort', 'Germany', 'Tasty beer!');
+INSERT INTO resort (destination, country, description) VALUES ('Egyptian resort', 'Egypt', 'Fry on the sand!');
+
 CREATE TABLE users
 (
     id SERIAL NOT NULL PRIMARY KEY,
@@ -5,7 +37,11 @@ CREATE TABLE users
     password VARCHAR(255) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
-    manager_id INT
+    manager_id INT,
+    agency_branch_id INT NOT NULL,
+
+    FOREIGN KEY (manager_id) REFERENCES users(id),
+    FOREIGN KEY (agency_branch_id) REFERENCES agency_branch(id)
 );
 
 CREATE TABLE roles
@@ -25,6 +61,23 @@ CREATE TABLE role_user
     UNIQUE (user_id, role_id)
 );
 
+INSERT INTO roles VALUES (1, 'manager');
+INSERT INTO roles VALUES (2, 'user');
+
+INSERT INTO users (email, password, first_name, last_name, manager_id, agency_branch_id)
+VALUES ('admin1@mail.com', '$2a$10$oNL5kXw.WVqQG9J2qEz31OpnN6KVr3lQ9AawMzEZsfJefzevmdPVq', 'Andrey', 'Yermolenko', NULL, 1);
+INSERT INTO users (email, password, first_name, last_name, manager_id, agency_branch_id)
+VALUES ('admin2@mail.com', '$2a$10$oNL5kXw.WVqQG9J2qEz31OpnN6KVr3lQ9AawMzEZsfJefzevmdPVq', 'Ivan', 'Sidorov', NULL, 2);
+INSERT INTO users (email, password, first_name, last_name, manager_id, agency_branch_id)
+VALUES ('admin3@mail.com', '$2a$10$oNL5kXw.WVqQG9J2qEz31OpnN6KVr3lQ9AawMzEZsfJefzevmdPVq', 'Igor', 'Petrov', NULL, 3);
+
+INSERT INTO role_user VALUES (1, 1);
+INSERT INTO role_user VALUES (1, 2);
+INSERT INTO role_user VALUES (2, 1);
+INSERT INTO role_user VALUES (2, 2);
+INSERT INTO role_user VALUES (3, 1);
+INSERT INTO role_user VALUES (3, 2);
+
 CREATE TABLE travel_tour
 (
     id SERIAL NOT NULL PRIMARY KEY,
@@ -34,7 +87,12 @@ CREATE TABLE travel_tour
     cost FLOAT NOT NULL,
     max_count INT NOT NULL,
     current_count INT NOT NULL,
-    description VARCHAR
+    description VARCHAR,
+    travel_carrier_id INT,
+    resort_id INT NOT NULL,
+
+    FOREIGN KEY (travel_carrier_id) REFERENCES travel_carrier(id),
+    FOREIGN KEY (resort_id) REFERENCES resort(id)
 );
 
 CREATE TABLE tour_user
@@ -47,9 +105,6 @@ CREATE TABLE tour_user
 
     UNIQUE (user_id, tour_id)
 );
-
-INSERT INTO roles VALUES (1, 'manager');
-INSERT INTO roles VALUES (2, 'user');
 
 CREATE TABLE tokens
 (

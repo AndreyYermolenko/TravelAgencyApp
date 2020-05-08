@@ -1,6 +1,10 @@
 package com.yermolenko.model;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
@@ -14,8 +18,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TravelTour {
     private int id;
     private String destination;
@@ -27,4 +31,8 @@ public class TravelTour {
     private Integer maxCount;
     private Integer currentCount;
     private String description;
+    private TravelCarrier traverCarrier;
+    private Resort resort;
+    private Integer traverCarrierId;
+    private Integer resortId;
 }
