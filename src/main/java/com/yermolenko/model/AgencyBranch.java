@@ -5,6 +5,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Class AgencyBranch.
+ *
+ * @author Andrey
+ * Created on 09.05.2020
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

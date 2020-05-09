@@ -15,16 +15,34 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class TravelAgencyDAOImpl.
+ *
+ * @author Andrey
+ * Created on 09.05.2020
+ */
 @Log4j
 @Component
 public class TravelAgencyDAOImpl implements TravelAgencyDAO {
 
     private final ConnectionPool connectionPool;
 
+    /**
+     * Constructor TravelAgencyDAOImpl creates a new TravelAgencyDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
     public TravelAgencyDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
+    /**
+     * Method getAgencyBranches returns the agencyBranches of this TravelAgencyDAOImpl object.
+     *
+     *
+     *
+     * @return the agencyBranches (type List<AgencyBranch>) of this TravelAgencyDAOImpl object.
+     */
     @Override
     public List<AgencyBranch> getAgencyBranches() {
         List<AgencyBranch> branches = new ArrayList<>();
@@ -52,6 +70,12 @@ public class TravelAgencyDAOImpl implements TravelAgencyDAO {
         return branches;
     }
 
+    /**
+     * Method getAgencyBranchById.
+     *
+     * @param id of type int
+     * @return AgencyBranch
+     */
     @Override
     public AgencyBranch getAgencyBranchById(int id) {
         AgencyBranch agencyBranch = new AgencyBranch();
@@ -78,6 +102,13 @@ public class TravelAgencyDAOImpl implements TravelAgencyDAO {
         return agencyBranch;
     }
 
+    /**
+     * Method getResorts returns the resorts of this TravelAgencyDAOImpl object.
+     *
+     *
+     *
+     * @return the resorts (type List<Resort>) of this TravelAgencyDAOImpl object.
+     */
     @Override
     public List<Resort> getResorts() {
         List<Resort> resorts = new ArrayList<>();
@@ -106,6 +137,12 @@ public class TravelAgencyDAOImpl implements TravelAgencyDAO {
         return resorts;
     }
 
+    /**
+     * Method getResortById.
+     *
+     * @param id of type int
+     * @return Resort
+     */
     @Override
     public Resort getResortById(int id) {
         Resort resort = new Resort();
@@ -133,6 +170,13 @@ public class TravelAgencyDAOImpl implements TravelAgencyDAO {
         return resort;
     }
 
+    /**
+     * Method getTravelCarriers returns the travelCarriers of this TravelAgencyDAOImpl object.
+     *
+     *
+     *
+     * @return the travelCarriers (type List<TravelCarrier>) of this TravelAgencyDAOImpl object.
+     */
     @Override
     public List<TravelCarrier> getTravelCarriers() {
         List<TravelCarrier> travelCarriers = new ArrayList<>();
@@ -159,6 +203,12 @@ public class TravelAgencyDAOImpl implements TravelAgencyDAO {
         return travelCarriers;
     }
 
+    /**
+     * Method getTravelCarrierById.
+     *
+     * @param id of type int
+     * @return TravelCarrier
+     */
     @Override
     public TravelCarrier getTravelCarrierById(int id) {
         TravelCarrier travelCarrier = new TravelCarrier();

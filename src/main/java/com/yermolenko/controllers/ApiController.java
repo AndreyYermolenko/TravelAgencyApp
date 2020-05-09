@@ -4,7 +4,6 @@ import com.yermolenko.controllers.forms.LoginForm;
 import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.controllers.forms.TravelTourForm;
 import com.yermolenko.controllers.forms.UserForm;
-import com.yermolenko.dao.TravelAgencyDAO;
 import com.yermolenko.model.*;
 import com.yermolenko.services.RestService;
 import com.yermolenko.services.TravelAgencyService;
@@ -203,6 +202,13 @@ public class ApiController {
         return ResponseEntity.ok(users);
     }
 
+    /**
+     * Method getAgencyBranches returns the agencyBranches of this ApiController object.
+     *
+     *
+     *
+     * @return the agencyBranches (type ResponseEntity<List<AgencyBranch>>) of this ApiController object.
+     */
     @GetMapping("/api/agencyBranch")
     public ResponseEntity<List<AgencyBranch>> getAgencyBranches() {
         List<AgencyBranch> agencyBranchList= travelAgencyService.getAgencyBranches();
@@ -210,6 +216,13 @@ public class ApiController {
         return ResponseEntity.ok(agencyBranchList);
     }
 
+    /**
+     * Method getResorts returns the resorts of this ApiController object.
+     *
+     *
+     *
+     * @return the resorts (type ResponseEntity<List<Resort>>) of this ApiController object.
+     */
     @GetMapping("/api/resort")
     public ResponseEntity<List<Resort>> getResorts() {
         List<Resort> resortList= travelAgencyService.getResorts();
@@ -217,6 +230,13 @@ public class ApiController {
         return ResponseEntity.ok(resortList);
     }
 
+    /**
+     * Method getTravelCarriers returns the travelCarriers of this ApiController object.
+     *
+     *
+     *
+     * @return the travelCarriers (type ResponseEntity<List<TravelCarrier>>) of this ApiController object.
+     */
     @GetMapping("/api/carrier")
     public ResponseEntity<List<TravelCarrier>> getTravelCarriers() {
         List<TravelCarrier> carrierList= travelAgencyService.getTravelCarriers();

@@ -1,10 +1,9 @@
 com.yermolenko.config
 com.yermolenko.controllers
+com.yermolenko.controllers.forms
 com.yermolenko.dao
 com.yermolenko.dao.impl
-com.yermolenko.dto
 com.yermolenko.exceptions
-com.yermolenko.controllers.forms
 com.yermolenko.model
 com.yermolenko.security.config
 com.yermolenko.security.details

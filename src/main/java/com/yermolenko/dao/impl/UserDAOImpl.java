@@ -138,6 +138,12 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    /**
+     * Method getManagerByBranchId.
+     *
+     * @param id of type int
+     * @return User
+     */
     @Override
     public User getManagerByBranchId(int id) {
         Connection connection = connectionPool.getConnection();
@@ -165,6 +171,13 @@ public class UserDAOImpl implements UserDAO {
         return null;
     }
 
+    /**
+     * Method rsToUser.
+     *
+     * @param user of type User
+     * @param rs of type ResultSet
+     * @return User
+     */
     private User rsToUser(User user, ResultSet rs) {
         try {
             user.setId(rs.getInt(1));
@@ -181,6 +194,12 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    /**
+     * Method getAuthoritiesById.
+     *
+     * @param id of type int
+     * @return Set<Role>
+     */
     private Set<Role> getAuthoritiesById(int id) {
         Connection connection = connectionPool.getConnection();
         Set<Role> authorities = new HashSet<>();
@@ -204,6 +223,12 @@ public class UserDAOImpl implements UserDAO {
         return authorities;
     }
 
+    /**
+     * Method getRoleById.
+     *
+     * @param roleId of type int
+     * @return Role
+     */
     private Role getRoleById(int roleId) {
         Connection connection = connectionPool.getConnection();
         Role role = new Role();

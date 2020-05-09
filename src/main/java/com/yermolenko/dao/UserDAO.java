@@ -34,6 +34,12 @@ public interface UserDAO {
      */
     User getUserById(int id);
 
+    /**
+     * Method getManagerByBranchId.
+     *
+     * @param id of type int
+     * @return User
+     */
     User getManagerByBranchId(int id);
 
 }

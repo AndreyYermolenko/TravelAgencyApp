@@ -88,6 +88,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method getAllToursForUser.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     @Override
     public List<TravelTour> getAllToursForUser(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
@@ -208,6 +214,12 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method getSomeToursForUser.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     @Override
     public List<TravelTour> getSomeToursForUser(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
@@ -412,6 +424,13 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method mapperTravelTourForManager.
+     *
+     * @param tour of type TravelTour
+     * @param rs of type ResultSet
+     * @return TravelTour
+     */
     private TravelTour mapperTravelTourForManager(TravelTour tour, ResultSet rs) {
         try {
             tour.setId(rs.getInt(1));
@@ -431,6 +450,13 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tour;
     }
 
+    /**
+     * Method mapperTravelTourForUser.
+     *
+     * @param tour of type TravelTour
+     * @param rs of type ResultSet
+     * @return TravelTour
+     */
     private TravelTour mapperTravelTourForUser(TravelTour tour, ResultSet rs) {
         try {
             tour.setId(rs.getInt(1));
