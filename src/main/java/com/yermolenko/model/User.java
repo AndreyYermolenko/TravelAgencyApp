@@ -34,10 +34,10 @@ public class User {
     @Size(min = 1, max = 10, message = "Last name should be from 1 to 10 symbols!")
     private String lastName;
 
-    private int managerId;
+    private Integer managerId;
 
     private Set<Role> roles;
 
-    private int agencyBranchId;
+    private Integer agencyBranchId;
 
 }

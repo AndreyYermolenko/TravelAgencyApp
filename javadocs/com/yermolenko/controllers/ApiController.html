@@ -173,14 +173,14 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="altColor" id="i0">
 <td class="colFirst"><code>org.springframework.http.ResponseEntity&lt;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTour(com.yermolenko.forms.TravelTourForm)">addTour</a></span>&#8203;(<a href="../forms/TravelTourForm.html" title="class in com.yermolenko.forms">TravelTourForm</a>&nbsp;tourAdd)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addTour(com.yermolenko.forms.TravelTourForm)">addTour</a></span>&#8203;(<a href="../forms/TravelTourForm.html" title="class in com.yermolenko.controllers.forms">TravelTourForm</a>&nbsp;tourAdd)</code></th>
 <td class="colLast">
 <div class="block">Controller addTour is responsible for adding a new tour.</div>
 </td>
 </tr>
 <tr class="rowColor" id="i1">
 <td class="colFirst"><code>org.springframework.http.ResponseEntity&lt;java.lang.Object&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addUser(com.yermolenko.forms.UserForm)">addUser</a></span>&#8203;(<a href="../forms/UserForm.html" title="class in com.yermolenko.forms">UserForm</a>&nbsp;userForm)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addUser(com.yermolenko.forms.UserForm)">addUser</a></span>&#8203;(<a href="../forms/UserForm.html" title="class in com.yermolenko.controllers.forms">UserForm</a>&nbsp;userForm)</code></th>
 <td class="colLast">
 <div class="block">Controller addUser is responsible for adding a new user.</div>
 </td>
@@ -201,7 +201,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor" id="i4">
 <td class="colFirst"><code>org.springframework.http.ResponseEntity&lt;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTours(com.yermolenko.forms.SearchTourParams)">getTours</a></span>&#8203;(<a href="../forms/SearchTourParams.html" title="class in com.yermolenko.forms">SearchTourParams</a>&nbsp;tourParams)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTours(com.yermolenko.forms.SearchTourParams)">getTours</a></span>&#8203;(<a href="../forms/SearchTourParams.html" title="class in com.yermolenko.controllers.forms">SearchTourParams</a>&nbsp;tourParams)</code></th>
 <td class="colLast">
 <div class="block">Controller getTours is responsible for getting travel tours.</div>
 </td>
@@ -215,7 +215,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor" id="i6">
 <td class="colFirst"><code>org.springframework.http.ResponseEntity&lt;<a href="../dto/TokenDto.html" title="class in com.yermolenko.dto">TokenDto</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#login(com.yermolenko.forms.LoginForm)">login</a></span>&#8203;(<a href="../forms/LoginForm.html" title="class in com.yermolenko.forms">LoginForm</a>&nbsp;loginForm)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#login(com.yermolenko.forms.LoginForm)">login</a></span>&#8203;(<a href="../forms/LoginForm.html" title="class in com.yermolenko.controllers.forms">LoginForm</a>&nbsp;loginForm)</code></th>
 <td class="colLast">
 <div class="block">Controller login forms a request for api to receive a token.</div>
 </td>
@@ -229,7 +229,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor" id="i8">
 <td class="colFirst"><code>org.springframework.http.ResponseEntity&lt;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTour(com.yermolenko.forms.TravelTourForm,int)">updateTour</a></span>&#8203;(<a href="../forms/TravelTourForm.html" title="class in com.yermolenko.forms">TravelTourForm</a>&nbsp;tourUpdate,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateTour(com.yermolenko.forms.TravelTourForm,int)">updateTour</a></span>&#8203;(<a href="../forms/TravelTourForm.html" title="class in com.yermolenko.controllers.forms">TravelTourForm</a>&nbsp;tourUpdate,
           int&nbsp;id)</code></th>
 <td class="colLast">
 <div class="block">Controller updateTour is responsible for updating tour for manager.</div>
@@ -298,7 +298,7 @@ extends java.lang.Object</pre>
 <h4>login</h4>
 <pre class="methodSignature">@PostMapping("/api/login")
 public&nbsp;org.springframework.http.ResponseEntity&lt;<a href="../dto/TokenDto.html" title="class in com.yermolenko.dto">TokenDto</a>&gt;&nbsp;login&#8203;(@RequestBody
-                                                               <a href="../forms/LoginForm.html" title="class in com.yermolenko.forms">LoginForm</a>&nbsp;loginForm)</pre>
+                                                               <a href="../forms/LoginForm.html" title="class in com.yermolenko.controllers.forms">LoginForm</a>&nbsp;loginForm)</pre>
 <div class="block">Controller login forms a request for api to receive a token.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -316,7 +316,7 @@ public&nbsp;org.springframework.http.ResponseEntity&lt;<a href="../dto/TokenDto.
 <h4>addUser</h4>
 <pre class="methodSignature">@PostMapping("/api/sign_up")
 public&nbsp;org.springframework.http.ResponseEntity&lt;java.lang.Object&gt;&nbsp;addUser&#8203;(@RequestBody
-                                                                         <a href="../forms/UserForm.html" title="class in com.yermolenko.forms">UserForm</a>&nbsp;userForm)</pre>
+                                                                         <a href="../forms/UserForm.html" title="class in com.yermolenko.controllers.forms">UserForm</a>&nbsp;userForm)</pre>
 <div class="block">Controller addUser is responsible for adding a new user.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -334,7 +334,7 @@ public&nbsp;org.springframework.http.ResponseEntity&lt;java.lang.Object&gt;&nbsp
 <h4>getTours</h4>
 <pre class="methodSignature">@PostMapping("/api/tours")
 public&nbsp;org.springframework.http.ResponseEntity&lt;?&gt;&nbsp;getTours&#8203;(@RequestBody
-                                                           <a href="../forms/SearchTourParams.html" title="class in com.yermolenko.forms">SearchTourParams</a>&nbsp;tourParams)</pre>
+                                                           <a href="../forms/SearchTourParams.html" title="class in com.yermolenko.controllers.forms">SearchTourParams</a>&nbsp;tourParams)</pre>
 <div class="block">Controller getTours is responsible for getting travel tours.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -370,7 +370,7 @@ public&nbsp;org.springframework.http.ResponseEntity&lt;?&gt;&nbsp;reservationTou
 <h4>updateTour</h4>
 <pre class="methodSignature">@PostMapping("/api/updateTour")
 public&nbsp;org.springframework.http.ResponseEntity&lt;?&gt;&nbsp;updateTour&#8203;(@RequestBody
-                                                             <a href="../forms/TravelTourForm.html" title="class in com.yermolenko.forms">TravelTourForm</a>&nbsp;tourUpdate,
+                                                             <a href="../forms/TravelTourForm.html" title="class in com.yermolenko.controllers.forms">TravelTourForm</a>&nbsp;tourUpdate,
                                                              @RequestParam
                                                              int&nbsp;id)</pre>
 <div class="block">Controller updateTour is responsible for updating tour for manager.</div>
@@ -409,7 +409,7 @@ public&nbsp;org.springframework.http.ResponseEntity&lt;?&gt;&nbsp;deleteTour&#82
 <h4>addTour</h4>
 <pre class="methodSignature">@PostMapping("/api/addTour")
 public&nbsp;org.springframework.http.ResponseEntity&lt;?&gt;&nbsp;addTour&#8203;(@RequestBody
-                                                          <a href="../forms/TravelTourForm.html" title="class in com.yermolenko.forms">TravelTourForm</a>&nbsp;tourAdd)</pre>
+                                                          <a href="../forms/TravelTourForm.html" title="class in com.yermolenko.controllers.forms">TravelTourForm</a>&nbsp;tourAdd)</pre>
 <div class="block">Controller addTour is responsible for adding a new tour.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>

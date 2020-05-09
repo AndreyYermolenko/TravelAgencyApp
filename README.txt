@@ -54,11 +54,21 @@ User может:
 	"email": "user@mail.com",
 	"password": "root",
 	"firstName": "Andrey",
-	"lastName": "Yermolenko"
+	"lastName": "Yermolenko",
+	"agencyBranchId": "1"
 }
 Отправить POST запрос на http://localhost:7001/api/sign_up
 
-3. Получить все туристические туры, которые удовлетворяют параметрам поиска.
+3. Получение списка отделений турагенства.
+Отправить GET запрос на http://localhost:7001/api/agencyBranch
+
+4. Получение списка курортов.
+Отправить GET запрос на http://localhost:7001/api/resort
+
+5. Получение списка перевозчиков.
+Отправить GET запрос на http://localhost:7001/api/carrier
+
+6. Получить все туристические туры, которые удовлетворяют параметрам поиска.
 	В зависимости от роли пользователя данные о турах будут отличаться (менеджеру доступно больше данных).
 	В RequestBody добавить данные о туре. Каких-то параметров может не быть в запросе, например:
 {
@@ -79,18 +89,18 @@ User может:
 		token = ${tokenValue}
 Отправить POST запрос на http://localhost:7001/api/tours
 
-4. Забронировать тур (для обычного пользователя).
+7. Забронировать тур (для обычного пользователя).
 	Отправить GET запрос на http://localhost:7001/api/reservationTour
 	Добавить в RequestParameters токен пользователя и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
 		
-5.Получение зарезервированных туров для текущего пользователя (для пользователя).
+8.Получение зарезервированных туров для текущего пользователя (для пользователя).
 	Отправить GET запрос на http://localhost:7001/api/reservedTours
 	Добавить в RequestParameters токен пользоватя:
 		token = ${tokenValue}		
 
-6. Обновить тур (для менеджера).
+9. Обновить тур (для менеджера).
 	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
 	Например:
 {
@@ -99,35 +109,39 @@ User может:
     "endDate": "2020-08-20",
     "cost": "2000",
     "maxCount": "12",
-    "description": "Turkey tour (update)"
+    "description": "Turkey tour (update)",
+	"travelCarrierId": "1",
+	"resortId": "2"
 }
 	Добавить в RequestParameters токен менеджера и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
 Отправить POST запрос на http://localhost:7001/api/updateTour
 
-7. Удалить тур (для менеджера).
+10. Удалить тур (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/deleteTour
 	Добавить в RequestParameters токен менеджера и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
 		
-8. Добавить тур (для менеджера).	
+11. Добавить тур (для менеджера).	
 	В RequestBody добавить данные о туре. Все поля обязательны к заполнению.
 	Например:
 {
-    "destination": "Turkey",
+    "destination": "Turkey New",
 	"beginDate": "2020-08-15",
     "endDate": "2020-08-20",
     "cost": "2000",
     "maxCount": "12",
-    "description": "Turkey tour"
+    "description": "Turkey tour",
+	"travelCarrierId": "1",
+	"resortId": "2"
 }
 	Добавить в RequestParameters токен менеджера:
 		token = ${tokenValue}
 Отправить POST запрос на http://localhost:7001/api/addTour
 		
-9.Получение списка пользователей для тура (для менеджера).
+12.Получение списка пользователей для тура (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/listOfReservedTourUsers
 	Добавить в RequestParameters токен менеджера и ID тура:
 		token = ${tokenValue}

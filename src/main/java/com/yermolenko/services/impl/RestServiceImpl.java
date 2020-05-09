@@ -2,8 +2,8 @@ package com.yermolenko.services.impl;
 
 import com.yermolenko.dao.TokenDAO;
 import com.yermolenko.dao.UserDAO;
-import com.yermolenko.forms.LoginForm;
-import com.yermolenko.forms.UserForm;
+import com.yermolenko.controllers.forms.LoginForm;
+import com.yermolenko.controllers.forms.UserForm;
 import com.yermolenko.model.Token;
 import com.yermolenko.model.User;
 import com.yermolenko.services.RestService;
@@ -53,6 +53,7 @@ public class RestServiceImpl implements RestService {
                 .lastName(userForm.getLastName())
                 .password(hashPassword)
                 .email(userForm.getEmail())
+                .agencyBranchId(userForm.getAgencyBranchId())
                 .build();
 
         return userDAO.registrationUser(user);

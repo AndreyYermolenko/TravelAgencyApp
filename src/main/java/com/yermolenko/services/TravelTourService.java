@@ -1,6 +1,6 @@
 package com.yermolenko.services;
 
-import com.yermolenko.forms.SearchTourParams;
+import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 

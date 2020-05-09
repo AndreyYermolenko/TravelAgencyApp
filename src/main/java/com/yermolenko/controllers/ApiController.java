@@ -1,12 +1,13 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.forms.LoginForm;
-import com.yermolenko.forms.SearchTourParams;
-import com.yermolenko.forms.TravelTourForm;
-import com.yermolenko.forms.UserForm;
-import com.yermolenko.model.TravelTour;
-import com.yermolenko.model.User;
+import com.yermolenko.controllers.forms.LoginForm;
+import com.yermolenko.controllers.forms.SearchTourParams;
+import com.yermolenko.controllers.forms.TravelTourForm;
+import com.yermolenko.controllers.forms.UserForm;
+import com.yermolenko.dao.TravelAgencyDAO;
+import com.yermolenko.model.*;
 import com.yermolenko.services.RestService;
+import com.yermolenko.services.TravelAgencyService;
 import com.yermolenko.services.TravelTourService;
 import com.yermolenko.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -36,17 +37,21 @@ public class ApiController {
 
     private final UserService userService;
 
+    private final TravelAgencyService travelAgencyService;
+
+
     /**
      * Constructor ApiController creates a new ApiController instance.
-     *
-     * @param travelTourService of type TravelTourService
+     *  @param travelTourService of type TravelTourService
      * @param restService of type RestService
      * @param userService of type UserService
+     * @param travelAgencyService
      */
-    public ApiController(TravelTourService travelTourService, RestService restService, UserService userService) {
+    public ApiController(TravelTourService travelTourService, RestService restService, UserService userService, TravelAgencyService travelAgencyService) {
         this.travelTourService = travelTourService;
         this.restService = restService;
         this.userService = userService;
+        this.travelAgencyService = travelAgencyService;
     }
 
     /**
@@ -68,8 +73,7 @@ public class ApiController {
      */
     @PostMapping("/api/sign_up")
     public ResponseEntity<Object> addUser(@RequestBody UserForm userForm) {
-        User user = from(userForm);
-        boolean result = userService.registrationUser(user);
+        boolean result = restService.signUp(userForm);
 
         if (result) {
             return ResponseEntity.ok().build();
@@ -179,7 +183,6 @@ public class ApiController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         String currentUserEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(currentUserEmail);
-
         List<TravelTour> tours = travelTourService.getReservedTours(user);
 
         return ResponseEntity.ok(tours);
@@ -195,9 +198,29 @@ public class ApiController {
     public ResponseEntity<List<User>> listOfReservedTourUsers(@RequestParam int id) {
         TravelTour tour = new TravelTour();
         tour.setId(id);
-
         List<User> users = travelTourService.getListOfReservedTourUsers(tour);
 
         return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/api/agencyBranch")
+    public ResponseEntity<List<AgencyBranch>> getAgencyBranches() {
+        List<AgencyBranch> agencyBranchList= travelAgencyService.getAgencyBranches();
+
+        return ResponseEntity.ok(agencyBranchList);
+    }
+
+    @GetMapping("/api/resort")
+    public ResponseEntity<List<Resort>> getResorts() {
+        List<Resort> resortList= travelAgencyService.getResorts();
+
+        return ResponseEntity.ok(resortList);
+    }
+
+    @GetMapping("/api/carrier")
+    public ResponseEntity<List<TravelCarrier>> getTravelCarriers() {
+        List<TravelCarrier> carrierList= travelAgencyService.getTravelCarriers();
+
+        return ResponseEntity.ok(carrierList);
     }
 }

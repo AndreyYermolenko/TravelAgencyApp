@@ -1,7 +1,7 @@
 package com.yermolenko.services;
 
-import com.yermolenko.forms.LoginForm;
-import com.yermolenko.forms.UserForm;
+import com.yermolenko.controllers.forms.LoginForm;
+import com.yermolenko.controllers.forms.UserForm;
 import com.yermolenko.model.Token;
 
 /**

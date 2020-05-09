@@ -1,4 +1,4 @@
-package com.yermolenko.forms;
+package com.yermolenko.controllers.forms;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.yermolenko.utils.LocalDateDeserializer;
@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 /**
- * Class SearchTourParams is a form for data transfer.
+ * Class TravelTourForm is a form for data transfer.
  *
  * @author Andrey
  * Created on 03.05.2020
@@ -20,16 +20,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SearchTourParams {
+public class TravelTourForm {
     private String destination;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate beginDate;
-    @JsonDeserialize(using = LocalDateDeserializer.class)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate endDate;
-    private Float minCost;
-    private Float maxCost;
-    private String sortedBy;
-    private Boolean desc = false;
+    private Float cost;
+    private Integer maxCount;
+    private String description;
+    private Integer travelCarrierId;
+    private Integer resortId;
 }

@@ -1,4 +1,4 @@
-package com.yermolenko.forms;
+package com.yermolenko.controllers.forms;
 
 import lombok.Data;
 
@@ -15,4 +15,5 @@ public class UserForm {
     private String password;
     private String firstName;
     private String lastName;
+    private Integer agencyBranchId;
 }

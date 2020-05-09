@@ -4,7 +4,7 @@ import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.TravelAgencyDAO;
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.dao.UserDAO;
-import com.yermolenko.forms.SearchTourParams;
+import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import lombok.extern.log4j.Log4j;
@@ -476,7 +476,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setFloat(4, travelTour.getCost());
             ps.setInt(5, travelTour.getMaxCount());
             ps.setString(6, travelTour.getDescription());
-            ps.setInt(7, travelTour.getTraverCarrierId());
+            ps.setInt(7, travelTour.getTravelCarrierId());
             ps.setInt(8, travelTour.getResortId());
             ps.setInt(9, id);
 
@@ -544,7 +544,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             ps.setFloat(4, travelTour.getCost());
             ps.setInt(5, travelTour.getMaxCount());
             ps.setString(6, travelTour.getDescription());
-            ps.setInt(7, travelTour.getTraverCarrierId());
+            ps.setInt(7, travelTour.getTravelCarrierId());
             ps.setInt(8, travelTour.getResortId());
 
             int countOfInsert = ps.executeUpdate();

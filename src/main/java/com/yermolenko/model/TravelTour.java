@@ -33,6 +33,6 @@ public class TravelTour {
     private String description;
     private TravelCarrier traverCarrier;
     private Resort resort;
-    private Integer traverCarrierId;
+    private Integer travelCarrierId;
     private Integer resortId;
 }

@@ -27,8 +27,12 @@
                     <td>${user.lastName}</td>
                 </tr>
                 <tr>
-                    <th>Manager Id</th>
+                    <th>Manager ID</th>
                     <td>${user.managerId}</td>
+                </tr>
+                <tr>
+                    <th>Agency Branch ID</th>
+                    <td>${user.agencyBranchId}</td>
                 </tr>
             </table>
         </c:forEach>

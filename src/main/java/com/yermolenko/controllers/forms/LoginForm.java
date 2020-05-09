@@ -1,4 +1,4 @@
-package com.yermolenko.forms;
+package com.yermolenko.controllers.forms;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
