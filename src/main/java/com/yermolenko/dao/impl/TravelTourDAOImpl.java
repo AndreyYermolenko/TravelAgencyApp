@@ -441,7 +441,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setMaxCount(rs.getInt(6));
             tour.setCurrentCount(rs.getInt(7));
             tour.setDescription(rs.getString(8));
-            tour.setTraverCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setTravelCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
             tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);
@@ -465,7 +465,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setEndDate(rs.getDate(4).toLocalDate());
             tour.setCost(rs.getFloat(5));
             tour.setDescription(rs.getString(8));
-            tour.setTraverCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setTravelCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
             tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);

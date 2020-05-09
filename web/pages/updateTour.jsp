@@ -24,11 +24,11 @@
         <br/>
 
         <div>
-            <select name="traverCarrierId" id="traverCarrierId" >
+            <select name="travelCarrierId" id="travelCarrierId" >
                 <option disabled>Транспортный перевозчик</option>
                 <c:forEach var="carrier" items="${travelCarriers}" >
                     <c:choose>
-                        <c:when test = "${carrier.id  == tourCurrent.traverCarrier.id}">
+                        <c:when test = "${carrier.id  == tourCurrent.travelCarrier.id}">
                             <option selected value="${carrier.id}">${carrier.destination}</option>
                         </c:when>
                         <c:otherwise>

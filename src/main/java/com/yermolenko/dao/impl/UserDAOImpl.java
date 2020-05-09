@@ -186,6 +186,7 @@ public class UserDAOImpl implements UserDAO {
             user.setFirstName(rs.getString(4));
             user.setLastName(rs.getString(5));
             user.setManagerId(rs.getInt(6));
+            user.setAgencyBranchId(rs.getInt(7));
             Set<Role> roleSet = getAuthoritiesById(user.getId());
             user.setRoles(roleSet);
         } catch (SQLException e) {

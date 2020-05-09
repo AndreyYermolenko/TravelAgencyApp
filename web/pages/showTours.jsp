@@ -8,12 +8,6 @@
     <link href="<c:url value="/resources/css/scroll.css" />" rel="stylesheet">
 </head>
 <body>
-<sec:authorize access="hasAuthority('manager')">
-</sec:authorize>
-    <sec:authorize access="hasAuthority('manager')">
-        <a href="/addTour">Добавить тур</a>
-        <br>
-    </sec:authorize>
     <div class="scroll">
         <c:forEach var="tour" items="${tours}" >
             <table border="1" cellpadding="2" width="100%">
@@ -63,7 +57,7 @@
                 </sec:authorize>
                 <tr>
                     <th>Перевозчик</th>
-                    <th>${tour.traverCarrier.destination}</th>
+                    <th>${tour.travelCarrier.destination}</th>
                 </tr>
                 <tr>
                     <th>Курорт</th>

@@ -31,7 +31,7 @@ public class TravelTour {
     private Integer maxCount;
     private Integer currentCount;
     private String description;
-    private TravelCarrier traverCarrier;
+    private TravelCarrier travelCarrier;
     private Resort resort;
     private Integer travelCarrierId;
     private Integer resortId;

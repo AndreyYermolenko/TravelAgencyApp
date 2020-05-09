@@ -25,7 +25,7 @@
         <br/>
 
         <div>
-            <select name="traverCarrierId" id="traverCarrierId" >
+            <select name="travelCarrierId" id="travelCarrierId" >
                 <option disabled>Перевозчик</option>
                 <c:forEach var="carrier" items="${travelCarriers}" >
                     <option value="${carrier.id}">${carrier.destination}</option>

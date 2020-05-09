@@ -40,8 +40,15 @@
       <br/>
       <a id="linkReserved" href="/tours/reserved">Список забронированных туров</a>
   </sec:authorize>
+
   <br/>
   <a href="/logout">Logout</a>
+  <br/>
+
+  <sec:authorize access="hasAuthority('manager')">
+      <a href="/addTour">Добавить тур</a>
+      <br>
+  </sec:authorize>
 
   <div>
       <jsp:include page="showTours.jsp" />

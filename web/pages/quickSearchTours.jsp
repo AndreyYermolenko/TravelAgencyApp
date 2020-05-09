@@ -45,6 +45,10 @@
     </sec:authorize>
     <a href="/logout">Logout</a>
     <br/>
+    <sec:authorize access="hasAuthority('manager')">
+        <a href="/addTour">Добавить тур</a>
+        <br>
+    </sec:authorize>
 
     <span id="includePage"></span>
 
