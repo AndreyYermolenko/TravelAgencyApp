@@ -146,7 +146,7 @@ User может:
 }
 	Добавить в RequestParameters токен менеджера:
 		token = ${tokenValue}
-Отправить POST запрос на http://localhost:7001/api/addTour
+	Отправить POST запрос на http://localhost:7001/api/addTour
 		
 12.Получение списка пользователей для тура (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/listOfReservedTourUsers
