@@ -7,13 +7,9 @@
 используя гиперссылки. Приложение поддерживает 2 роли: manager и user. 
 UI и функционал для разных ролей отличается.
 
-Для генерации БД нужно:
-1. Указать параметры для подключения к БД в liquibase.properties
-2. Запустить скрипт updateDatabase.cmd или собрать проект с помощью maven
-(с командной строки, потому что через IDE плагин liquibase не работает).
-
 В файле testdata.sql находятся тестовые данные для заполнения БД.
 В файле database.sql находятся SQL запросы для создания БД.
+Таблицы в БД создаются автоматически при первом запуске проекта!
 
 Manager может:
 +использовать быстрый (с помощью Ajax) или расширенный поиск туров;
@@ -56,7 +52,7 @@ User может:
 	"lastName": "Yermolenko",
 	"agencyBranchId": "1"
 }
-Отправить POST запрос на http://localhost:7001/api/sign_up
+	Отправить POST запрос на http://localhost:7001/api/sign_up
 
 2. Авторизация (получение токена).
 	В RequestBody добавить данные о пользователе, например:
@@ -67,13 +63,13 @@ User может:
 Отправить POST запрос на http://localhost:7001/api/login
 
 3. Получение списка отделений турагенства.
-Отправить GET запрос на http://localhost:7001/api/agencyBranch
+	Отправить GET запрос на http://localhost:7001/api/agencyBranch
 
 4. Получение списка курортов.
-Отправить GET запрос на http://localhost:7001/api/resort
+	Отправить GET запрос на http://localhost:7001/api/resort
 
 5. Получение списка перевозчиков.
-Отправить GET запрос на http://localhost:7001/api/carrier
+	Отправить GET запрос на http://localhost:7001/api/carrier
 
 6. Получить все туристические туры, которые удовлетворяют параметрам поиска.
 	В зависимости от роли пользователя данные о турах будут отличаться (менеджеру доступно больше данных).
@@ -94,7 +90,7 @@ User может:
 
 	Добавить в RequestParameters:
 		token = ${tokenValue}
-Отправить POST запрос на http://localhost:7001/api/tours
+	Отправить POST запрос на http://localhost:7001/api/tours
 
 7. Забронировать тур (для обычного пользователя).
 	Отправить GET запрос на http://localhost:7001/api/reservationTour
@@ -123,7 +119,7 @@ User может:
 	Добавить в RequestParameters токен менеджера и ID тура:
 		token = ${tokenValue}
 		id=${idValue}
-Отправить POST запрос на http://localhost:7001/api/updateTour
+	Отправить POST запрос на http://localhost:7001/api/updateTour
 
 10. Удалить тур (для менеджера).
 	Отправить GET запрос на http://localhost:7001/api/deleteTour
