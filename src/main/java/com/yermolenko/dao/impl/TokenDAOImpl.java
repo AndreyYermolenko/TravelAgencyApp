@@ -44,7 +44,7 @@ public class TokenDAOImpl implements TokenDAO {
      * @return Token
      */
     @Override
-    public Token findOneByValue(String value) {
+    public Token findOneTokenByValue(String value) {
         Connection connection = connectionPool.getConnection();
         Token token = null;
 

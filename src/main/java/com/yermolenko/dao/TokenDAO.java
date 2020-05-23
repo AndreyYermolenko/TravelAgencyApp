@@ -16,7 +16,7 @@ public interface TokenDAO {
      * @param value of type String
      * @return Token
      */
-    Token findOneByValue(String value);
+    Token findOneTokenByValue(String value);
 
     /**
      * Method saveToken saves to the database token data.

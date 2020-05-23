@@ -42,9 +42,9 @@ public class TravelTourServiceImpl implements TravelTourService {
                 && searchTourParams.getEndDate() == null
                 && searchTourParams.getMinCost() == null
                 && searchTourParams.getMaxCost() == null) {
-            return travelTourDAO.getAllToursForManager(searchTourParams);
+            return travelTourDAO.getAllTravelToursForManager(searchTourParams);
         }
-        return travelTourDAO.getSomeToursForManager(searchTourParams);
+        return travelTourDAO.getSomeTravelToursForManager(searchTourParams);
     }
 
     @Override
@@ -54,9 +54,9 @@ public class TravelTourServiceImpl implements TravelTourService {
                 && searchTourParams.getEndDate() == null
                 && searchTourParams.getMinCost() == null
                 && searchTourParams.getMaxCost() == null) {
-            return travelTourDAO.getAllToursForUser(searchTourParams);
+            return travelTourDAO.getAllTravelToursForUser(searchTourParams);
         }
-        return travelTourDAO.getSomeToursForUser(searchTourParams);
+        return travelTourDAO.getSomeTravelToursForUser(searchTourParams);
     }
 
     /**
@@ -67,7 +67,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public TravelTour getTour(int id) {
-        return travelTourDAO.getTourById(id);
+        return travelTourDAO.getTravelTourById(id);
     }
 
     /**
@@ -79,7 +79,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public boolean updateTour(int id, TravelTour tour) {
-        return travelTourDAO.updateTour(id, tour);
+        return travelTourDAO.updateTravelTour(id, tour);
     }
 
     /**
@@ -90,7 +90,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public boolean deleteTour(int id) {
-        return travelTourDAO.deleteTour(id);
+        return travelTourDAO.deleteTravelTour(id);
     }
 
     /**
@@ -101,7 +101,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public boolean addTour(TravelTour tour) {
-        return travelTourDAO.addTour(tour);
+        return travelTourDAO.addTravelTour(tour);
     }
 
     /**
@@ -113,7 +113,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public boolean reservationTour(User user, TravelTour travelTour) {
-        return travelTourDAO.reservationTour(user, travelTour);
+        return travelTourDAO.reservationTravelTour(user, travelTour);
     }
 
     /**
@@ -124,7 +124,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public List<TravelTour> getReservedTours(User user) {
-        return travelTourDAO.getReservedTours(user);
+        return travelTourDAO.getReservedTravelTours(user);
     }
 
     /**
@@ -135,7 +135,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      */
     @Override
     public List<User> getListOfReservedTourUsers(TravelTour tour) {
-        return travelTourDAO.getListOfReservedTourUsers(tour);
+        return travelTourDAO.getListOfReservedTravelTourUsers(tour);
     }
 
 }

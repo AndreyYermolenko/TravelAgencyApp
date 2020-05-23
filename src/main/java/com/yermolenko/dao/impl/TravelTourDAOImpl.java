@@ -1,9 +1,6 @@
 package com.yermolenko.dao.impl;
 
-import com.yermolenko.dao.ConnectionPool;
-import com.yermolenko.dao.TravelAgencyDAO;
-import com.yermolenko.dao.TravelTourDAO;
-import com.yermolenko.dao.UserDAO;
+import com.yermolenko.dao.*;
 import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
@@ -30,18 +27,24 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
     private final ConnectionPool connectionPool;
     private final UserDAO userDAO;
-    private final TravelAgencyDAO travelAgencyDAO;
+    private final AgencyBranchDAO agencyBranchDAO;
+    private final ResortDAO resortDAO;
+    private final TravelCarrierDAO travelCarrierDAO;
 
     /**
      * Constructor TravelTourDAOImpl creates a new TravelTourDAOImpl instance.
-     *  @param connectionPool of type ConnectionPool
+     * @param connectionPool of type ConnectionPool
      * @param userDAO of type UserDAO
-     * @param travelAgencyDAO
+     * @param agencyBranchDAO
+     * @param resortDAO
+     * @param travelCarrierDAO
      */
-    public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO, TravelAgencyDAO travelAgencyDAO) {
+    public TravelTourDAOImpl(ConnectionPool connectionPool, UserDAO userDAO, AgencyBranchDAO agencyBranchDAO, ResortDAO resortDAO, TravelCarrierDAO travelCarrierDAO) {
         this.connectionPool = connectionPool;
         this.userDAO = userDAO;
-        this.travelAgencyDAO = travelAgencyDAO;
+        this.agencyBranchDAO = agencyBranchDAO;
+        this.resortDAO = resortDAO;
+        this.travelCarrierDAO = travelCarrierDAO;
     }
 
     /**
@@ -51,7 +54,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getAllToursForManager(SearchTourParams searchTourParams) {
+    public List<TravelTour> getAllTravelToursForManager(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -95,7 +98,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getAllToursForUser(SearchTourParams searchTourParams) {
+    public List<TravelTour> getAllTravelToursForUser(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -139,7 +142,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getSomeToursForManager(SearchTourParams searchTourParams) {
+    public List<TravelTour> getSomeTravelToursForManager(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -221,7 +224,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getSomeToursForUser(SearchTourParams searchTourParams) {
+    public List<TravelTour> getSomeTravelToursForUser(SearchTourParams searchTourParams) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -303,7 +306,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return TravelTour
      */
     @Override
-    public TravelTour getTourById(int id) {
+    public TravelTour getTravelTourById(int id) {
         Connection connection = connectionPool.getConnection();
         TravelTour tour = new TravelTour();
 
@@ -332,7 +335,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return boolean
      */
     @Override
-    public boolean reservationTour(User user, TravelTour travelTour) {
+    public boolean reservationTravelTour(User user, TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -395,7 +398,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getReservedTours(User user) {
+    public List<TravelTour> getReservedTravelTours(User user) {
         List<TravelTour> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 
@@ -413,7 +416,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
 
             while (rs.next()) {
                 int tourId = rs.getInt(2);
-                TravelTour tour = getTourById(tourId);
+                TravelTour tour = getTravelTourById(tourId);
                 tours.add(tour);
             }
 
@@ -441,8 +444,8 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setMaxCount(rs.getInt(6));
             tour.setCurrentCount(rs.getInt(7));
             tour.setDescription(rs.getString(8));
-            tour.setTravelCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
-            tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
+            tour.setTravelCarrier(travelCarrierDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setResort(resortDAO.getResortById(rs.getInt(10)));
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);
         }
@@ -465,8 +468,8 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             tour.setEndDate(rs.getDate(4).toLocalDate());
             tour.setCost(rs.getFloat(5));
             tour.setDescription(rs.getString(8));
-            tour.setTravelCarrier(travelAgencyDAO.getTravelCarrierById(rs.getInt(9)));
-            tour.setResort(travelAgencyDAO.getResortById(rs.getInt(10)));
+            tour.setTravelCarrier(travelCarrierDAO.getTravelCarrierById(rs.getInt(9)));
+            tour.setResort(resortDAO.getResortById(rs.getInt(10)));
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);
         }
@@ -482,7 +485,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return boolean
      */
     @Override
-    public boolean updateTour(int id, TravelTour travelTour) {
+    public boolean updateTravelTour(int id, TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -524,7 +527,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return boolean
      */
     @Override
-    public boolean deleteTour(int id) {
+    public boolean deleteTravelTour(int id) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -555,7 +558,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return boolean
      */
     @Override
-    public boolean addTour(TravelTour travelTour) {
+    public boolean addTravelTour(TravelTour travelTour) {
         Connection connection = connectionPool.getConnection();
 
         try {
@@ -591,7 +594,7 @@ public class TravelTourDAOImpl implements TravelTourDAO {
      * @return List<User>
      */
     @Override
-    public List<User> getListOfReservedTourUsers(TravelTour tour) {
+    public List<User> getListOfReservedTravelTourUsers(TravelTour tour) {
         List<User> tours = new ArrayList<>();
         Connection connection = connectionPool.getConnection();
 

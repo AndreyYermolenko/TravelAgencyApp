@@ -20,9 +20,9 @@ public interface TravelTourDAO {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getAllToursForManager(SearchTourParams searchTourParams);
+    List<TravelTour> getAllTravelToursForManager(SearchTourParams searchTourParams);
 
-    List<TravelTour> getAllToursForUser(SearchTourParams searchTourParams);
+    List<TravelTour> getAllTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getSomeTours gets some tours data from database.
@@ -30,9 +30,9 @@ public interface TravelTourDAO {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getSomeToursForManager(SearchTourParams searchTourParams);
+    List<TravelTour> getSomeTravelToursForManager(SearchTourParams searchTourParams);
 
-    List<TravelTour> getSomeToursForUser(SearchTourParams searchTourParams);
+    List<TravelTour> getSomeTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getTourById gets tour data by id from database.
@@ -40,7 +40,7 @@ public interface TravelTourDAO {
      * @param id of type int
      * @return TravelTour
      */
-    TravelTour getTourById(int id);
+    TravelTour getTravelTourById(int id);
 
     /**
      * Method reservationTour adds tour reservation data to the database.
@@ -49,7 +49,7 @@ public interface TravelTourDAO {
      * @param travelTour of type TravelTour
      * @return boolean
      */
-    boolean reservationTour(User user, TravelTour travelTour);
+    boolean reservationTravelTour(User user, TravelTour travelTour);
 
     /**
      * Method getReservedTours gets reserved tours data from database.
@@ -57,7 +57,7 @@ public interface TravelTourDAO {
      * @param user of type User
      * @return List<TravelTour>
      */
-    List<TravelTour> getReservedTours(User user);
+    List<TravelTour> getReservedTravelTours(User user);
 
     /**
      * Method updateTour updates tour data to the database.
@@ -66,7 +66,7 @@ public interface TravelTourDAO {
      * @param travelTour of type TravelTour
      * @return boolean
      */
-    boolean updateTour(int id, TravelTour travelTour);
+    boolean updateTravelTour(int id, TravelTour travelTour);
 
     /**
      * Method deleteTour deletes tour data from the database.
@@ -74,7 +74,7 @@ public interface TravelTourDAO {
      * @param id of type int
      * @return boolean
      */
-    boolean deleteTour(int id);
+    boolean deleteTravelTour(int id);
 
     /**
      * Method addTour adds tour data to the database.
@@ -82,7 +82,7 @@ public interface TravelTourDAO {
      * @param travelTour of type TravelTour
      * @return boolean
      */
-    boolean addTour(TravelTour travelTour);
+    boolean addTravelTour(TravelTour travelTour);
 
     /**
      * Method getListOfReservedTourUsers gets list of reserved tour users data from database.
@@ -90,6 +90,6 @@ public interface TravelTourDAO {
      * @param tour of type TravelTour
      * @return List<User>
      */
-    List<User> getListOfReservedTourUsers(TravelTour tour);
+    List<User> getListOfReservedTravelTourUsers(TravelTour tour);
 
 }

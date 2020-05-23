@@ -29,7 +29,7 @@ public class ConnectionPool {
     private DataSource ds;
 
     {
-        try(InputStream in = UserDAO.class
+        try(InputStream in = ConnectionPool.class
                 .getClassLoader().getResourceAsStream("application.properties")) {
             Properties properties = new Properties();
             properties.load(in);

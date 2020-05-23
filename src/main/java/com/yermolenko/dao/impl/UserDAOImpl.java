@@ -1,6 +1,7 @@
 package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
+import com.yermolenko.dao.RoleDao;
 import com.yermolenko.dao.UserDAO;
 import com.yermolenko.model.Role;
 import com.yermolenko.model.User;
@@ -11,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,14 +25,17 @@ import java.util.Set;
 public class UserDAOImpl implements UserDAO {
 
     private final ConnectionPool connectionPool;
+    private final RoleDao roleDao;
 
     /**
      * Constructor UserDAOImpl creates a new UserDAOImpl instance.
      *
      * @param connectionPool of type ConnectionPool
+     * @param roleDao
      */
-    public UserDAOImpl(ConnectionPool connectionPool) {
+    public UserDAOImpl(ConnectionPool connectionPool, RoleDao roleDao) {
         this.connectionPool = connectionPool;
+        this.roleDao = roleDao;
     }
 
     /**
@@ -99,7 +102,7 @@ public class UserDAOImpl implements UserDAO {
 
             while (rs.next()) {
                 user = new User();
-                rsToUser(user, rs);
+                mapperUser(user, rs);
             }
 
             connection.close();
@@ -128,7 +131,7 @@ public class UserDAOImpl implements UserDAO {
 
             ResultSet rs = ps.executeQuery();
             rs.next();
-            rsToUser(user, rs);
+            mapperUser(user, rs);
 
             connection.close();
         } catch (SQLException ex) {
@@ -157,7 +160,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 User user = new User();
-                rsToUser(user, rs);
+                mapperUser(user, rs);
                 if (user.getRoles().contains(managerRole)) {
                     connection.close();
                     return user;
@@ -178,7 +181,7 @@ public class UserDAOImpl implements UserDAO {
      * @param rs of type ResultSet
      * @return User
      */
-    private User rsToUser(User user, ResultSet rs) {
+    private User mapperUser(User user, ResultSet rs) {
         try {
             user.setId(rs.getInt(1));
             user.setEmail(rs.getString(2));
@@ -187,7 +190,7 @@ public class UserDAOImpl implements UserDAO {
             user.setLastName(rs.getString(5));
             user.setManagerId(rs.getInt(6));
             user.setAgencyBranchId(rs.getInt(7));
-            Set<Role> roleSet = getAuthoritiesById(user.getId());
+            Set<Role> roleSet = roleDao.getRolesByUserId(user.getId());
             user.setRoles(roleSet);
         } catch (SQLException e) {
             log.error("Parsing result set problem", e);
@@ -195,59 +198,4 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    /**
-     * Method getAuthoritiesById.
-     *
-     * @param id of type int
-     * @return Set<Role>
-     */
-    private Set<Role> getAuthoritiesById(int id) {
-        Connection connection = connectionPool.getConnection();
-        Set<Role> authorities = new HashSet<>();
-
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM role_user " +
-                    "WHERE user_id = ?;");
-            ps.setInt(1, id);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                authorities.add(getRoleById(rs.getInt(2)));
-            }
-
-            connection.close();
-        } catch (SQLException e) {
-            log.error("Getting authorities by id problem", e);
-        }
-
-        return authorities;
-    }
-
-    /**
-     * Method getRoleById.
-     *
-     * @param roleId of type int
-     * @return Role
-     */
-    private Role getRoleById(int roleId) {
-        Connection connection = connectionPool.getConnection();
-        Role role = new Role();
-
-        try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM roles " +
-                    "WHERE id = ?;");
-            ps.setInt(1, roleId);
-
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            role.setId(rs.getInt(1));
-            role.setName(rs.getString(2));
-
-            connection.close();
-        } catch (SQLException e) {
-            log.error("Getting role by id problem", e);
-        }
-        return role;
-    }
 }

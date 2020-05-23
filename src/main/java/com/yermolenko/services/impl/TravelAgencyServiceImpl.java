@@ -1,6 +1,8 @@
 package com.yermolenko.services.impl;
 
-import com.yermolenko.dao.TravelAgencyDAO;
+import com.yermolenko.dao.AgencyBranchDAO;
+import com.yermolenko.dao.ResortDAO;
+import com.yermolenko.dao.TravelCarrierDAO;
 import com.yermolenko.model.AgencyBranch;
 import com.yermolenko.model.Resort;
 import com.yermolenko.model.TravelCarrier;
@@ -20,15 +22,20 @@ import java.util.List;
 @Service
 public class TravelAgencyServiceImpl implements TravelAgencyService {
 
-    private final TravelAgencyDAO travelAgencyDAO;
+    private final AgencyBranchDAO agencyBranchDAO;
+    private final ResortDAO resortDAO;
+    private final TravelCarrierDAO travelCarrierDAO;
 
     /**
      * Constructor TravelAgencyServiceImpl creates a new TravelAgencyServiceImpl instance.
-     *
-     * @param travelAgencyDAO of type TravelAgencyDAO
+     *  @param agencyBranchDAO
+     * @param resortDAO
+     * @param travelCarrierDAO
      */
-    public TravelAgencyServiceImpl(TravelAgencyDAO travelAgencyDAO) {
-        this.travelAgencyDAO = travelAgencyDAO;
+    public TravelAgencyServiceImpl(AgencyBranchDAO agencyBranchDAO, ResortDAO resortDAO, TravelCarrierDAO travelCarrierDAO) {
+        this.agencyBranchDAO = agencyBranchDAO;
+        this.resortDAO = resortDAO;
+        this.travelCarrierDAO = travelCarrierDAO;
     }
 
     /**
@@ -40,7 +47,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public List<AgencyBranch> getAgencyBranches() {
-        return travelAgencyDAO.getAgencyBranches();
+        return agencyBranchDAO.getAgencyBranches();
     }
 
     /**
@@ -51,7 +58,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public AgencyBranch getAgencyBranchById(int id) {
-        return travelAgencyDAO.getAgencyBranchById(id);
+        return agencyBranchDAO.getAgencyBranchById(id);
     }
 
     /**
@@ -63,7 +70,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public List<Resort> getResorts() {
-        return travelAgencyDAO.getResorts();
+        return resortDAO.getResorts();
     }
 
     /**
@@ -74,7 +81,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public Resort getResortById(int id) {
-        return travelAgencyDAO.getResortById(id);
+        return resortDAO.getResortById(id);
     }
 
     /**
@@ -86,7 +93,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public List<TravelCarrier> getTravelCarriers() {
-        return travelAgencyDAO.getTravelCarriers();
+        return travelCarrierDAO.getTravelCarriers();
     }
 
     /**
@@ -97,6 +104,6 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      */
     @Override
     public TravelCarrier getTravelCarrierById(int id) {
-        return travelAgencyDAO.getTravelCarrierById(id);
+        return travelCarrierDAO.getTravelCarrierById(id);
     }
 }
