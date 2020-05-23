@@ -1,9 +1,13 @@
 package com.yermolenko.controllers;
 
+import com.yermolenko.controllers.forms.LoginForm;
+import com.yermolenko.controllers.forms.UserForm;
 import com.yermolenko.model.User;
+import com.yermolenko.services.RestService;
 import com.yermolenko.services.TravelAgencyService;
 import com.yermolenko.services.UserService;
 import com.yermolenko.utils.UserValidator;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,17 +28,21 @@ public class AuthController {
 
     private final UserService userService;
 
+    private final RestService restService;
+
     private final TravelAgencyService travelAgencyService;
 
     /**
      * Constructor AuthController creates a new AuthController instance.
      * @param userValidator of type UserValidator
      * @param userService of type UserService
+     * @param restService
      * @param travelAgencyService
      */
-    public AuthController(UserValidator userValidator, UserService userService, TravelAgencyService travelAgencyService) {
+    public AuthController(UserValidator userValidator, UserService userService, RestService restService, TravelAgencyService travelAgencyService) {
         this.userValidator = userValidator;
         this.userService = userService;
+        this.restService = restService;
         this.travelAgencyService = travelAgencyService;
     }
 
@@ -82,6 +90,33 @@ public class AuthController {
             model.addAttribute("error", true);
         }
         return "/auth/sign_in";
+    }
+
+    /**
+     * Controller login forms a request for api to receive a token.
+     *
+     * @param loginForm of type LoginForm
+     * @return ResponseEntity<TokenDto>
+     */
+    @PostMapping("/api/login")
+    public ResponseEntity<String> login(@RequestBody LoginForm loginForm) {
+        return ResponseEntity.ok(restService.login(loginForm).getValue());
+    }
+
+    /**
+     * Controller addUser is responsible for adding a new user.
+     *
+     * @param userForm of type UserForm
+     * @return ResponseEntity<Object>
+     */
+    @PostMapping("/api/sign_up")
+    public ResponseEntity<Object> addUser(@RequestBody UserForm userForm) {
+        boolean result = restService.signUp(userForm);
+
+        if (result) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 }

@@ -14,36 +14,18 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-/**
- * Class MainController contains main controllers.
- *
- * @author Andrey
- * Created on 03.05.2020
- */
 @Controller
-public class MainController {
+public class MainControllerForUser {
 
     private final TravelTourService travelTourService;
 
     private final TravelAgencyService travelAgencyService;
 
-    /**
-     * Constructor MainController creates a new MainController instance.
-     *
-     * @param travelTourService of type TravelTourService
-     * @param travelAgencyService
-     */
-    public MainController(TravelTourService travelTourService, TravelAgencyService travelAgencyService) {
+    public MainControllerForUser(TravelTourService travelTourService, TravelAgencyService travelAgencyService) {
         this.travelTourService = travelTourService;
         this.travelAgencyService = travelAgencyService;
     }
 
-    /**
-     * Controller getTours is responsible for getting tours.
-     *
-     * @param model of type Model
-     * @return String
-     */
     @GetMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
     public String getTours(Model model) {
@@ -62,7 +44,7 @@ public class MainController {
     @PostMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
     public String getTours(@ModelAttribute SearchTourParams tourParams,
-                              Model model) {
+                           Model model) {
         List<TravelTour> tours = travelTourService.getToursForManager(tourParams);
         model.addAttribute("tours", tours);
 
@@ -100,86 +82,6 @@ public class MainController {
     }
 
     /**
-     * Controller updateTour is responsible for updating tours.
-     *
-     * @param model of type Model
-     * @param id of type int
-     * @return String
-     */
-    @GetMapping("/updateTour")
-    @PreAuthorize("hasAuthority('manager')")
-    public String updateTour(Model model,
-                             @RequestParam int id) {
-        TravelTour tour = travelTourService.getTour(id);
-        model.addAttribute("tourCurrent", tour);
-        model.addAttribute("tourUpdate", new TravelTour());
-        model.addAttribute("resorts", travelAgencyService.getResorts());
-        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
-
-        return "updateTour";
-    }
-
-    /**
-     * Controller updateTour is responsible for updating tours.
-     *
-     * @param tourUpdate of type TravelTour
-     * @param id of type int
-     * @return String
-     */
-    @PostMapping("/updateTour")
-    @PreAuthorize("hasAuthority('manager')")
-    public String updateTour(@ModelAttribute TravelTour tourUpdate,
-                             @RequestParam int id) {
-        travelTourService.updateTour(id, tourUpdate);
-
-        return "quickSearchTours";
-    }
-
-    /**
-     * Controller deleteTour is responsible for deleting tours.
-     *
-     * @param id of type int
-     * @return String
-     */
-    @GetMapping("/deleteTour")
-    @PreAuthorize("hasAuthority('manager')")
-    public String deleteTour(@RequestParam int id) {
-        travelTourService.deleteTour(id);
-
-        return "quickSearchTours";
-    }
-
-    /**
-     * Controller addTour is responsible for adding tours.
-     *
-     * @param model of type Model
-     * @return String
-     */
-    @GetMapping("/addTour")
-    @PreAuthorize("hasAuthority('manager')")
-    public String addTour(Model model) {
-        model.addAttribute("newTour", new TravelTour());
-        model.addAttribute("resorts", travelAgencyService.getResorts());
-        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
-
-        return "addTour";
-    }
-
-    /**
-     * Controller addTour is responsible for adding tours.
-     *
-     * @param tour of type TravelTour
-     * @return String
-     */
-    @PostMapping("/addTour")
-    @PreAuthorize("hasAuthority('manager')")
-    public String addTour(@ModelAttribute TravelTour tour) {
-        travelTourService.addTour(tour);
-
-        return "quickSearchTours";
-    }
-
-    /**
      * Controller reservationTour is responsible for reservation tours for users.
      *
      * @param session of type HttpSession
@@ -213,26 +115,6 @@ public class MainController {
         model.addAttribute("tours", tours);
 
         return "reservedTours";
-    }
-
-    /**
-     * Controller listOfReservedTourUsers is responsible for getting list of reserved tour users for manager.
-     *
-     * @param tourId of type int
-     * @param model of type Model
-     * @return String
-     */
-    @GetMapping("/listOfReservedTourUsers")
-    @PreAuthorize("hasAuthority('manager')")
-    public String listOfReservedTourUsers(@RequestParam(name = "id") int tourId,
-                                          Model model) {
-        TravelTour tour = new TravelTour();
-        tour.setId(tourId);
-
-        List<User> users = travelTourService.getListOfReservedTourUsers(tour);
-        model.addAttribute("users", users);
-
-        return "listOfReservedTourUsers";
     }
 
 }
