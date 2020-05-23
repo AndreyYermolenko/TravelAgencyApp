@@ -2,6 +2,7 @@ package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.*;
 import com.yermolenko.controllers.forms.SearchTourParams;
+import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import lombok.extern.log4j.Log4j;
@@ -621,6 +622,43 @@ public class TravelTourDAOImpl implements TravelTourDAO {
             log.error("Getting list of reserved tours problem", e);
         }
         return tours;
+    }
+
+    @Override
+    public List<TravelTourResortDto> getTravelTourResortStat() {
+        List<TravelTourResortDto> ttrdList = new ArrayList<>();
+        Connection connection = connectionPool.getConnection();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT r.destination AS destination_resort,\n" +
+                            "       tt.destination AS destination_tour,\n" +
+                            "       (\n" +
+                            "           SELECT tc.destination\n" +
+                            "           FROM travel_carrier AS tc\n" +
+                            "           WHERE tt.travel_carrier_id = tc.id\n" +
+                            "        ) AS destination_carrier,\n" +
+                            "       tt.cost\n" +
+                            "FROM resort AS r\n" +
+                            "    LEFT JOIN travel_tour AS tt ON r.id = tt.resort_id"
+            );
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                TravelTourResortDto ttrd = new TravelTourResortDto();
+                ttrd.setDestinationResort(rs.getString(1));
+                ttrd.setDestinationTravelTour(rs.getString(2));
+                ttrd.setDestinationCarrier(rs.getString(3));
+                ttrd.setCost(rs.getFloat(4));
+                ttrdList.add(ttrd);
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            log.error("Getting TravelTourResortStat problem", e);
+        }
+
+        return ttrdList;
     }
 
 }

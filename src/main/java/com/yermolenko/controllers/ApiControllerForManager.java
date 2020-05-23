@@ -3,9 +3,7 @@ package com.yermolenko.controllers;
 import com.yermolenko.controllers.forms.TravelTourForm;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
-import com.yermolenko.services.TravelAgencyService;
 import com.yermolenko.services.TravelTourService;
-import com.yermolenko.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +16,8 @@ public class ApiControllerForManager {
 
     private final TravelTourService travelTourService;
 
-    private final UserService userService;
-
-    private final TravelAgencyService travelAgencyService;
-
-    public ApiControllerForManager(TravelTourService travelTourService, UserService userService, TravelAgencyService travelAgencyService) {
+    public ApiControllerForManager(TravelTourService travelTourService) {
         this.travelTourService = travelTourService;
-        this.userService = userService;
-        this.travelAgencyService = travelAgencyService;
     }
 
     /**

@@ -43,6 +43,14 @@
         <a id="linkReserved" href="/tours/reserved">Список забронированных туров</a>
         <br/>
     </sec:authorize>
+    <sec:authorize access="hasAuthority('manager')">
+        <a id="linkBranchManager" href="/listOfBranchManagerStat">Статистика по менеджерам</a>
+        <br/>
+    </sec:authorize>
+    <sec:authorize access="hasAuthority('manager')">
+        <a id="linkTravelTourResort" href="/listOfTravelTourResortStat">Список всех туров</a>
+        <br/>
+    </sec:authorize>
     <a href="/logout">Logout</a>
     <br/>
     <sec:authorize access="hasAuthority('manager')">

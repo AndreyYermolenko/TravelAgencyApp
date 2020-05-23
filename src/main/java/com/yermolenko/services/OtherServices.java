@@ -12,7 +12,7 @@ import java.util.List;
  * @author Andrey
  * Created on 09.05.2020
  */
-public interface TravelAgencyService {
+public interface OtherServices {
 
     /**
      * Method getAgencyBranches returns the agencyBranches of this TravelAgencyService object.
@@ -22,14 +22,6 @@ public interface TravelAgencyService {
      * @return the agencyBranches (type List<AgencyBranch>) of this TravelAgencyService object.
      */
     List<AgencyBranch> getAgencyBranches();
-
-    /**
-     * Method getAgencyBranchById.
-     *
-     * @param id of type int
-     * @return AgencyBranch
-     */
-    AgencyBranch getAgencyBranchById(int id);
 
     /**
      * Method getResorts returns the resorts of this TravelAgencyService object.

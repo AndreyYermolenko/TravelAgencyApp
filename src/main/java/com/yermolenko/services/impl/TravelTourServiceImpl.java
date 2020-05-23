@@ -2,6 +2,8 @@ package com.yermolenko.services.impl;
 
 import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.controllers.forms.SearchTourParams;
+import com.yermolenko.dto.BranchManagerDto;
+import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import com.yermolenko.services.TravelTourService;
@@ -136,6 +138,11 @@ public class TravelTourServiceImpl implements TravelTourService {
     @Override
     public List<User> getListOfReservedTourUsers(TravelTour tour) {
         return travelTourDAO.getListOfReservedTravelTourUsers(tour);
+    }
+
+    @Override
+    public List<TravelTourResortDto> getTravelTourResortStat() {
+        return travelTourDAO.getTravelTourResortStat();
     }
 
 }

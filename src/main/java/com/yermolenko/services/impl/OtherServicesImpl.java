@@ -6,7 +6,7 @@ import com.yermolenko.dao.TravelCarrierDAO;
 import com.yermolenko.model.AgencyBranch;
 import com.yermolenko.model.Resort;
 import com.yermolenko.model.TravelCarrier;
-import com.yermolenko.services.TravelAgencyService;
+import com.yermolenko.services.OtherServices;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Log4j
 @Service
-public class TravelAgencyServiceImpl implements TravelAgencyService {
+public class OtherServicesImpl implements OtherServices {
 
     private final AgencyBranchDAO agencyBranchDAO;
     private final ResortDAO resortDAO;
@@ -32,7 +32,7 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
      * @param resortDAO
      * @param travelCarrierDAO
      */
-    public TravelAgencyServiceImpl(AgencyBranchDAO agencyBranchDAO, ResortDAO resortDAO, TravelCarrierDAO travelCarrierDAO) {
+    public OtherServicesImpl(AgencyBranchDAO agencyBranchDAO, ResortDAO resortDAO, TravelCarrierDAO travelCarrierDAO) {
         this.agencyBranchDAO = agencyBranchDAO;
         this.resortDAO = resortDAO;
         this.travelCarrierDAO = travelCarrierDAO;
@@ -48,17 +48,6 @@ public class TravelAgencyServiceImpl implements TravelAgencyService {
     @Override
     public List<AgencyBranch> getAgencyBranches() {
         return agencyBranchDAO.getAgencyBranches();
-    }
-
-    /**
-     * Method getAgencyBranchById.
-     *
-     * @param id of type int
-     * @return AgencyBranch
-     */
-    @Override
-    public AgencyBranch getAgencyBranchById(int id) {
-        return agencyBranchDAO.getAgencyBranchById(id);
     }
 
     /**

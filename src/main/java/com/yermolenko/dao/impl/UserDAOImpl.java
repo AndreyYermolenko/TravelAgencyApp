@@ -3,6 +3,7 @@ package com.yermolenko.dao.impl;
 import com.yermolenko.dao.ConnectionPool;
 import com.yermolenko.dao.RoleDao;
 import com.yermolenko.dao.UserDAO;
+import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.model.Role;
 import com.yermolenko.model.User;
 import lombok.extern.log4j.Log4j;
@@ -12,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -196,6 +199,43 @@ public class UserDAOImpl implements UserDAO {
             log.error("Parsing result set problem", e);
         }
         return user;
+    }
+
+    public List<BranchManagerDto> getBranchManagerStat() {
+        Connection connection = connectionPool.getConnection();
+        List<BranchManagerDto> bmsdList = new ArrayList<>();
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT ab.destination AS destination_branch,\n" +
+                            "       us1.last_name AS last_name_manager,\n" +
+                            "       (\n" +
+                            "            SELECT count(*) FROM tour_user AS tu WHERE tu.user_id = (\n" +
+                            "                SELECT id FROM users AS us2 WHERE us2.manager_id = us1.id\n" +
+                            "            )\n" +
+                            "       ) AS count\n" +
+                            "FROM agency_branch AS ab\n" +
+                            "LEFT JOIN users AS us1 ON ab.id = us1.agency_branch_id AND us1.manager_id IS null\n" +
+                            "ORDER BY count DESC"
+            );
+
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                BranchManagerDto bmsd = new BranchManagerDto();
+                bmsd.setDestinationBranch(rs.getString(1));
+                bmsd.setLastNameManager(rs.getString(2));
+                bmsd.setCountOrder(rs.getInt(3));
+                bmsdList.add(bmsd);
+            }
+
+
+            connection.close();
+        } catch (SQLException e) {
+            log.error("GetBranchManagerStat problem", e);
+        }
+
+        return bmsdList;
     }
 
 }

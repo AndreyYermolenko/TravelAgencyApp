@@ -1,6 +1,9 @@
 package com.yermolenko.dao;
 
+import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.model.User;
+
+import java.util.List;
 
 /**
  * Interface UserDAO is designed to receive and modify user data.
@@ -42,4 +45,5 @@ public interface UserDAO {
      */
     User getManagerByBranchId(int id);
 
+    List<BranchManagerDto> getBranchManagerStat();
 }

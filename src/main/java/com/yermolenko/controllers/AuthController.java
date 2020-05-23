@@ -4,7 +4,7 @@ import com.yermolenko.controllers.forms.LoginForm;
 import com.yermolenko.controllers.forms.UserForm;
 import com.yermolenko.model.User;
 import com.yermolenko.services.RestService;
-import com.yermolenko.services.TravelAgencyService;
+import com.yermolenko.services.OtherServices;
 import com.yermolenko.services.UserService;
 import com.yermolenko.utils.UserValidator;
 import org.springframework.http.ResponseEntity;
@@ -30,20 +30,20 @@ public class AuthController {
 
     private final RestService restService;
 
-    private final TravelAgencyService travelAgencyService;
+    private final OtherServices otherServices;
 
     /**
      * Constructor AuthController creates a new AuthController instance.
      * @param userValidator of type UserValidator
      * @param userService of type UserService
      * @param restService
-     * @param travelAgencyService
+     * @param otherServices
      */
-    public AuthController(UserValidator userValidator, UserService userService, RestService restService, TravelAgencyService travelAgencyService) {
+    public AuthController(UserValidator userValidator, UserService userService, RestService restService, OtherServices otherServices) {
         this.userValidator = userValidator;
         this.userService = userService;
         this.restService = restService;
-        this.travelAgencyService = travelAgencyService;
+        this.otherServices = otherServices;
     }
 
     /**
@@ -55,7 +55,7 @@ public class AuthController {
     @GetMapping("/sign_up")
     public String registration(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("branches", travelAgencyService.getAgencyBranches());
+        model.addAttribute("branches", otherServices.getAgencyBranches());
 
         return "/auth/sign_up";
     }

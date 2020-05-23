@@ -1,9 +1,12 @@
 package com.yermolenko.controllers;
 
+import com.yermolenko.dto.BranchManagerDto;
+import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
-import com.yermolenko.services.TravelAgencyService;
+import com.yermolenko.services.OtherServices;
 import com.yermolenko.services.TravelTourService;
+import com.yermolenko.services.UserService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,11 +22,14 @@ public class MainControllerForManager {
 
     private final TravelTourService travelTourService;
 
-    private final TravelAgencyService travelAgencyService;
+    private final UserService userService;
 
-    public MainControllerForManager(TravelTourService travelTourService, TravelAgencyService travelAgencyService) {
+    private final OtherServices otherServices;
+
+    public MainControllerForManager(TravelTourService travelTourService, UserService userService, OtherServices otherServices) {
         this.travelTourService = travelTourService;
-        this.travelAgencyService = travelAgencyService;
+        this.userService = userService;
+        this.otherServices = otherServices;
     }
 
     /**
@@ -40,8 +46,8 @@ public class MainControllerForManager {
         TravelTour tour = travelTourService.getTour(id);
         model.addAttribute("tourCurrent", tour);
         model.addAttribute("tourUpdate", new TravelTour());
-        model.addAttribute("resorts", travelAgencyService.getResorts());
-        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
+        model.addAttribute("resorts", otherServices.getResorts());
+        model.addAttribute("travelCarriers", otherServices.getTravelCarriers());
 
         return "updateTour";
     }
@@ -86,8 +92,8 @@ public class MainControllerForManager {
     @PreAuthorize("hasAuthority('manager')")
     public String addTour(Model model) {
         model.addAttribute("newTour", new TravelTour());
-        model.addAttribute("resorts", travelAgencyService.getResorts());
-        model.addAttribute("travelCarriers", travelAgencyService.getTravelCarriers());
+        model.addAttribute("resorts", otherServices.getResorts());
+        model.addAttribute("travelCarriers", otherServices.getTravelCarriers());
 
         return "addTour";
     }
@@ -124,5 +130,22 @@ public class MainControllerForManager {
         model.addAttribute("users", users);
 
         return "listOfReservedTourUsers";
+    }
+    @GetMapping("/listOfBranchManagerStat")
+    @PreAuthorize("hasAuthority('manager')")
+    public String listOfBranchManagerStat(Model model) {
+        List<BranchManagerDto> list = userService.getBranchManagerStat();
+        model.addAttribute("list", list);
+
+        return "listOfBranchManagerStat";
+    }
+
+    @GetMapping("/listOfTravelTourResortStat")
+    @PreAuthorize("hasAuthority('manager')")
+    public String listOfTravelTourResortStat(Model model) {
+        List<TravelTourResortDto> list = travelTourService.getTravelTourResortStat();
+        model.addAttribute("list", list);
+
+        return "listOfTravelTourResortStat";
     }
 }

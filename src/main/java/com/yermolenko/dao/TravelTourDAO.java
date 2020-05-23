@@ -1,6 +1,7 @@
 package com.yermolenko.dao;
 
 import com.yermolenko.controllers.forms.SearchTourParams;
+import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 
@@ -92,4 +93,5 @@ public interface TravelTourDAO {
      */
     List<User> getListOfReservedTravelTourUsers(TravelTour tour);
 
+    List<TravelTourResortDto> getTravelTourResortStat();
 }

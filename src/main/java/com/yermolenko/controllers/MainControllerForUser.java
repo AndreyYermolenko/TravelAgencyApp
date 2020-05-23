@@ -3,7 +3,7 @@ package com.yermolenko.controllers;
 import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
-import com.yermolenko.services.TravelAgencyService;
+import com.yermolenko.services.OtherServices;
 import com.yermolenko.services.TravelTourService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,11 +19,11 @@ public class MainControllerForUser {
 
     private final TravelTourService travelTourService;
 
-    private final TravelAgencyService travelAgencyService;
+    private final OtherServices otherServices;
 
-    public MainControllerForUser(TravelTourService travelTourService, TravelAgencyService travelAgencyService) {
+    public MainControllerForUser(TravelTourService travelTourService, OtherServices otherServices) {
         this.travelTourService = travelTourService;
-        this.travelAgencyService = travelAgencyService;
+        this.otherServices = otherServices;
     }
 
     @GetMapping("/tours/advancedSearch")

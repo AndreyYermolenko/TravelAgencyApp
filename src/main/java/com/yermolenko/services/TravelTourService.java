@@ -1,6 +1,7 @@
 package com.yermolenko.services;
 
 import com.yermolenko.controllers.forms.SearchTourParams;
+import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 
@@ -81,5 +82,7 @@ public interface TravelTourService {
      * @return List<User>
      */
     List<User> getListOfReservedTourUsers(TravelTour tour);
+
+    List<TravelTourResortDto> getTravelTourResortStat();
 
 }

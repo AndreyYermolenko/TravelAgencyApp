@@ -2,7 +2,7 @@ package com.yermolenko.controllers;
 
 import com.yermolenko.controllers.forms.SearchTourParams;
 import com.yermolenko.model.*;
-import com.yermolenko.services.TravelAgencyService;
+import com.yermolenko.services.OtherServices;
 import com.yermolenko.services.TravelTourService;
 import com.yermolenko.services.UserService;
 import org.springframework.http.ResponseEntity;
@@ -28,18 +28,18 @@ public class ApiControllerForUser {
 
     private final UserService userService;
 
-    private final TravelAgencyService travelAgencyService;
+    private final OtherServices otherServices;
 
     /**
      * Constructor ApiController creates a new ApiController instance.
      *  @param travelTourService of type TravelTourService
      * @param userService of type UserService
-     * @param travelAgencyService
+     * @param otherServices
      */
-    public ApiControllerForUser(TravelTourService travelTourService, UserService userService, TravelAgencyService travelAgencyService) {
+    public ApiControllerForUser(TravelTourService travelTourService, UserService userService, OtherServices otherServices) {
         this.travelTourService = travelTourService;
         this.userService = userService;
-        this.travelAgencyService = travelAgencyService;
+        this.otherServices = otherServices;
     }
 
     /**
@@ -107,7 +107,7 @@ public class ApiControllerForUser {
      */
     @GetMapping("/api/agencyBranch")
     public ResponseEntity<List<AgencyBranch>> getAgencyBranches() {
-        List<AgencyBranch> agencyBranchList= travelAgencyService.getAgencyBranches();
+        List<AgencyBranch> agencyBranchList= otherServices.getAgencyBranches();
 
         return ResponseEntity.ok(agencyBranchList);
     }
@@ -121,7 +121,7 @@ public class ApiControllerForUser {
      */
     @GetMapping("/api/resort")
     public ResponseEntity<List<Resort>> getResorts() {
-        List<Resort> resortList= travelAgencyService.getResorts();
+        List<Resort> resortList= otherServices.getResorts();
 
         return ResponseEntity.ok(resortList);
     }
@@ -135,7 +135,7 @@ public class ApiControllerForUser {
      */
     @GetMapping("/api/carrier")
     public ResponseEntity<List<TravelCarrier>> getTravelCarriers() {
-        List<TravelCarrier> carrierList= travelAgencyService.getTravelCarriers();
+        List<TravelCarrier> carrierList= otherServices.getTravelCarriers();
 
         return ResponseEntity.ok(carrierList);
     }
