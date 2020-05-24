@@ -10,3 +10,9 @@ VALUES ('Egypt', TO_DATE('2020-08-20', 'YYYY-MM-DD'),
        );
 
 COMMIT;
+
+-- DROP TRIGGER quantity_user ON tour_user;
+-- DROP ROUTINE increase_quantity();
+--
+-- INSERT INTO tour_user (user_id, tour_id) VALUES (4, 2);
+-- DELETE FROM tour_user WHERE tour_id = 2

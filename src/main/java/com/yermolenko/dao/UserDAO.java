@@ -44,6 +44,4 @@ public interface UserDAO {
      * @return User
      */
     User getManagerByBranchId(int id);
-
-    List<BranchManagerDto> getBranchManagerStat();
 }

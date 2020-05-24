@@ -30,7 +30,7 @@ public class ApiControllerForManager {
     @PostMapping("/api/updateTour")
     public ResponseEntity<?> updateTour(@RequestBody TravelTourForm tourUpdate,
                                         @RequestParam int id) {
-        boolean result = travelTourService.updateTour(id, from(tourUpdate));
+        boolean result = travelTourService.updateTravelTour(id, from(tourUpdate));
 
         if (result) {
             return ResponseEntity.ok().build();
@@ -46,7 +46,7 @@ public class ApiControllerForManager {
      */
     @GetMapping("/api/deleteTour")
     public ResponseEntity<?> deleteTour(@RequestParam int id) {
-        boolean result = travelTourService.deleteTour(id);
+        boolean result = travelTourService.deleteTravelTour(id);
 
         if (result) {
             return ResponseEntity.ok().build();
@@ -62,7 +62,7 @@ public class ApiControllerForManager {
      */
     @PostMapping("/api/addTour")
     public ResponseEntity<?> addTour(@RequestBody TravelTourForm tourAdd) {
-        boolean result = travelTourService.addTour(from(tourAdd));
+        boolean result = travelTourService.addTravelTour(from(tourAdd));
 
         if (result) {
             return ResponseEntity.ok().build();
@@ -80,7 +80,7 @@ public class ApiControllerForManager {
     public ResponseEntity<List<User>> listOfReservedTourUsers(@RequestParam int id) {
         TravelTour tour = new TravelTour();
         tour.setId(id);
-        List<User> users = travelTourService.getListOfReservedTourUsers(tour);
+        List<User> users = travelTourService.getListOfReservedTravelTourUsers(tour);
 
         return ResponseEntity.ok(users);
     }

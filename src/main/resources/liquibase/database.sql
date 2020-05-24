@@ -101,7 +101,7 @@ CREATE TABLE tour_user
     tour_id INT NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (tour_id) REFERENCES travel_tour(id),
+    FOREIGN KEY (tour_id) REFERENCES travel_tour(id) ON DELETE CASCADE,
 
     UNIQUE (user_id, tour_id)
 );
@@ -115,5 +115,26 @@ CREATE TABLE tokens
     FOREIGN KEY (user_id) REFERENCES users(id),
     UNIQUE (token)
 );
+
+CREATE OR REPLACE FUNCTION increase_quantity() RETURNS TRIGGER AS $$
+DECLARE
+    count int;
+    quantity numeric;
+BEGIN
+    IF TG_OP = 'INSERT' THEN
+        count = (SELECT count(*) FROM tour_user WHERE tour_id = NEW.tour_id);
+        quantity = (SELECT max_count FROM travel_tour WHERE id = NEW.tour_id);
+        IF count > quantity THEN
+            RAISE TRIGGERED_ACTION_EXCEPTION;
+        END if;
+        UPDATE travel_tour SET current_count = count WHERE id = NEW.tour_id;
+        RETURN NEW;
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER quantity_user
+    AFTER INSERT ON tour_user FOR EACH ROW
+    EXECUTE PROCEDURE increase_quantity();
 
 COMMIT;

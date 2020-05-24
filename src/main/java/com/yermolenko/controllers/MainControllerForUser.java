@@ -45,7 +45,7 @@ public class MainControllerForUser {
     @PreAuthorize("hasAuthority('user')")
     public String getTours(@ModelAttribute SearchTourParams tourParams,
                            Model model) {
-        List<TravelTour> tours = travelTourService.getToursForManager(tourParams);
+        List<TravelTour> tours = travelTourService.getTravelToursForManager(tourParams);
         model.addAttribute("tours", tours);
 
         return "advancedSearchTours";
@@ -75,7 +75,7 @@ public class MainControllerForUser {
                             Model model) {
         SearchTourParams params = new SearchTourParams();
         params.setDestination(destination);
-        List<TravelTour> tours = travelTourService.getToursForManager(params);
+        List<TravelTour> tours = travelTourService.getTravelToursForManager(params);
         model.addAttribute("tours", tours);
 
         return "showTours";
@@ -93,8 +93,8 @@ public class MainControllerForUser {
     public String reservationTour(HttpSession session,
                                   @RequestParam(name = "id") int idTour) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        TravelTour tour = travelTourService.getTour(idTour);
-        boolean result = travelTourService.reservationTour(user, tour);
+        TravelTour tour = travelTourService.getTravelTour(idTour);
+        boolean result = travelTourService.reservationTravelTour(user, tour);
         session.setAttribute("isSuccess", result);
 
         return "/reservationTour";
@@ -111,7 +111,7 @@ public class MainControllerForUser {
     public String getReservedTours(Model model) {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        List<TravelTour> tours = travelTourService.getReservedTours(user);
+        List<TravelTour> tours = travelTourService.getReservedTravelTours(user);
         model.addAttribute("tours", tours);
 
         return "reservedTours";

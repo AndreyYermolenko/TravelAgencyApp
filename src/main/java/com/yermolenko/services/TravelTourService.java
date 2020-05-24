@@ -21,9 +21,9 @@ public interface TravelTourService {
      * @param searchTourParams of type SearchTourParams
      * @return List<TravelTour>
      */
-    List<TravelTour> getToursForManager(SearchTourParams searchTourParams);
+    List<TravelTour> getTravelToursForManager(SearchTourParams searchTourParams);
 
-    List<TravelTour> getToursForUser(SearchTourParams searchTourParams);
+    List<TravelTour> getTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
      * Method getTour.
@@ -31,7 +31,7 @@ public interface TravelTourService {
      * @param id of type int
      * @return TravelTour
      */
-    TravelTour getTour(int id);
+    TravelTour getTravelTour(int id);
 
     /**
      * Method updateTour.
@@ -40,7 +40,7 @@ public interface TravelTourService {
      * @param tour of type TravelTour
      * @return boolean
      */
-    boolean updateTour(int id, TravelTour tour);
+    boolean updateTravelTour(int id, TravelTour tour);
 
     /**
      * Method deleteTour.
@@ -48,7 +48,7 @@ public interface TravelTourService {
      * @param id of type int
      * @return boolean
      */
-    boolean deleteTour(int id);
+    boolean deleteTravelTour(int id);
 
     /**
      * Method addTour.
@@ -56,7 +56,7 @@ public interface TravelTourService {
      * @param tour of type TravelTour
      * @return boolean
      */
-    boolean addTour(TravelTour tour);
+    boolean addTravelTour(TravelTour tour);
 
     /**
      * Method reservationTour.
@@ -65,7 +65,7 @@ public interface TravelTourService {
      * @param travelTour of type TravelTour
      * @return boolean
      */
-    boolean reservationTour(User user, TravelTour travelTour);
+    boolean reservationTravelTour(User user, TravelTour travelTour);
 
     /**
      * Method getReservedTours.
@@ -73,7 +73,7 @@ public interface TravelTourService {
      * @param user of type User
      * @return List<TravelTour>
      */
-    List<TravelTour> getReservedTours(User user);
+    List<TravelTour> getReservedTravelTours(User user);
 
     /**
      * Method getListOfReservedTourUsers.
@@ -81,7 +81,7 @@ public interface TravelTourService {
      * @param tour of type TravelTour
      * @return List<User>
      */
-    List<User> getListOfReservedTourUsers(TravelTour tour);
+    List<User> getListOfReservedTravelTourUsers(TravelTour tour);
 
     List<TravelTourResortDto> getTravelTourResortStat();
 

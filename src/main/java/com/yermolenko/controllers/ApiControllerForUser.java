@@ -55,9 +55,9 @@ public class ApiControllerForUser {
                 .getAuthorities();
 
         if (authorities.contains(new SimpleGrantedAuthority("manager"))) {
-            return ResponseEntity.ok(travelTourService.getToursForManager(tourParams));
+            return ResponseEntity.ok(travelTourService.getTravelToursForManager(tourParams));
         } else {
-            return ResponseEntity.ok(travelTourService.getToursForUser(tourParams));
+            return ResponseEntity.ok(travelTourService.getTravelToursForUser(tourParams));
         }
     }
 
@@ -72,8 +72,8 @@ public class ApiControllerForUser {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         String currentUserEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(currentUserEmail);
-        TravelTour tour = travelTourService.getTour(id);
-        boolean result = travelTourService.reservationTour(user, tour);
+        TravelTour tour = travelTourService.getTravelTour(id);
+        boolean result = travelTourService.reservationTravelTour(user, tour);
 
         if (result) {
             return ResponseEntity.ok().build();
@@ -93,7 +93,7 @@ public class ApiControllerForUser {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getDetails();
         String currentUserEmail = userDetails.getUsername();
         User user = userService.findUserByEmail(currentUserEmail);
-        List<TravelTour> tours = travelTourService.getReservedTours(user);
+        List<TravelTour> tours = travelTourService.getReservedTravelTours(user);
 
         return ResponseEntity.ok(tours);
     }

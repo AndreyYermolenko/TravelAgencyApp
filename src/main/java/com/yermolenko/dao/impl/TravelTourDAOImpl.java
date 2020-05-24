@@ -340,40 +340,6 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         Connection connection = connectionPool.getConnection();
 
         try {
-            PreparedStatement ps1 = connection.prepareStatement(
-                    "SELECT count(*) FROM tour_user " +
-                            "WHERE user_id = ? AND tour_id = ?;"
-            );
-            ps1.setInt(1, user.getId());
-            ps1.setInt(2, travelTour.getId());
-            ResultSet rs1 = ps1.executeQuery();
-            rs1.next();
-            int countOfReservation = rs1.getInt(1);
-            if (countOfReservation != 0) {
-                return false;
-            }
-
-            PreparedStatement ps2 = connection.prepareStatement(
-                    "SELECT current_count, max_count FROM travel_tour " +
-                            "WHERE id = ?;"
-            );
-            ps2.setInt(1, travelTour.getId());
-            ResultSet rs2 = ps2.executeQuery();
-            rs2.next();
-            int currentCountOfUsers = rs2.getInt(1);
-            int maxCountOfUsers = rs2.getInt(2);
-            if (currentCountOfUsers >= maxCountOfUsers) {
-                return false;
-            }
-
-            PreparedStatement ps3 = connection.prepareStatement(
-                    "UPDATE travel_tour SET current_count = ? " +
-                            "WHERE id = ?;"
-            );
-            ps3.setInt(1, ++currentCountOfUsers);
-            ps3.setInt(2, travelTour.getId());
-            ps3.executeUpdate();
-
             PreparedStatement ps4 = connection.prepareStatement(
                     "INSERT INTO tour_user " +
                             "(user_id, tour_id) " +
@@ -532,20 +498,15 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         Connection connection = connectionPool.getConnection();
 
         try {
-            PreparedStatement ps1 = connection.prepareStatement("DELETE FROM tour_user " +
-                    "WHERE tour_id = ?");
-            ps1.setInt(1, id);
-
             PreparedStatement ps2 = connection.prepareStatement("DELETE FROM travel_tour " +
                     "WHERE id = ?");
             ps2.setInt(1, id);
 
-            int countOfDelete1 =  ps1.executeUpdate();
             int countOfDelete2 = ps2.executeUpdate();
 
             connection.close();
 
-            return (countOfDelete1 != 0 && countOfDelete2 != 0);
+            return countOfDelete2 != 0;
         } catch (SQLException ex) {
             log.error("Deleting tour problem", ex);
         }

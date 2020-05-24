@@ -57,9 +57,4 @@ public class UserServiceImpl implements UserService {
         return userDAO.findUserByEmail(email);
     }
 
-    @Override
-    public List<BranchManagerDto> getBranchManagerStat() {
-        return userDAO.getBranchManagerStat();
-    }
-
 }

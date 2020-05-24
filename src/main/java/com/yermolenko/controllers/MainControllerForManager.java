@@ -43,7 +43,7 @@ public class MainControllerForManager {
     @PreAuthorize("hasAuthority('manager')")
     public String updateTour(Model model,
                              @RequestParam int id) {
-        TravelTour tour = travelTourService.getTour(id);
+        TravelTour tour = travelTourService.getTravelTour(id);
         model.addAttribute("tourCurrent", tour);
         model.addAttribute("tourUpdate", new TravelTour());
         model.addAttribute("resorts", otherServices.getResorts());
@@ -63,7 +63,7 @@ public class MainControllerForManager {
     @PreAuthorize("hasAuthority('manager')")
     public String updateTour(@ModelAttribute TravelTour tourUpdate,
                              @RequestParam int id) {
-        travelTourService.updateTour(id, tourUpdate);
+        travelTourService.updateTravelTour(id, tourUpdate);
 
         return "quickSearchTours";
     }
@@ -77,7 +77,7 @@ public class MainControllerForManager {
     @GetMapping("/deleteTour")
     @PreAuthorize("hasAuthority('manager')")
     public String deleteTour(@RequestParam int id) {
-        travelTourService.deleteTour(id);
+        travelTourService.deleteTravelTour(id);
 
         return "quickSearchTours";
     }
@@ -107,7 +107,7 @@ public class MainControllerForManager {
     @PostMapping("/addTour")
     @PreAuthorize("hasAuthority('manager')")
     public String addTour(@ModelAttribute TravelTour tour) {
-        travelTourService.addTour(tour);
+        travelTourService.addTravelTour(tour);
 
         return "quickSearchTours";
     }
@@ -126,18 +126,10 @@ public class MainControllerForManager {
         TravelTour tour = new TravelTour();
         tour.setId(tourId);
 
-        List<User> users = travelTourService.getListOfReservedTourUsers(tour);
+        List<User> users = travelTourService.getListOfReservedTravelTourUsers(tour);
         model.addAttribute("users", users);
 
         return "listOfReservedTourUsers";
-    }
-    @GetMapping("/listOfBranchManagerStat")
-    @PreAuthorize("hasAuthority('manager')")
-    public String listOfBranchManagerStat(Model model) {
-        List<BranchManagerDto> list = userService.getBranchManagerStat();
-        model.addAttribute("list", list);
-
-        return "listOfBranchManagerStat";
     }
 
     @GetMapping("/listOfTravelTourResortStat")

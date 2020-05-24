@@ -8,6 +8,7 @@ import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
 import com.yermolenko.services.TravelTourService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getToursForManager(SearchTourParams searchTourParams) {
+    public List<TravelTour> getTravelToursForManager(SearchTourParams searchTourParams) {
         if ("".equals(searchTourParams.getDestination())
                 && searchTourParams.getBeginDate() == null
                 && searchTourParams.getEndDate() == null
@@ -50,7 +51,7 @@ public class TravelTourServiceImpl implements TravelTourService {
     }
 
     @Override
-    public List<TravelTour> getToursForUser(SearchTourParams searchTourParams) {
+    public List<TravelTour> getTravelToursForUser(SearchTourParams searchTourParams) {
         if ("".equals(searchTourParams.getDestination())
                 && searchTourParams.getBeginDate() == null
                 && searchTourParams.getEndDate() == null
@@ -68,7 +69,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return TravelTour
      */
     @Override
-    public TravelTour getTour(int id) {
+    public TravelTour getTravelTour(int id) {
         return travelTourDAO.getTravelTourById(id);
     }
 
@@ -80,7 +81,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return boolean
      */
     @Override
-    public boolean updateTour(int id, TravelTour tour) {
+    public boolean updateTravelTour(int id, TravelTour tour) {
         return travelTourDAO.updateTravelTour(id, tour);
     }
 
@@ -91,7 +92,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return boolean
      */
     @Override
-    public boolean deleteTour(int id) {
+    public boolean deleteTravelTour(int id) {
         return travelTourDAO.deleteTravelTour(id);
     }
 
@@ -102,7 +103,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return boolean
      */
     @Override
-    public boolean addTour(TravelTour tour) {
+    public boolean addTravelTour(TravelTour tour) {
         return travelTourDAO.addTravelTour(tour);
     }
 
@@ -114,7 +115,8 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return boolean
      */
     @Override
-    public boolean reservationTour(User user, TravelTour travelTour) {
+    @Transactional
+    public boolean reservationTravelTour(User user, TravelTour travelTour) {
         return travelTourDAO.reservationTravelTour(user, travelTour);
     }
 
@@ -125,7 +127,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return List<TravelTour>
      */
     @Override
-    public List<TravelTour> getReservedTours(User user) {
+    public List<TravelTour> getReservedTravelTours(User user) {
         return travelTourDAO.getReservedTravelTours(user);
     }
 
@@ -136,7 +138,7 @@ public class TravelTourServiceImpl implements TravelTourService {
      * @return List<User>
      */
     @Override
-    public List<User> getListOfReservedTourUsers(TravelTour tour) {
+    public List<User> getListOfReservedTravelTourUsers(TravelTour tour) {
         return travelTourDAO.getListOfReservedTravelTourUsers(tour);
     }
 

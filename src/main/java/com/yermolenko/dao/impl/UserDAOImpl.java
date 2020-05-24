@@ -201,41 +201,4 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public List<BranchManagerDto> getBranchManagerStat() {
-        Connection connection = connectionPool.getConnection();
-        List<BranchManagerDto> bmsdList = new ArrayList<>();
-
-        try {
-            PreparedStatement ps = connection.prepareStatement(
-                    "SELECT ab.destination AS destination_branch,\n" +
-                            "       us1.last_name AS last_name_manager,\n" +
-                            "       (\n" +
-                            "            SELECT count(*) FROM tour_user AS tu WHERE tu.user_id = (\n" +
-                            "                SELECT id FROM users AS us2 WHERE us2.manager_id = us1.id\n" +
-                            "            )\n" +
-                            "       ) AS count\n" +
-                            "FROM agency_branch AS ab\n" +
-                            "LEFT JOIN users AS us1 ON ab.id = us1.agency_branch_id AND us1.manager_id IS null\n" +
-                            "ORDER BY count DESC"
-            );
-
-            ResultSet rs = ps.executeQuery();
-
-            while(rs.next()) {
-                BranchManagerDto bmsd = new BranchManagerDto();
-                bmsd.setDestinationBranch(rs.getString(1));
-                bmsd.setLastNameManager(rs.getString(2));
-                bmsd.setCountOrder(rs.getInt(3));
-                bmsdList.add(bmsd);
-            }
-
-
-            connection.close();
-        } catch (SQLException e) {
-            log.error("GetBranchManagerStat problem", e);
-        }
-
-        return bmsdList;
-    }
-
 }
