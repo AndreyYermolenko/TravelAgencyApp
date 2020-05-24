@@ -585,6 +585,13 @@ public class TravelTourDAOImpl implements TravelTourDAO {
         return tours;
     }
 
+    /**
+     * Method getTravelTourResortStat returns the travelTourResortStat of this TravelTourDAOImpl object.
+     *
+     *
+     *
+     * @return the travelTourResortStat (type List<TravelTourResortDto>) of this TravelTourDAOImpl object.
+     */
     @Override
     public List<TravelTourResortDto> getTravelTourResortStat() {
         List<TravelTourResortDto> ttrdList = new ArrayList<>();

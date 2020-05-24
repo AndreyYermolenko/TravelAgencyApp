@@ -1,9 +1,6 @@
 package com.yermolenko.services;
 
-import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.model.User;
-
-import java.util.List;
 
 /**
  * Interface UserService.

@@ -23,6 +23,12 @@ public interface TravelTourService {
      */
     List<TravelTour> getTravelToursForManager(SearchTourParams searchTourParams);
 
+    /**
+     * Method getTravelToursForUser.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     List<TravelTour> getTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
@@ -83,6 +89,13 @@ public interface TravelTourService {
      */
     List<User> getListOfReservedTravelTourUsers(TravelTour tour);
 
+    /**
+     * Method getTravelTourResortStat returns the travelTourResortStat of this TravelTourService object.
+     *
+     *
+     *
+     * @return the travelTourResortStat (type List<TravelTourResortDto>) of this TravelTourService object.
+     */
     List<TravelTourResortDto> getTravelTourResortStat();
 
 }

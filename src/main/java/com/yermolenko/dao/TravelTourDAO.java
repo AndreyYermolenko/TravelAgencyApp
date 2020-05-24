@@ -23,6 +23,12 @@ public interface TravelTourDAO {
      */
     List<TravelTour> getAllTravelToursForManager(SearchTourParams searchTourParams);
 
+    /**
+     * Method getAllTravelToursForUser.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     List<TravelTour> getAllTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
@@ -33,6 +39,12 @@ public interface TravelTourDAO {
      */
     List<TravelTour> getSomeTravelToursForManager(SearchTourParams searchTourParams);
 
+    /**
+     * Method getSomeTravelToursForUser.
+     *
+     * @param searchTourParams of type SearchTourParams
+     * @return List<TravelTour>
+     */
     List<TravelTour> getSomeTravelToursForUser(SearchTourParams searchTourParams);
 
     /**
@@ -93,5 +105,12 @@ public interface TravelTourDAO {
      */
     List<User> getListOfReservedTravelTourUsers(TravelTour tour);
 
+    /**
+     * Method getTravelTourResortStat returns the travelTourResortStat of this TravelTourDAO object.
+     *
+     *
+     *
+     * @return the travelTourResortStat (type List<TravelTourResortDto>) of this TravelTourDAO object.
+     */
     List<TravelTourResortDto> getTravelTourResortStat();
 }

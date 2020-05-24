@@ -1,7 +1,7 @@
 package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
-import com.yermolenko.dao.RoleDao;
+import com.yermolenko.dao.RoleDAO;
 import com.yermolenko.model.Role;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Component;
@@ -13,13 +13,24 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Class RoleDaoImpl.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Log4j
 @Component
-public class RoleDaoImpl implements RoleDao {
+public class RoleDAOImpl implements RoleDAO {
 
     private final ConnectionPool connectionPool;
 
-    public RoleDaoImpl(ConnectionPool connectionPool) {
+    /**
+     * Constructor RoleDaoImpl creates a new RoleDaoImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
+    public RoleDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 

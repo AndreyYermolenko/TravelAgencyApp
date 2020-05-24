@@ -1,9 +1,8 @@
 package com.yermolenko.dao.impl;
 
 import com.yermolenko.dao.ConnectionPool;
-import com.yermolenko.dao.RoleDao;
+import com.yermolenko.dao.RoleDAO;
 import com.yermolenko.dao.UserDAO;
-import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.model.Role;
 import com.yermolenko.model.User;
 import lombok.extern.log4j.Log4j;
@@ -13,8 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,7 +25,7 @@ import java.util.Set;
 public class UserDAOImpl implements UserDAO {
 
     private final ConnectionPool connectionPool;
-    private final RoleDao roleDao;
+    private final RoleDAO roleDao;
 
     /**
      * Constructor UserDAOImpl creates a new UserDAOImpl instance.
@@ -36,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
      * @param connectionPool of type ConnectionPool
      * @param roleDao
      */
-    public UserDAOImpl(ConnectionPool connectionPool, RoleDao roleDao) {
+    public UserDAOImpl(ConnectionPool connectionPool, RoleDAO roleDao) {
         this.connectionPool = connectionPool;
         this.roleDao = roleDao;
     }

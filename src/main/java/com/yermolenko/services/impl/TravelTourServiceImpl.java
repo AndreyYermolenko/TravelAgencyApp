@@ -1,8 +1,7 @@
 package com.yermolenko.services.impl;
 
-import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.controllers.forms.SearchTourParams;
-import com.yermolenko.dto.BranchManagerDto;
+import com.yermolenko.dao.TravelTourDAO;
 import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;

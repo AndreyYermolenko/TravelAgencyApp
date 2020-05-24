@@ -13,12 +13,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class ResortDAOImpl.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Log4j
 @Component
 public class ResortDAOImpl implements ResortDAO {
 
     private final ConnectionPool connectionPool;
 
+    /**
+     * Constructor ResortDAOImpl creates a new ResortDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
     public ResortDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }

@@ -13,12 +13,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class TravelCarrierDAOImpl.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Log4j
 @Component
 public class TravelCarrierDAOImpl implements TravelCarrierDAO {
 
     private final ConnectionPool connectionPool;
 
+    /**
+     * Constructor TravelCarrierDAOImpl creates a new TravelCarrierDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
     public TravelCarrierDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }

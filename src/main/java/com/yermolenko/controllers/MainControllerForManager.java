@@ -1,6 +1,5 @@
 package com.yermolenko.controllers;
 
-import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.dto.TravelTourResortDto;
 import com.yermolenko.model.TravelTour;
 import com.yermolenko.model.User;
@@ -17,6 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * Class MainControllerForManager.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Controller
 public class MainControllerForManager {
 
@@ -26,6 +31,13 @@ public class MainControllerForManager {
 
     private final OtherServices otherServices;
 
+    /**
+     * Constructor MainControllerForManager creates a new MainControllerForManager instance.
+     *
+     * @param travelTourService of type TravelTourService
+     * @param userService of type UserService
+     * @param otherServices of type OtherServices
+     */
     public MainControllerForManager(TravelTourService travelTourService, UserService userService, OtherServices otherServices) {
         this.travelTourService = travelTourService;
         this.userService = userService;
@@ -121,8 +133,7 @@ public class MainControllerForManager {
      */
     @GetMapping("/listOfReservedTourUsers")
     @PreAuthorize("hasAuthority('manager')")
-    public String listOfReservedTourUsers(@RequestParam(name = "id") int tourId,
-                                          Model model) {
+    public String listOfReservedTourUsers(@RequestParam(name = "id") int tourId, Model model) {
         TravelTour tour = new TravelTour();
         tour.setId(tourId);
 
@@ -132,6 +143,12 @@ public class MainControllerForManager {
         return "listOfReservedTourUsers";
     }
 
+    /**
+     * Method listOfTravelTourResortStat.
+     *
+     * @param model of type Model
+     * @return String
+     */
     @GetMapping("/listOfTravelTourResortStat")
     @PreAuthorize("hasAuthority('manager')")
     public String listOfTravelTourResortStat(Model model) {

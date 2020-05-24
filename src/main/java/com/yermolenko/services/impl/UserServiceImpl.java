@@ -1,13 +1,10 @@
 package com.yermolenko.services.impl;
 
 import com.yermolenko.dao.UserDAO;
-import com.yermolenko.dto.BranchManagerDto;
 import com.yermolenko.model.User;
 import com.yermolenko.services.UserService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * Class UserServiceImpl.

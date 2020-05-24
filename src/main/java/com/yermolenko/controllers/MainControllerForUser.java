@@ -14,6 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * Class MainControllerForUser.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Controller
 public class MainControllerForUser {
 
@@ -21,11 +27,23 @@ public class MainControllerForUser {
 
     private final OtherServices otherServices;
 
+    /**
+     * Constructor MainControllerForUser creates a new MainControllerForUser instance.
+     *
+     * @param travelTourService of type TravelTourService
+     * @param otherServices of type OtherServices
+     */
     public MainControllerForUser(TravelTourService travelTourService, OtherServices otherServices) {
         this.travelTourService = travelTourService;
         this.otherServices = otherServices;
     }
 
+    /**
+     * Method getTours.
+     *
+     * @param model of type Model
+     * @return String
+     */
     @GetMapping("/tours/advancedSearch")
     @PreAuthorize("hasAuthority('user')")
     public String getTours(Model model) {

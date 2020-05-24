@@ -11,11 +11,22 @@ import java.util.List;
 
 import static com.yermolenko.utils.Converters.from;
 
+/**
+ * Class ApiControllerForManager.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @RestController
 public class ApiControllerForManager {
 
     private final TravelTourService travelTourService;
 
+    /**
+     * Constructor ApiControllerForManager creates a new ApiControllerForManager instance.
+     *
+     * @param travelTourService of type TravelTourService
+     */
     public ApiControllerForManager(TravelTourService travelTourService) {
         this.travelTourService = travelTourService;
     }

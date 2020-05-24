@@ -13,12 +13,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class AgencyBranchDAOImpl.
+ *
+ * @author Andrey
+ * Created on 24.05.2020
+ */
 @Log4j
 @Component
 public class AgencyBranchDAOImpl implements AgencyBranchDAO {
 
     private final ConnectionPool connectionPool;
 
+    /**
+     * Constructor AgencyBranchDAOImpl creates a new AgencyBranchDAOImpl instance.
+     *
+     * @param connectionPool of type ConnectionPool
+     */
     public AgencyBranchDAOImpl(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
