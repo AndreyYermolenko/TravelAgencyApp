@@ -1,12 +1,10 @@
 package com.yermolenko.dao;
 
-import com.yermolenko.exceptions.ConnectionToDatabaseException;
 import lombok.extern.log4j.Log4j;
+import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,29 +22,35 @@ import java.util.Properties;
 @Component
 public class ConnectionPool {
 
-    private String datasource;
+    private static final DataSource ds;
+    private static final PoolProperties p = new PoolProperties();
+    private static String dbUrl;
+    private static String dbDriverClassName;
+    private static String dbUsername;
+    private static String dbPassword;
 
-    private DataSource ds;
-
-    {
-        try(InputStream in = ConnectionPool.class
+    static {
+        try (InputStream in = ConnectionPool.class
                 .getClassLoader().getResourceAsStream("application.properties")) {
             Properties properties = new Properties();
             properties.load(in);
-            datasource = properties.getProperty("datasource.name");
+            dbUrl = properties.getProperty("db.url");
+            dbDriverClassName = properties.getProperty("db.driverClassName");
+            dbUsername = properties.getProperty("db.username");
+            dbPassword = properties.getProperty("db.password");
         } catch (IOException e) {
-            log.error("Getting datasource problem", e);
+            log.error("Problem with getting DB credential from apllication.properties", e);
         }
+        p.setUrl(dbUrl);
+        p.setDriverClassName(dbDriverClassName);
+        p.setUsername(dbUsername);
+        p.setPassword(dbPassword);
+        ds = new org.apache.tomcat.jdbc.pool.DataSource(p);
     }
 
-    {
-        Context context;
-        try {
-            context = new InitialContext();
-            ds = (DataSource) context.lookup(datasource);
-        } catch (NamingException e) {
-            log.error("Getting datasource name problem", e);
-        }
+    @Bean
+    public DataSource dataSource() {
+        return ds;
     }
 
     /**
@@ -59,15 +63,10 @@ public class ConnectionPool {
     public Connection getConnection(){
         Connection connection = null;
         try {
-            if (ds == null) {
-                throw new ConnectionToDatabaseException();
-            }
             connection = ds.getConnection();
         } catch (SQLException e) {
             log.error("Getting connection problem", e);
         }
         return connection;
     }
-
-
 }

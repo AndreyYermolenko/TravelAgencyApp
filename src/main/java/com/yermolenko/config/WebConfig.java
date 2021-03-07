@@ -12,9 +12,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 /**
@@ -30,11 +27,14 @@ import javax.sql.DataSource;
 @Log4j
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${datasource.name}")
-    private String datasourceName;
-
     @Value("${changeLog.name}")
     private String changeLogName;
+
+    private final DataSource dataSource;
+
+    public WebConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     /**
      * Method viewResolver customizes view resolver.
@@ -62,17 +62,9 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean
     public SpringLiquibase liquibase() {
-        Context ctx;
-        try {
-            ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup(datasourceName);
-            SpringLiquibase liquibase = new SpringLiquibase();
-            liquibase.setChangeLog(changeLogName);
-            liquibase.setDataSource(ds);
-            return liquibase;
-        } catch (NamingException e) {
-            log.error("Error creating liquibase bean ", e);
-        }
-        return null;
+        SpringLiquibase liquibase = new SpringLiquibase();
+        liquibase.setChangeLog(changeLogName);
+        liquibase.setDataSource(dataSource);
+        return liquibase;
     }
 }
